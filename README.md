@@ -92,8 +92,6 @@ python -m pip install -r requirements-nlp.txt
 
 ## 로컬 설정
 
-API 키와 토큰은 절대 Git에 커밋하지 않습니다.
-
 애플리케이션은 다음 환경변수 또는 Git에서 제외된 로컬 JSON 파일을 사용합니다.
 
 - `X_BEARER_TOKEN`
