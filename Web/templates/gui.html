@@ -1,0 +1,2631 @@
+﻿<!DOCTYPE html>
+<html lang="ko" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PolitiMarket - Crawler Manager</title>
+    <!-- Tailwind CSS & Google Fonts & Material Symbols -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F5F5F7;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #16171D;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #2D313E;
+            border-radius: 3px;
+        }
+        .terminal-log {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            line-height: 1.5;
+            background-color: #07080C;
+            color: #A9B2C3;
+        }
+        .admin-light {
+            background: #F5F5F7 !important;
+            color: #1a1b1f !important;
+        }
+        .admin-light header {
+            background: rgba(250, 248, 254, 0.86) !important;
+            border-color: #e3e2e7 !important;
+            box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06);
+        }
+        .admin-light .bg-\[\#12131A\],
+        .admin-light .bg-\[\#181921\],
+        .admin-light .bg-\[\#181921\]\/50 {
+            background-color: #ffffff !important;
+        }
+        .admin-light .bg-\[\#0B0C10\],
+        .admin-light .bg-\[\#07080C\] {
+            background-color: #f8fafc !important;
+        }
+        .admin-light .bg-gray-900,
+        .admin-light .bg-gray-850,
+        .admin-light .bg-gray-800 {
+            background-color: #eef2f7 !important;
+        }
+        .admin-light [class*="border-gray-7"],
+        .admin-light [class*="border-gray-8"],
+        .admin-light [class*="border-gray-9"] {
+            border-color: #dfe3ea !important;
+        }
+        .admin-light .text-gray-100,
+        .admin-light .text-gray-200,
+        .admin-light .text-gray-300 {
+            color: #1a1b1f !important;
+        }
+        .admin-light .text-gray-400 {
+            color: #5f6673 !important;
+        }
+        .admin-light .text-gray-500,
+        .admin-light .text-gray-600 {
+            color: #727784 !important;
+        }
+        .admin-light .text-blue-300,
+        .admin-light .text-blue-400 {
+            color: #1d4ed8 !important;
+        }
+        .admin-light .text-purple-300,
+        .admin-light .text-purple-400 {
+            color: #7e22ce !important;
+        }
+        .admin-light .text-violet-300,
+        .admin-light .text-violet-400 {
+            color: #6d28d9 !important;
+        }
+        .admin-light .text-cyan-300,
+        .admin-light .text-cyan-400 {
+            color: #0e7490 !important;
+        }
+        .admin-light .text-emerald-300,
+        .admin-light .text-emerald-400 {
+            color: #047857 !important;
+        }
+        .admin-light .text-amber-300,
+        .admin-light .text-amber-400 {
+            color: #92400e !important;
+        }
+        .admin-light .text-rose-300,
+        .admin-light .text-rose-400 {
+            color: #be123c !important;
+        }
+        .admin-light [class*="bg-blue-950"] {
+            background-color: #dbeafe !important;
+        }
+        .admin-light [class*="bg-purple-950"] {
+            background-color: #f3e8ff !important;
+        }
+        .admin-light [class*="bg-violet-950"] {
+            background-color: #ede9fe !important;
+        }
+        .admin-light [class*="bg-cyan-950"] {
+            background-color: #cffafe !important;
+        }
+        .admin-light [class*="bg-emerald-950"] {
+            background-color: #d1fae5 !important;
+        }
+        .admin-light [class*="bg-amber-950"] {
+            background-color: #fef3c7 !important;
+        }
+        .admin-light [class*="bg-rose-950"] {
+            background-color: #ffe4e6 !important;
+        }
+        .admin-light [class*="border-blue-8"],
+        .admin-light [class*="border-blue-9"] {
+            border-color: #93c5fd !important;
+        }
+        .admin-light [class*="border-purple-8"],
+        .admin-light [class*="border-purple-9"] {
+            border-color: #c084fc !important;
+        }
+        .admin-light [class*="border-violet-8"],
+        .admin-light [class*="border-violet-9"] {
+            border-color: #a78bfa !important;
+        }
+        .admin-light [class*="border-cyan-8"],
+        .admin-light [class*="border-cyan-9"] {
+            border-color: #67e8f9 !important;
+        }
+        .admin-light [class*="border-emerald-8"],
+        .admin-light [class*="border-emerald-9"] {
+            border-color: #6ee7b7 !important;
+        }
+        .admin-light [class*="border-amber-8"],
+        .admin-light [class*="border-amber-9"] {
+            border-color: #fbbf24 !important;
+        }
+        .admin-light [class*="border-rose-8"],
+        .admin-light [class*="border-rose-9"] {
+            border-color: #fda4af !important;
+        }
+        .admin-light button:not([class*="bg-blue-600"]):not([class*="bg-emerald-600"]):not([class*="bg-rose-600"]):not([class*="bg-cyan-600"]) {
+            color: #1f2937;
+        }
+        .admin-light button[class*="border-gray"] {
+            background-color: #ffffff !important;
+            border-color: #cbd5e1 !important;
+            color: #334155 !important;
+            box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06);
+        }
+        .admin-light button:hover:not([class*="bg-blue-600"]):not([class*="bg-emerald-600"]):not([class*="bg-rose-600"]):not([class*="bg-cyan-600"]) {
+            background-color: #e6edf5 !important;
+        }
+        .admin-light input,
+        .admin-light textarea,
+        .admin-light select {
+            background-color: #ffffff !important;
+            color: #1a1b1f !important;
+            border-color: #cfd6e3 !important;
+        }
+        .admin-light table thead tr {
+            background-color: #f4f6fa !important;
+        }
+        .admin-light .terminal-log {
+            background-color: #101828 !important;
+            color: #d0d5dd !important;
+        }
+        .admin-light #log-terminal,
+        .admin-light #log-terminal .text-gray-300 {
+            color: #d0d5dd !important;
+        }
+        .admin-light #log-terminal .text-gray-500,
+        .admin-light #log-terminal .text-gray-600 {
+            color: #98a2b3 !important;
+        }
+        .admin-light #log-terminal .text-blue-400 {
+            color: #93c5fd !important;
+        }
+        .admin-light #log-terminal .text-emerald-400 {
+            color: #6ee7b7 !important;
+        }
+        .admin-light #log-terminal .text-rose-400 {
+            color: #fda4af !important;
+        }
+        .admin-light .custom-scrollbar::-webkit-scrollbar-track {
+            background: #eef2f7;
+        }
+        .admin-light .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c7cedb;
+        }
+        .admin-light #toast {
+            background: #ffffff !important;
+            color: #1a1b1f !important;
+            border-color: #dfe3ea !important;
+        }
+    </style>
+</head>
+<body class="admin-light text-gray-100 min-h-screen flex flex-col antialiased">
+    <!-- Header -->
+    <header class="border-b border-gray-800 bg-[#12131A]/90 backdrop-blur sticky top-0 z-40 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <span class="material-symbols-outlined text-blue-500 text-3xl">query_stats</span>
+                <h1 class="text-xl font-bold tracking-tight">PolitiMarket <span class="text-blue-500 font-medium text-sm border border-blue-500/30 px-2 py-0.5 rounded-full ml-1 bg-blue-500/10">Crawler Admin</span></h1>
+            </div>
+            <!-- Global Status -->
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <span class="relative flex h-3 w-3">
+                        <span id="status-pulse" class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 bg-red-500"></span>
+                        <span id="status-dot" class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                    </span>
+                    <span id="status-text" class="text-sm font-semibold text-gray-400">오프라인</span>
+                </div>
+                <!-- Page Navigation Box -->
+                <div class="flex items-center bg-gray-900 border border-gray-700 rounded-xl p-1 gap-1">
+                    <a href="/" class="flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 text-white rounded-lg text-xs font-bold transition-all shadow-md shadow-blue-900/30">
+                        <span class="material-symbols-outlined text-sm" style="font-size:14px">settings</span> 관리
+                    </a>
+                    <a href="/code.html" class="flex items-center gap-1.5 px-3 py-1.5 text-gray-400 hover:bg-gray-800 hover:text-gray-200 rounded-lg text-xs font-semibold transition-all">
+                        <span class="material-symbols-outlined text-sm" style="font-size:14px">dashboard</span> 대시보드
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl w-full mx-auto p-6 flex flex-col gap-6">
+        <!-- Top Section: Status and Accounts -->
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            
+            <!-- Left Column: Controller -->
+            <div class="bg-[#12131A] rounded-2xl border border-gray-800 p-6 flex flex-col justify-between h-full min-h-[280px]">
+                <div>
+                    <h2 class="text-base font-bold mb-4 text-gray-300 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-blue-400">terminal</span> 스케줄러 컨트롤
+                    </h2>
+                    <p class="text-xs text-gray-500 mb-6 leading-relaxed">
+                        실시간 크롤링 루프 프로세스를 제어합니다. 상태는 1초마다 갱신하고, 뉴스 수집은 기본 6분 이내에서 20% 지터로 랜덤 실행됩니다. 시장지표 상태는 15초 기준으로 갱신합니다.
+                    </p>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <div id="scheduler-pid-info" class="text-xs text-gray-400 mb-1">
+                        프로세스 정보: <span class="text-gray-500">미작동</span>
+                    </div>
+                    <div id="scheduler-crawl-timer" class="text-xs text-gray-500 mb-1">
+                        다음 뉴스 수집: <span class="text-gray-500">루프 대기</span>
+                    </div>
+                    <div id="scheduler-platform-timers" class="grid grid-cols-2 gap-x-3 gap-y-1 text-[11px] text-gray-500 mb-1"></div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button id="btn-start" onclick="controlScheduler('start')" class="flex items-center justify-center gap-2 py-3 bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white rounded-xl text-sm font-bold transition-all disabled:opacity-50 shadow-lg shadow-emerald-950/20">
+                            <span class="material-symbols-outlined">play_arrow</span> 루프 시작
+                        </button>
+                        <button id="btn-stop" onclick="controlScheduler('stop')" class="flex items-center justify-center gap-2 py-3 bg-rose-600 hover:bg-rose-500 active:bg-rose-700 text-white rounded-xl text-sm font-bold transition-all disabled:opacity-50 shadow-lg shadow-rose-950/20">
+                            <span class="material-symbols-outlined">stop</span> 루프 정지
+                        </button>
+                    </div>
+                    <button id="btn-force-run" onclick="controlScheduler('force')" class="flex items-center justify-center gap-2 py-2.5 border border-gray-800 hover:bg-gray-850 hover:border-gray-700 text-gray-300 rounded-xl text-xs font-semibold transition-all">
+                        <span class="material-symbols-outlined text-sm">autorenew</span> 즉시 수집 (1회 강제 실행)
+                    </button>
+                    <div class="grid grid-cols-[1fr_auto] gap-2">
+                        <input id="global-backfill-days" type="number" min="1" value="7" class="bg-[#0B0C10] border border-gray-800 rounded-xl px-3 py-2.5 text-xs text-gray-200 focus:outline-none focus:border-cyan-600" placeholder="백필 일수">
+                        <button id="btn-global-backfill" onclick="runAllBackfill()" class="flex items-center justify-center gap-1.5 px-3 py-2.5 border border-cyan-900/60 hover:bg-cyan-950/30 hover:border-cyan-700 text-cyan-300 rounded-xl text-xs font-semibold transition-all whitespace-nowrap">
+                            <span class="material-symbols-outlined text-sm">history</span> 전체 백필
+                        </button>
+                    </div>
+                    <button id="btn-reset-crawl-data" onclick="resetCrawlData()" class="flex items-center justify-center gap-2 py-2.5 border border-rose-900/60 hover:bg-rose-950/30 hover:border-rose-700 text-rose-300 rounded-xl text-xs font-semibold transition-all">
+                        <span class="material-symbols-outlined text-sm">delete_sweep</span> 수집 데이터 초기화
+                    </button>
+                </div>
+            </div>
+
+            <!-- Middle Column: X Account Slots -->
+            <div class="bg-[#12131A] rounded-2xl border border-gray-800 p-6 flex flex-col h-full">
+                <h2 class="text-base font-bold mb-4 text-gray-300 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-blue-400">alternate_email</span> X 공식 API 수집
+                </h2>
+                <div class="bg-[#181921] border border-blue-900/30 rounded-xl p-3 mb-4">
+                    <div class="flex justify-between items-center text-xs mb-2">
+                        <span class="text-gray-400">Bearer Token</span>
+                        <span id="x-api-token-mask" class="font-mono text-blue-300">미설정</span>
+                    </div>
+                    <input id="x-api-bearer" type="password" placeholder="X API Bearer Token 입력" class="mb-2 w-full bg-[#0B0C10] border border-gray-800 rounded-lg px-3 py-2 text-xs text-gray-200 focus:outline-none focus:border-blue-600">
+                    <label class="text-[10px] text-gray-500 font-bold">대상 계정(@ 없이, 줄바꿈/쉼표 구분)</label>
+                    <textarea id="x-api-accounts" rows="2" class="mt-1 mb-2 w-full bg-[#0B0C10] border border-gray-800 rounded-lg px-3 py-2 text-xs text-gray-200 focus:outline-none focus:border-blue-600 resize-none" placeholder="realDonaldTrump"></textarea>
+                    <label class="text-[10px] text-gray-500 font-bold">추가 검색식(optional, X search query)</label>
+                    <textarea id="x-api-queries" rows="2" class="mt-1 mb-2 w-full bg-[#0B0C10] border border-gray-800 rounded-lg px-3 py-2 text-xs text-gray-200 focus:outline-none focus:border-blue-600 resize-none" placeholder="from:OpenAI -is:retweet"></textarea>
+                    <div class="grid grid-cols-2 gap-2 mb-2">
+                        <div>
+                            <label class="text-[10px] text-gray-500 font-bold">루프 조회일</label>
+                            <input id="x-api-recent-days" type="number" min="1" max="7" value="1" class="mt-1 w-full bg-[#0B0C10] border border-gray-800 rounded-lg px-3 py-2 text-xs text-gray-200 focus:outline-none focus:border-blue-600">
+                        </div>
+                        <div>
+                            <label class="text-[10px] text-gray-500 font-bold">백필 조회일</label>
+                            <input id="x-api-backfill-days" type="number" min="1" value="7" class="mt-1 w-full bg-[#0B0C10] border border-gray-800 rounded-lg px-3 py-2 text-xs text-gray-200 focus:outline-none focus:border-blue-600">
+                        </div>
+                    </div>
+                    <label class="flex items-center gap-2 text-[11px] text-gray-400 mb-3">
+                        <input id="x-api-full-archive" type="checkbox" class="accent-blue-600">
+                        7일 초과 백필에 full-archive endpoint 사용
+                    </label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button onclick="saveXApiConfig()" class="flex items-center justify-center gap-1 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-[11px] font-bold transition-all">
+                            <span class="material-symbols-outlined text-sm">save</span> 저장
+                        </button>
+                        <button onclick="testXApiConfig()" class="flex items-center justify-center gap-1 py-2 bg-emerald-950/30 hover:bg-emerald-900/40 border border-emerald-800/50 text-emerald-300 rounded-lg text-[11px] font-bold transition-all">
+                            <span class="material-symbols-outlined text-sm">verified</span> 테스트
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Truth Social Accounts -->
+            <div class="bg-[#12131A] rounded-2xl border border-gray-800 p-6 flex flex-col h-full">
+                <h2 class="text-base font-bold mb-4 text-gray-300 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-blue-400">forum</span> Truth Social 연동 토큰
+                </h2>
+                <div class="flex-grow flex flex-col justify-between">
+                    <div>
+                        <div class="text-xs text-gray-400 mb-3 flex justify-between items-center">
+                            <span>등록된 API 인증 토큰:</span>
+                            <span class="text-blue-400 font-bold" id="truth-tokens-count">0개</span>
+                        </div>
+                        <div class="max-h-28 overflow-y-auto custom-scrollbar flex flex-col gap-2 mb-4" id="truth-tokens-list">
+                            <!-- Token slots populated by script -->
+                            <div class="text-xs text-gray-500 italic p-3 text-center bg-[#181921]/50 border border-gray-800/50 rounded-xl">
+                                등록된 토큰이 없습니다. 수동 입력 또는 자동 로그인을 진행해 주세요.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 mt-auto">
+                        <button onclick="openLoginModal('truth_auto')" class="flex items-center justify-center gap-1.5 py-2.5 bg-gray-800 hover:bg-gray-755 border border-gray-700 text-gray-200 rounded-xl text-xs font-semibold transition-all">
+                            <span class="material-symbols-outlined text-sm">login</span> 자동 로그인
+                        </button>
+                        <button onclick="openLoginModal('truth_manual')" class="flex items-center justify-center gap-1.5 py-2.5 bg-blue-950/20 hover:bg-blue-900/30 border border-blue-800/40 text-blue-400 rounded-xl text-xs font-semibold transition-all">
+                            <span class="material-symbols-outlined text-sm">key</span> 수동 토큰 입력
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LLM Reasoning Model Card -->
+            <div class="bg-[#12131A] rounded-2xl border border-gray-800 p-6 flex flex-col h-full">
+                <h2 class="text-base font-bold mb-4 text-gray-300 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-blue-400">auto_awesome</span> LLM Reasoning
+                </h2>
+                <div class="flex-grow flex flex-col justify-between gap-4">
+                    <div class="space-y-3">
+                        <div class="bg-[#181921] border border-gray-800/80 rounded-xl p-3">
+                            <div class="flex justify-between items-center text-xs">
+                                <span class="text-gray-400">모델</span>
+                                <span class="font-mono text-blue-300" id="won-model">gpt-5.5</span>
+                            </div>
+                            <div class="flex justify-between items-center text-xs mt-2">
+                                <span class="text-gray-400">상태</span>
+                                <span class="font-bold text-gray-500" id="won-status">미연동</span>
+                            </div>
+                            <div class="text-[10px] text-gray-500 mt-2 font-mono truncate" id="won-key-mask">OpenAI API 키 미설정</div>
+                            <div class="mt-3 rounded-lg border border-gray-800 bg-[#0B0C10] px-3 py-2 text-[10px] text-gray-500 leading-relaxed" id="won-usage-summary">
+                                LLM 호출 없음
+                            </div>
+                        </div>
+                        <div>
+                            <label class="text-[11px] text-gray-400 font-bold">Model</label>
+                            <select id="won-model-select" class="mt-1 mb-3 w-full bg-[#0B0C10] border border-gray-800 rounded-xl px-3 py-2 text-xs text-gray-200 focus:outline-none focus:border-blue-600">
+                                <option value="gpt-5.5">gpt-5.5 / reasoning medium</option>
+                            </select>
+                            <label class="text-[11px] text-gray-400 font-bold">OpenAI API Key</label>
+                            <input id="won-api-key" type="password" placeholder="sk-... 또는 OPENAI_API_KEY 환경변수 사용" class="mt-1 mb-3 w-full bg-[#0B0C10] border border-gray-800 rounded-xl px-3 py-2 text-xs text-gray-200 focus:outline-none focus:border-blue-600">
+                            <input id="won-api-url" type="hidden" value="https://api.openai.com/v1/responses">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2">
+                        <button onclick="saveWonConfig()" class="flex items-center justify-center gap-1 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition-all">
+                            <span class="material-symbols-outlined text-sm">save</span> 저장
+                        </button>
+                        <button onclick="testWonConfig()" class="flex items-center justify-center gap-1 py-2.5 bg-emerald-950/30 hover:bg-emerald-900/40 border border-emerald-800/50 text-emerald-300 rounded-xl text-xs font-bold transition-all">
+                            <span class="material-symbols-outlined text-sm">verified</span> 테스트
+                        </button>
+                        <button onclick="deleteWonConfig()" class="flex items-center justify-center gap-1 py-2.5 bg-gray-900 hover:bg-gray-850 border border-gray-700 text-gray-400 rounded-xl text-xs font-bold transition-all">
+                            <span class="material-symbols-outlined text-sm">delete</span> 삭제
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- NLP Tagging Progress -->
+        <div class="bg-[#12131A] rounded-2xl border border-gray-800 p-6 flex flex-col">
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+                <h2 class="text-base font-bold text-gray-300 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-violet-400">local_offer</span>
+                    크롤링 태깅 진행도
+                </h2>
+                <div class="flex flex-wrap items-center gap-2">
+                    <span id="tp-generated-at" class="text-[11px] text-gray-500 font-mono"></span>
+                    <button id="btn-reset-tagging-work" onclick="resetTaggingWork()" class="flex items-center justify-center gap-1.5 px-3 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition-all disabled:opacity-50">
+                        <span class="material-symbols-outlined text-sm">restart_alt</span>
+                        태깅 초기화 및 다시 작업
+                    </button>
+                </div>
+            </div>
+            <div class="flex flex-wrap gap-3 mb-5" id="tp-chips">
+                <span class="text-xs text-gray-600 italic">분석 결과를 불러오는 중...</span>
+            </div>
+            <div class="relative h-4 w-full rounded-full overflow-hidden bg-[#0B0C10] border border-gray-800 flex" id="tp-bar"></div>
+            <div class="flex flex-wrap gap-x-5 gap-y-2 mt-4" id="tp-legend"></div>
+        </div>
+
+        <!-- Tagging Audit -->
+        <div class="bg-[#12131A] rounded-2xl border border-gray-800 p-6 flex flex-col">
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+                <h2 class="text-base font-bold text-gray-300 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-blue-400">fact_check</span>
+                    태깅 결과 감사
+                </h2>
+                <button onclick="fetchTaggingAudit()" class="px-2.5 py-1 text-[11px] border border-gray-800 hover:bg-gray-800 text-gray-400 rounded-md transition-colors flex items-center gap-1">
+                    <span class="material-symbols-outlined text-xs">refresh</span> 새로고침
+                </button>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4" id="tag-audit-summary">
+                <div class="text-xs text-gray-600 italic col-span-full">태깅 결과를 불러오는 중...</div>
+            </div>
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 mb-4">
+                <div class="flex flex-wrap gap-2" id="tag-audit-status-tabs">
+                    <button onclick="setTagAuditStatus('all')" data-status="all" class="tag-audit-status px-3 py-1.5 rounded-lg border text-[11px] font-bold transition-all">전체</button>
+                    <button onclick="setTagAuditStatus('tagged')" data-status="tagged" class="tag-audit-status px-3 py-1.5 rounded-lg border text-[11px] font-bold transition-all">태깅완료</button>
+                    <button onclick="setTagAuditStatus('excluded')" data-status="excluded" class="tag-audit-status px-3 py-1.5 rounded-lg border text-[11px] font-bold transition-all">제외</button>
+                    <button onclick="setTagAuditStatus('pending')" data-status="pending" class="tag-audit-status px-3 py-1.5 rounded-lg border text-[11px] font-bold transition-all">대기</button>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 w-full lg:w-auto">
+                    <select id="tag-audit-tag-filter" onchange="setTagAuditTag(this.value)" class="bg-[#0B0C10] border border-gray-800 rounded-xl px-3 py-2 text-xs text-gray-200 focus:outline-none focus:border-blue-600 min-w-[160px]">
+                        <option value="all">모든 태그</option>
+                    </select>
+                    <div class="flex gap-2">
+                        <input id="tag-audit-search" type="text" onkeydown="handleTagAuditSearchKey(event)" placeholder="제목, 본문, 소스 검색" class="bg-[#0B0C10] border border-gray-800 rounded-xl px-3 py-2 text-xs text-gray-200 focus:outline-none focus:border-blue-600 w-full sm:w-56">
+                        <button onclick="applyTagAuditSearch()" class="px-3 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1">
+                            <span class="material-symbols-outlined text-sm">search</span>
+                            검색
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-wrap gap-2 mb-4" id="tag-audit-reason-pills"></div>
+            <div class="overflow-x-auto custom-scrollbar border border-gray-850 rounded-xl">
+                <table class="w-full text-left text-xs border-collapse">
+                    <thead>
+                        <tr class="bg-[#181921] border-b border-gray-800 text-gray-400 uppercase tracking-wider">
+                            <th class="p-3 font-semibold min-w-[260px]">항목</th>
+                            <th class="p-3 font-semibold min-w-[160px]">상태</th>
+                            <th class="p-3 font-semibold min-w-[190px]">태그</th>
+                            <th class="p-3 font-semibold min-w-[130px]">감성</th>
+                            <th class="p-3 font-semibold min-w-[220px]">제외 사유</th>
+                            <th class="p-3 font-semibold text-right min-w-[90px]">본문</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tag-audit-table">
+                        <tr><td colspan="6" class="p-6 text-center text-gray-600 italic">태깅 결과를 불러오는 중...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Dedup Audit -->
+        <div class="bg-[#12131A] rounded-2xl border border-gray-800 p-6 flex flex-col">
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+                <h2 class="text-base font-bold text-gray-300 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-emerald-400">hub</span>
+                    중복 후보 감사
+                </h2>
+                <button onclick="fetchDedupAudit()" class="px-2.5 py-1 text-[11px] border border-gray-800 hover:bg-gray-800 text-gray-400 rounded-md transition-colors flex items-center gap-1">
+                    <span class="material-symbols-outlined text-xs">refresh</span> 새로고침
+                </button>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-4" id="dedup-audit-summary">
+                <div class="text-xs text-gray-600 italic col-span-full">중복 후보를 불러오는 중...</div>
+            </div>
+            <div class="overflow-x-auto custom-scrollbar border border-gray-850 rounded-xl">
+                <table class="w-full text-left text-xs border-collapse">
+                    <thead>
+                        <tr class="bg-[#181921] border-b border-gray-800 text-gray-400 uppercase tracking-wider">
+                            <th class="p-3 font-semibold min-w-[310px]">후보쌍</th>
+                            <th class="p-3 font-semibold min-w-[160px]">GPT 감사</th>
+                            <th class="p-3 font-semibold min-w-[220px]">점수</th>
+                            <th class="p-3 font-semibold min-w-[240px]">사유</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dedup-audit-table">
+                        <tr><td colspan="4" class="p-6 text-center text-gray-600 italic">중복 후보를 불러오는 중...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Test Dataset Upload -->
+        <div class="bg-[#12131A] rounded-2xl border border-gray-800 p-6 flex flex-col">
+            <div class="flex flex-wrap items-start justify-between gap-3 mb-4">
+                <div>
+                    <h2 class="text-base font-bold text-gray-300 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-cyan-400">science</span>
+                        테스트 데이터셋
+                        <span id="test-mode-admin-status" class="text-[11px] font-semibold px-2 py-1 rounded-full bg-gray-900 text-gray-500 border border-gray-800">확인 중</span>
+                    </h2>
+                    <div class="text-[11px] text-gray-500 mt-1">
+                        <span id="test-dataset-dir">Test_dataset</span> 폴더의 가짜 뉴스/X/Truth Social JSON을 업로드하면 해당 데이터만 태깅하고 AI요약을 다시 생성합니다.
+                    </div>
+                </div>
+                <button onclick="disableTestDatasetMode()" class="px-3 py-2 bg-gray-900 hover:bg-gray-850 border border-gray-700 text-gray-300 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-sm">power_settings_new</span>
+                    실데이터 복구
+                </button>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-3 items-center">
+                <label class="flex flex-col gap-2 border border-dashed border-gray-700 rounded-2xl bg-[#0B0C10] p-4 cursor-pointer hover:border-cyan-700/70 transition-all">
+                    <span class="text-xs font-bold text-gray-300 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-sm">attach_file</span>
+                        테스트 JSON 첨부
+                    </span>
+                    <input type="file" id="test-dataset-file" accept=".json,application/json" class="text-xs text-gray-400 file:mr-3 file:px-3 file:py-1.5 file:rounded-lg file:border-0 file:bg-cyan-950/40 file:text-cyan-300 file:font-bold">
+                    <span class="text-[11px] text-gray-600">예: panic_dataset.json, warning_dataset.json, neutral_dataset.json, positive_dataset.json, overheated_dataset.json</span>
+                </label>
+                <button id="btn-upload-test-dataset" onclick="uploadTestDataset()" class="h-full min-h-[76px] px-5 bg-cyan-600 hover:bg-cyan-500 text-white rounded-2xl text-xs font-bold transition-all flex items-center justify-center gap-1.5">
+                    <span class="material-symbols-outlined text-sm">play_arrow</span>
+                    업로드 후 태깅/요약 시작
+                </button>
+            </div>
+            <div class="mt-4">
+                <div class="text-[11px] font-bold text-gray-400 mb-2">Test_dataset 폴더 예시 파일</div>
+                <div id="test-dataset-file-list" class="flex flex-wrap gap-2">
+                    <span class="text-xs text-gray-600 italic">파일 목록을 불러오는 중...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Middle Section: Live Log Console -->
+        <div class="bg-[#12131A] rounded-2xl border border-gray-800 p-6 flex flex-col h-[320px]">
+            <div class="flex justify-between items-center mb-3">
+                <h2 class="text-base font-bold text-gray-300 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-emerald-400">receipt_long</span> 스케줄러 실시간 실행 로그
+                </h2>
+                <div class="flex gap-2">
+                    <label class="flex items-center gap-1.5 text-xs text-gray-400 cursor-pointer">
+                        <input type="checkbox" id="auto-scroll-log" checked class="form-checkbox bg-gray-850 border-gray-700 rounded text-blue-500 focus:ring-0 focus:ring-offset-0">
+                        자동 스크롤
+                    </label>
+                    <button onclick="clearLogTerminal()" class="px-2.5 py-1 text-[11px] border border-gray-800 hover:bg-gray-800 text-gray-400 rounded-md transition-colors">
+                        화면 지우기
+                    </button>
+                </div>
+            </div>
+            <div id="log-terminal" class="flex-grow rounded-xl p-4 overflow-y-auto custom-scrollbar terminal-log font-mono border border-gray-850">
+                <!-- Log content streams here -->
+                <div class="text-gray-600">[시스템] 대시보드 로그 리스너 연결 중...</div>
+            </div>
+        </div>
+
+        <!-- Bottom Section: Data Viewer Tabs -->
+        <div class="bg-[#12131A] rounded-2xl border border-gray-800 p-6 flex flex-col">
+            <!-- Crawl Stats Header -->
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-base font-bold text-gray-300 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-violet-400">bar_chart</span>
+                    소스별 수집 현황
+                    <span class="text-xs text-gray-500 font-normal" id="crawl-stats-total"></span>
+                </h2>
+                <button onclick="fetchCrawlStats()" class="px-2.5 py-1 text-[11px] border border-gray-800 hover:bg-gray-800 text-gray-400 rounded-md transition-colors flex items-center gap-1">
+                    <span class="material-symbols-outlined text-xs">refresh</span> 새로고침
+                </button>
+            </div>
+            <!-- Category summary pills -->
+            <div class="flex flex-wrap gap-2 mb-4" id="crawl-cat-pills">
+                <span class="text-xs text-gray-600 italic">로딩 중...</span>
+            </div>
+            <!-- Per-source table -->
+            <div class="overflow-x-auto custom-scrollbar border border-gray-850 rounded-xl">
+                <table class="w-full text-left text-xs border-collapse">
+                    <thead>
+                        <tr class="bg-[#181921] border-b border-gray-800 text-gray-400 uppercase tracking-wider">
+                            <th class="p-3 font-semibold">소스 (Source)</th>
+                            <th class="p-3 font-semibold">카테고리</th>
+                            <th class="p-3 font-semibold text-right">수집 수</th>
+                            <th class="p-3 font-semibold">최신 수집</th>
+                        </tr>
+                    </thead>
+                    <tbody id="crawl-stats-table">
+                        <tr><td colspan="4" class="p-6 text-center text-gray-600 italic">데이터를 불러오는 중...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Data Viewer Tabs -->
+        <div class="bg-[#12131A] rounded-2xl border border-gray-800 p-6 flex flex-col min-h-[400px]">
+            <div class="mb-5 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
+                <div>
+                    <div class="text-xs font-bold text-gray-200">수집 제어</div>
+                    <div class="text-[11px] text-gray-500 mt-0.5">꺼둔 항목은 다음 루프부터 수집하지 않습니다.</div>
+                </div>
+                <div class="flex flex-wrap gap-2" id="collector-toggle-row">
+                    <button id="collector-toggle-x" onclick="setCollectorEnabled('x')" class="collector-toggle px-3 py-1.5 rounded-lg border text-[11px] font-bold transition-all">X</button>
+                    <button id="collector-toggle-truth" onclick="setCollectorEnabled('truth')" class="collector-toggle px-3 py-1.5 rounded-lg border text-[11px] font-bold transition-all">Truth</button>
+                    <button id="collector-toggle-gov" onclick="setCollectorEnabled('gov')" class="collector-toggle px-3 py-1.5 rounded-lg border text-[11px] font-bold transition-all">정부</button>
+                    <button id="collector-toggle-news" onclick="setCollectorEnabled('news')" class="collector-toggle px-3 py-1.5 rounded-lg border text-[11px] font-bold transition-all">뉴스</button>
+                    <button id="collector-toggle-thinktank" onclick="setCollectorEnabled('thinktank')" class="collector-toggle px-3 py-1.5 rounded-lg border text-[11px] font-bold transition-all">싱크탱크</button>
+                    <button id="collector-toggle-axios" onclick="setCollectorEnabled('axios')" class="collector-toggle px-3 py-1.5 rounded-lg border text-[11px] font-bold transition-all">Axios</button>
+                    <button id="collector-toggle-market" onclick="setCollectorEnabled('market')" class="collector-toggle px-3 py-1.5 rounded-lg border text-[11px] font-bold transition-all">Market</button>
+                    <button id="collector-toggle-russia" onclick="setCollectorEnabled('russia')" class="collector-toggle px-3 py-1.5 rounded-lg border text-[11px] font-bold transition-all">러시아</button>
+                    <button id="collector-toggle-china" onclick="setCollectorEnabled('china')" class="collector-toggle px-3 py-1.5 rounded-lg border text-[11px] font-bold transition-all">중국</button>
+                </div>
+            </div>
+            <!-- Tab Headers -->
+            <div class="border-b border-gray-800 flex justify-between items-center mb-6">
+                <div class="flex gap-6">
+                    <button onclick="switchTab('tab-news')" id="btn-tab-news" class="pb-4 font-bold text-sm text-blue-500 border-b-2 border-blue-500 transition-all">
+                        수집 소식 피드 (News Feed)
+                    </button>
+                    <button onclick="switchTab('tab-market')" id="btn-tab-market" class="pb-4 font-semibold text-sm text-gray-400 border-b-2 border-transparent hover:text-gray-200 transition-all flex items-center gap-1.5">
+                        시장 실시간 지수 (Market Indices)
+                        <span class="inline-flex items-center gap-1 text-[10px]" id="status-platform-market">
+                            <span class="w-1.5 h-1.5 rounded-full bg-gray-500"></span>
+                            <span class="text-gray-500">대기</span>
+                        </span>
+                    </button>
+                </div>
+                <div class="text-xs text-gray-500" id="data-last-refresh">
+                    마지막 동기화: -
+                </div>
+            </div>
+
+            <!-- Tab Content: News -->
+            <div id="tab-news" class="tab-content flex-grow flex flex-col">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6" id="news-grid-container">
+                    <!-- X Card -->
+                    <div class="bg-[#181921] border border-gray-800/80 rounded-2xl p-5 flex flex-col h-[340px] hover:border-blue-500/30 transition-all duration-300">
+                        <div class="flex justify-between items-center border-b border-gray-800 pb-3 mb-3">
+                            <div class="flex items-center gap-2">
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-950/40 text-blue-400 border border-blue-900/30">X (Twitter)</span>
+                                <h3 class="text-xs font-bold text-gray-200">X (Twitter) 피드</h3>
+                            </div>
+                            <!-- Status -->
+                            <div class="flex items-center gap-1.5 text-[11px]" id="status-platform-x">
+                                <span class="w-2 h-2 rounded-full bg-gray-500"></span>
+                                <span class="text-gray-500 font-semibold">대기 중</span>
+                            </div>
+                        </div>
+                        <div class="flex-grow overflow-y-auto custom-scrollbar flex flex-col gap-3 pr-1" id="feed-list-x">
+                            <div class="text-xs text-gray-500 italic p-6 text-center">수집된 소식이 없습니다.</div>
+                        </div>
+                    </div>
+
+                    <!-- Truth Social Card -->
+                    <div class="bg-[#181921] border border-gray-800/80 rounded-2xl p-5 flex flex-col h-[340px] hover:border-purple-500/30 transition-all duration-300">
+                        <div class="flex justify-between items-center border-b border-gray-800 pb-3 mb-3">
+                            <div class="flex items-center gap-2">
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-950/40 text-purple-400 border border-purple-900/30">Truth Social</span>
+                                <h3 class="text-xs font-bold text-gray-200">Truth Social 피드</h3>
+                            </div>
+                            <!-- Status -->
+                            <div class="flex items-center gap-1.5 text-[11px]" id="status-platform-truth">
+                                <span class="w-2 h-2 rounded-full bg-gray-500"></span>
+                                <span class="text-gray-500 font-semibold">대기 중</span>
+                            </div>
+                        </div>
+                        <div class="flex-grow overflow-y-auto custom-scrollbar flex flex-col gap-3 pr-1" id="feed-list-truth">
+                            <div class="text-xs text-gray-500 italic p-6 text-center">수집된 소식이 없습니다.</div>
+                        </div>
+                    </div>
+
+                    <!-- Gov Card -->
+                    <div class="bg-[#181921] border border-gray-800/80 rounded-2xl p-5 flex flex-col h-[340px] hover:border-amber-500/30 transition-all duration-300">
+                        <div class="flex justify-between items-center border-b border-gray-800 pb-3 mb-3">
+                            <div class="flex items-center gap-2">
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-950/40 text-amber-400 border border-amber-900/30">정부 기관</span>
+                                <h3 class="text-xs font-bold text-gray-200">정부 부처 및 정책브리핑</h3>
+                            </div>
+                            <!-- Status -->
+                            <div class="flex items-center gap-1.5 text-[11px]" id="status-platform-gov">
+                                <span class="w-2 h-2 rounded-full bg-gray-500"></span>
+                                <span class="text-gray-500 font-semibold">대기 중</span>
+                            </div>
+                        </div>
+                        <div class="flex-grow overflow-y-auto custom-scrollbar flex flex-col gap-3 pr-1" id="feed-list-gov">
+                            <div class="text-xs text-gray-500 italic p-6 text-center">수집된 소식이 없습니다.</div>
+                        </div>
+                    </div>
+
+                    <!-- News Card -->
+                    <div class="bg-[#181921] border border-gray-800/80 rounded-2xl p-5 flex flex-col h-[340px] hover:border-rose-500/30 transition-all duration-300">
+                        <div class="flex justify-between items-center border-b border-gray-800 pb-3 mb-3">
+                            <div class="flex items-center gap-2">
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-950/40 text-rose-400 border border-rose-900/30">뉴스 언론사</span>
+                                <h3 class="text-xs font-bold text-gray-200">주요 언론 피드 (Axios / 뉴시스)</h3>
+                            </div>
+                            <!-- Status -->
+                            <div class="flex items-center gap-1.5 text-[11px]" id="status-platform-news">
+                                <span class="w-2 h-2 rounded-full bg-gray-500"></span>
+                                <span class="text-gray-500 font-semibold">대기 중</span>
+                            </div>
+                        </div>
+                        <div class="flex-grow overflow-y-auto custom-scrollbar flex flex-col gap-3 pr-1" id="feed-list-news">
+                            <div class="text-xs text-gray-500 italic p-6 text-center">수집된 소식이 없습니다.</div>
+                        </div>
+                    </div>
+
+                    <!-- Think Tank Card -->
+                    <div class="bg-[#181921] border border-gray-800/80 rounded-2xl p-5 flex flex-col h-[340px] hover:border-violet-500/30 transition-all duration-300">
+                        <div class="flex justify-between items-center border-b border-gray-800 pb-3 mb-3">
+                            <div class="flex items-center gap-2">
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-violet-950/40 text-violet-300 border border-violet-900/30">싱크탱크</span>
+                                <h3 class="text-xs font-bold text-gray-200">CSIS / PIIE / Brookings</h3>
+                            </div>
+                            <div class="flex items-center gap-1.5 text-[11px]" id="status-platform-thinktank">
+                                <span class="w-2 h-2 rounded-full bg-gray-500"></span>
+                                <span class="text-gray-500 font-semibold">대기 중</span>
+                            </div>
+                        </div>
+                        <div class="flex-grow overflow-y-auto custom-scrollbar flex flex-col gap-3 pr-1" id="feed-list-thinktank">
+                            <div class="text-xs text-gray-500 italic p-6 text-center">수집된 소식이 없습니다.</div>
+                        </div>
+                    </div>
+
+                    <!-- Axios Card -->
+                    <div class="bg-[#181921] border border-gray-800/80 rounded-2xl p-5 flex flex-col h-[340px] hover:border-lime-500/30 transition-all duration-300">
+                        <div class="flex justify-between items-center border-b border-gray-800 pb-3 mb-3">
+                            <div class="flex items-center gap-2">
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-lime-950/40 text-lime-300 border border-lime-900/30">Axios</span>
+                                <h3 class="text-xs font-bold text-gray-200">미국 정책/경제 피드</h3>
+                            </div>
+                            <div class="flex items-center gap-1.5 text-[11px]" id="status-platform-axios">
+                                <span class="w-2 h-2 rounded-full bg-gray-500"></span>
+                                <span class="text-gray-500 font-semibold">대기 중</span>
+                            </div>
+                        </div>
+                        <div class="flex-grow overflow-y-auto custom-scrollbar flex flex-col gap-3 pr-1" id="feed-list-axios">
+                            <div class="text-xs text-gray-500 italic p-6 text-center">수집된 소식이 없습니다.</div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+                    <!-- Russia Card -->
+                    <div class="bg-[#181921] border border-gray-800/80 rounded-2xl p-5 flex flex-col h-[340px] hover:border-cyan-500/30 transition-all duration-300">
+                        <div class="flex justify-between items-center border-b border-gray-800 pb-3 mb-3">
+                            <div class="flex items-center gap-2">
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-cyan-950/40 text-cyan-300 border border-cyan-900/30">러시아 정부</span>
+                                <h3 class="text-xs font-bold text-gray-200">Kremlin 공식 피드</h3>
+                            </div>
+                            <div class="flex items-center gap-1.5 text-[11px]" id="status-platform-russia">
+                                <span class="w-2 h-2 rounded-full bg-gray-500"></span>
+                                <span class="text-gray-500 font-semibold">대기 중</span>
+                            </div>
+                        </div>
+                        <div class="flex-grow overflow-y-auto custom-scrollbar flex flex-col gap-3 pr-1" id="feed-list-russia">
+                            <div class="text-xs text-gray-500 italic p-6 text-center">수집된 소식이 없습니다.</div>
+                        </div>
+                    </div>
+
+                    <!-- China Card -->
+                    <div class="bg-[#181921] border border-gray-800/80 rounded-2xl p-5 flex flex-col h-[340px] hover:border-red-500/30 transition-all duration-300">
+                        <div class="flex justify-between items-center border-b border-gray-800 pb-3 mb-3">
+                            <div class="flex items-center gap-2">
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-red-950/40 text-red-300 border border-red-900/30">중국 언론</span>
+                                <h3 class="text-xs font-bold text-gray-200">인민망 한국어판 피드</h3>
+                            </div>
+                            <div class="flex items-center gap-1.5 text-[11px]" id="status-platform-china">
+                                <span class="w-2 h-2 rounded-full bg-gray-500"></span>
+                                <span class="text-gray-500 font-semibold">대기 중</span>
+                            </div>
+                        </div>
+                        <div class="flex-grow overflow-y-auto custom-scrollbar flex flex-col gap-3 pr-1" id="feed-list-china">
+                            <div class="text-xs text-gray-500 italic p-6 text-center">수집된 소식이 없습니다.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Content: Market Indices -->
+            <div id="tab-market" class="tab-content flex-grow flex flex-col hidden">
+                <div id="market-chart" class="border border-gray-850 rounded-xl bg-[#101116] p-4 mb-4 min-h-[220px]"></div>
+                <div class="overflow-x-auto custom-scrollbar border border-gray-850 rounded-xl">
+                    <table class="w-full text-left text-xs border-collapse">
+                        <thead>
+                            <tr class="bg-[#181921] border-b border-gray-800 text-gray-400 uppercase tracking-wider">
+                                <th class="p-3 font-semibold">지수명</th>
+                                <th class="p-3 font-semibold">실시간 현재가</th>
+                                <th class="p-3 font-semibold">전일 대비 변동폭</th>
+                                <th class="p-3 font-semibold">분봉 수집 개수</th>
+                                <th class="p-3 font-semibold">일봉 수집 개수</th>
+                            </tr>
+                        </thead>
+                        <tbody id="market-table-body">
+                            <!-- Populated dynamically -->
+                            <tr>
+                                <td colspan="5" class="p-8 text-center text-gray-500 italic">지수를 로딩 중입니다...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-850 py-6 bg-[#0B0C10] text-center text-xs text-gray-600">
+        PolitiMarket Crawler Administration Console • @Dong-Eui University 2026 NLP
+    </footer>
+
+    <!-- Login Modal (X & Truth Social) -->
+    <div id="login-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-200">
+        <div class="bg-[#12131A] border border-gray-800 rounded-2xl w-full max-w-md p-6 shadow-xl transform scale-95 transition-all duration-200" id="modal-container">
+            <div class="flex justify-between items-center mb-5 border-b border-gray-850 pb-3">
+                <h3 id="modal-title" class="text-base font-bold text-gray-100 flex items-center gap-2">로그인</h3>
+                <button onclick="closeLoginModal()" class="text-gray-400 hover:text-gray-200 transition-colors">
+                    <span class="material-symbols-outlined text-lg">close</span>
+                </button>
+            </div>
+            
+            <form id="login-form" onsubmit="handleFormSubmit(event)" class="flex flex-col gap-4">
+                <input type="hidden" id="login-type">
+                <input type="hidden" id="login-slot">
+                
+                <!-- Fields for username/email/password -->
+                <div id="fields-credentials">
+                    <div class="flex flex-col gap-1.5 mb-3">
+                        <label class="text-xs text-gray-400 font-bold" id="label-username">아이디 (Username)</label>
+                        <input type="text" id="input-username" class="w-full bg-[#181921] border border-gray-800 focus:border-blue-500 rounded-lg px-3 py-2 text-sm text-gray-100 placeholder-gray-600 outline-none transition-colors" placeholder="아이디 입력">
+                    </div>
+                    <div class="flex flex-col gap-1.5 mb-3" id="field-email-container">
+                        <label class="text-xs text-gray-400 font-bold">이메일 주소 (Email)</label>
+                        <input type="email" id="input-email" class="w-full bg-[#181921] border border-gray-800 focus:border-blue-500 rounded-lg px-3 py-2 text-sm text-gray-100 placeholder-gray-600 outline-none transition-colors" placeholder="계정 연동된 이메일 입력">
+                    </div>
+                    <div class="flex flex-col gap-1.5">
+                        <label class="text-xs text-gray-400 font-bold">비밀번호 (Password)</label>
+                        <input type="password" id="input-password" class="w-full bg-[#181921] border border-gray-800 focus:border-blue-500 rounded-lg px-3 py-2 text-sm text-gray-100 placeholder-gray-600 outline-none transition-colors" placeholder="비밀번호 입력">
+                    </div>
+                </div>
+
+                <!-- Fields for manual token paste -->
+                <div id="fields-token" class="hidden">
+                    <div class="flex flex-col gap-1.5">
+                        <label class="text-xs text-gray-400 font-bold">액세스 토큰 (Access Token)</label>
+                        <textarea id="input-token" rows="4" class="w-full bg-[#181921] border border-gray-800 focus:border-blue-500 rounded-lg px-3 py-2 text-xs text-gray-100 placeholder-gray-600 outline-none transition-colors font-mono resize-none" placeholder="Long access token string..."></textarea>
+                        <span class="text-[10px] text-gray-500 leading-relaxed mt-1">
+                            트루스 소셜에 웹 브라우저로 로그인한 다음 개발자 도구(F12)의 Network 탭에서 API 요청 헤더의 'Authorization: Bearer [토큰값]'에서 토큰 부분만 복사하여 붙여넣으십시오.
+                        </span>
+                    </div>
+                </div>
+
+                <div class="mt-4 flex justify-end gap-3 border-t border-gray-850 pt-4">
+                    <button type="button" onclick="closeLoginModal()" class="px-4 py-2 bg-gray-800 hover:bg-gray-750 text-gray-300 rounded-xl text-xs font-semibold transition-colors">취소</button>
+                    <button type="submit" id="btn-modal-submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition-colors">확인</button>
+                </div>
+            </form>
+            
+            <!-- Loading Indicator -->
+            <div id="modal-loading" class="hidden absolute inset-0 bg-[#12131A]/85 backdrop-blur-sm rounded-2xl flex flex-col items-center justify-center gap-3">
+                <div class="w-8 h-8 rounded-full border-2 border-blue-500/20 border-t-blue-500 animate-spin"></div>
+                <div class="text-xs text-gray-400" id="loading-text">로그인 처리 중... (X 로그인은 약 10~20초 소요될 수 있습니다)</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Detail Modal -->
+    <div id="error-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-[60] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-200">
+        <div id="error-modal-container" class="bg-[#12131A] border border-rose-900/60 rounded-2xl w-full max-w-3xl p-6 shadow-xl transform scale-95 transition-all duration-200">
+            <div class="flex justify-between items-center mb-4 border-b border-gray-850 pb-3">
+                <h3 id="error-modal-title" class="text-base font-bold text-rose-300 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-lg">error</span>
+                    오류 상세
+                </h3>
+                <button onclick="closeErrorModal()" class="text-gray-400 hover:text-gray-200 transition-colors">
+                    <span class="material-symbols-outlined text-lg">close</span>
+                </button>
+            </div>
+            <textarea id="error-modal-message" readonly class="w-full h-[52vh] bg-[#0B0C10] border border-gray-800 rounded-xl p-3 text-xs text-gray-200 font-mono leading-relaxed resize-none outline-none custom-scrollbar whitespace-pre-wrap"></textarea>
+            <div class="mt-4 flex justify-end gap-3">
+                <button type="button" onclick="copyErrorModalText()" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition-colors flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-sm">content_copy</span>
+                    전체 복사
+                </button>
+                <button type="button" onclick="closeErrorModal()" class="px-4 py-2 bg-gray-800 hover:bg-gray-750 text-gray-300 rounded-xl text-xs font-semibold transition-colors">닫기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-6 right-6 px-4 py-3 bg-gray-850 border border-gray-800 text-sm rounded-xl text-gray-100 shadow-xl transition-all duration-300 translate-y-12 opacity-0 z-50 flex items-center gap-2">
+        <span class="material-symbols-outlined" id="toast-icon">info</span>
+        <span id="toast-message">알림 메시지</span>
+    </div>
+
+    <script>
+        let logStreamInterval = null;
+        let lastLogLine = 0;
+        let logInitialized = false;
+        let activeTab = 'tab-news';
+        let fetchedNews = [];
+        let tagAuditState = { status: 'all', tag: 'all', q: '', limit: 120, offset: 0 };
+        let tagAuditInFlight = false;
+
+        // Load dashboard status on startup
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchStatus();
+            fetchData();
+            fetchCrawlStats();
+            fetchTaggingProgress();
+            fetchTaggingAudit();
+            fetchDedupAudit();
+            fetchTestDatasetStatus();
+            
+            // Refresh scheduler countdown and platform statuses every second.
+            setInterval(fetchStatus, 1000);
+
+            // Refresh heavier datasets on a slightly slower cadence.
+            setInterval(() => {
+                fetchData();
+                fetchTaggingProgress();
+                fetchTestDatasetStatus();
+            }, 4000);
+
+            // Refresh crawl stats every 30 seconds
+            setInterval(fetchCrawlStats, 30000);
+            setInterval(fetchTaggingAudit, 12000);
+            setInterval(fetchDedupAudit, 20000);
+
+            // Fetch logs every 2 seconds
+            startLogPolling();
+        });
+
+        // ── Crawl Stats ──────────────────────────────────────────────────────
+        const CAT_COLORS = {
+            'X (Twitter)':    { pill: 'bg-blue-950/40 border-blue-800/40 text-blue-300', row: 'text-blue-400' },
+            'Truth Social':   { pill: 'bg-purple-950/40 border-purple-800/40 text-purple-300', row: 'text-purple-400' },
+            '정부/공공':       { pill: 'bg-amber-950/40 border-amber-800/40 text-amber-300', row: 'text-amber-400' },
+            '뉴스':            { pill: 'bg-rose-950/40 border-rose-800/40 text-rose-300', row: 'text-rose-400' },
+            '시장지표':        { pill: 'bg-emerald-950/40 border-emerald-800/40 text-emerald-300', row: 'text-emerald-400' },
+            '기타':            { pill: 'bg-gray-900 border-gray-700 text-gray-400', row: 'text-gray-400' },
+        };
+
+        const TAG_CATEGORY_COLORS = {
+            IT: '#4f8cff',
+            Energy: '#f59e0b',
+            Finance: '#22c55e',
+            Healthcare: '#ef4444',
+            Commodities: '#a16207',
+            Defense: '#94a3b8',
+            Chemicals: '#8b5cf6',
+            Shipbuilding: '#06b6d4'
+        };
+
+        function formatProgressTime(value) {
+            if (!value) return '';
+            const date = new Date(value);
+            if (isNaN(date.getTime())) return '';
+            return `업데이트 ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+        }
+
+        function formatDuration(seconds) {
+            const total = Math.max(0, Math.floor(Number(seconds || 0)));
+            const minutes = Math.floor(total / 60);
+            const secs = total % 60;
+            return `${minutes}:${String(secs).padStart(2, '0')}`;
+        }
+
+        function renderTaggingProgress(progress) {
+            const chipsEl = document.getElementById('tp-chips');
+            const barEl = document.getElementById('tp-bar');
+            const legendEl = document.getElementById('tp-legend');
+            const generatedEl = document.getElementById('tp-generated-at');
+            if (!chipsEl || !barEl || !legendEl) return;
+
+            const counts = progress?.category_counts || {};
+            const order = Object.keys(TAG_CATEGORY_COLORS);
+            const completed = Number(progress?.completed_count || Object.values(counts).reduce((sum, n) => sum + Number(n || 0), 0));
+            const excluded = Number(progress?.excluded_count || 0);
+            const inProgress = Number(progress?.in_progress_count || 0);
+            const total = Number(progress?.total_count || (completed + excluded + inProgress));
+            const denominator = Math.max(total, completed + excluded + inProgress, 1);
+            const statusText = progress?.status === 'blocked' ? '모델 오류'
+                : progress?.status === 'error' ? '오류'
+                : progress?.status === 'running' ? '진행중'
+                : progress?.status === 'scoring' ? '점수화중'
+                : '완료';
+            const statusClass = progress?.status === 'blocked' || progress?.status === 'error'
+                ? 'text-rose-300 border-rose-900/60 bg-rose-950/20'
+                : 'text-gray-400 border-gray-800 bg-[#181921]';
+            const cacheRate = progress?.cache_hit_rate;
+            const cacheText = cacheRate === undefined ? '' : `<span class="px-3 py-2 rounded-xl border border-gray-800 text-[11px] text-cyan-300 bg-[#181921]">캐시 ${Math.round(Number(cacheRate || 0) * 100)}%</span>`;
+            const trainingText = progress?.last_training_at ? `<span class="px-3 py-2 rounded-xl border border-gray-800 text-[11px] text-violet-300 bg-[#181921]">최근 학습 ${formatProgressTime(progress.last_training_at).replace('업데이트 ', '')}</span>` : '';
+            const modelErrors = Array.isArray(progress?.model_errors) ? progress.model_errors : [];
+            const modelErrorText = modelErrors.length
+                ? modelErrors.map(err => `<span class="px-3 py-2 rounded-xl border border-rose-900/60 text-[11px] text-rose-200 bg-rose-950/20 max-w-full truncate" title="${escapeHtml(err.message || '')}">${escapeHtml(err.component || 'MODEL')}: ${escapeHtml(err.message || '')}</span>`).join('')
+                : '';
+            const runtime = progress?.runtime || {};
+            const runtimeDevice = String(runtime.device || '').toLowerCase();
+            const runtimeLabel = runtimeDevice === 'cuda'
+                ? `GPU ${runtime.gpu_name ? escapeHtml(runtime.gpu_name) : 'CUDA'}`
+                : runtimeDevice === 'cpu'
+                    ? 'CPU'
+                    : '';
+            const runtimeText = runtimeLabel
+                ? `<span class="px-3 py-2 rounded-xl border border-gray-800 text-[11px] ${runtimeDevice === 'cuda' ? 'text-emerald-300' : 'text-amber-300'} bg-[#181921]">${runtimeLabel}</span>`
+                : '';
+
+            const chipData = [
+                { label: '전체', value: total, icon: 'dataset', color: '#60a5fa' },
+                { label: '진행중', value: inProgress, icon: 'sync', color: '#f59e0b' },
+                { label: '완료', value: completed, icon: 'task_alt', color: '#22c55e' },
+                { label: '제외', value: excluded, icon: 'block', color: '#ef4444' }
+            ];
+            chipsEl.innerHTML = chipData.map(item => `
+                <div class="flex items-center gap-2 bg-[#181921] rounded-xl px-3 py-2 border border-gray-800 min-w-[110px]">
+                    <span class="material-symbols-outlined text-[18px]" style="color:${item.color}">${item.icon}</span>
+                    <div class="flex flex-col leading-tight">
+                        <span class="text-[10px] text-gray-500">${item.label}</span>
+                        <span class="text-sm font-black text-gray-100">${Number(item.value).toLocaleString()}</span>
+                    </div>
+                </div>
+            `).join('') + `<span class="px-3 py-2 rounded-xl border text-[11px] ${statusClass}">${statusText}</span>` + runtimeText + modelErrorText + cacheText + trainingText;
+
+            const categorySegments = order.map(category => {
+                const count = Number(counts[category] || 0);
+                const width = count > 0 ? (count / denominator) * 100 : 0;
+                return `<div title="${category} ${count}" style="width:${width}%;background:${TAG_CATEGORY_COLORS[category]};min-width:${count > 0 ? '4px' : '0'}"></div>`;
+            }).join('');
+            const inProgressWidth = inProgress > 0 ? (inProgress / denominator) * 100 : 0;
+            const excludedWidth = excluded > 0 ? (excluded / denominator) * 100 : 0;
+            barEl.innerHTML = `
+                ${categorySegments}
+                <div title="진행중 ${inProgress}" style="width:${inProgressWidth}%;background:#f59e0b;min-width:${inProgress > 0 ? '4px' : '0'}"></div>
+                <div title="제외 ${excluded}" style="width:${excludedWidth}%;background:#ef4444;min-width:${excluded > 0 ? '4px' : '0'}"></div>
+            `;
+
+            legendEl.innerHTML = order.map(category => `
+                <div class="flex items-center gap-1.5 text-[11px] text-gray-500">
+                    <span class="w-2.5 h-2.5 rounded-full" style="background:${TAG_CATEGORY_COLORS[category]}"></span>
+                    <span class="font-bold text-gray-300">${category}</span>
+                    <span>${Number(counts[category] || 0)}</span>
+                </div>
+            `).join('') + `
+                <div class="flex items-center gap-1.5 text-[11px] text-gray-500">
+                    <span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
+                    <span class="font-bold text-gray-300">Excluded</span>
+                    <span>${excluded}</span>
+                </div>
+            `;
+            if (generatedEl) generatedEl.textContent = formatProgressTime(progress?.generated_at);
+        }
+
+        function fetchTaggingProgress() {
+            fetch('/api/tagging/progress')
+                .then(r => r.json())
+                .then(renderTaggingProgress)
+                .catch(() => {});
+        }
+
+        function escapeHtml(value) {
+            return String(value ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function shortDate(value) {
+            if (!value) return '-';
+            const date = new Date(value);
+            if (isNaN(date.getTime())) return escapeHtml(value);
+            return `${date.getMonth() + 1}/${date.getDate()} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+        }
+
+        function renderTagAuditStatusTabs() {
+            document.querySelectorAll('.tag-audit-status').forEach(button => {
+                const active = button.dataset.status === tagAuditState.status;
+                button.className = active
+                    ? "tag-audit-status px-3 py-1.5 rounded-lg border text-[11px] font-bold transition-all bg-blue-600 border-blue-500 text-white"
+                    : "tag-audit-status px-3 py-1.5 rounded-lg border text-[11px] font-bold transition-all bg-gray-900 border-gray-700 text-gray-500 hover:bg-gray-850";
+            });
+        }
+
+        function setTagAuditStatus(status) {
+            tagAuditState.status = status;
+            tagAuditState.offset = 0;
+            renderTagAuditStatusTabs();
+            fetchTaggingAudit();
+        }
+
+        function setTagAuditTag(tag) {
+            tagAuditState.tag = tag || 'all';
+            tagAuditState.offset = 0;
+            fetchTaggingAudit();
+        }
+
+        function applyTagAuditSearch() {
+            const input = document.getElementById('tag-audit-search');
+            tagAuditState.q = input ? input.value.trim() : '';
+            tagAuditState.offset = 0;
+            fetchTaggingAudit();
+        }
+
+        function handleTagAuditSearchKey(event) {
+            if (event.key === 'Enter') applyTagAuditSearch();
+        }
+
+        function renderTagAuditSummary(data) {
+            const el = document.getElementById('tag-audit-summary');
+            if (!el) return;
+            const summary = data.summary || {};
+            const cards = [
+                { label: '전체', value: summary.total_items || 0, icon: 'dataset', color: 'text-blue-400' },
+                { label: '태깅완료', value: summary.tagged_items || 0, icon: 'task_alt', color: 'text-emerald-400' },
+                { label: '제외', value: summary.excluded_items || 0, icon: 'block', color: 'text-rose-400' },
+                { label: '대기', value: summary.pending_items || 0, icon: 'pending', color: 'text-amber-400' },
+            ];
+            el.innerHTML = cards.map(card => `
+                <div class="bg-[#181921] border border-gray-800 rounded-xl px-3 py-3 flex items-center gap-2">
+                    <span class="material-symbols-outlined ${card.color} text-[19px]">${card.icon}</span>
+                    <div class="leading-tight">
+                        <div class="text-[10px] text-gray-500">${card.label}</div>
+                        <div class="text-base font-black text-gray-100">${Number(card.value).toLocaleString()}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderTagAuditFilters(data) {
+            const select = document.getElementById('tag-audit-tag-filter');
+            if (select) {
+                const current = tagAuditState.tag || 'all';
+                const options = [`<option value="all">모든 태그</option>`].concat((data.tag_counts || []).map(row => {
+                    const tag = row.tag || '';
+                    return `<option value="${escapeHtml(tag)}">${escapeHtml(tag)} (${Number(row.count || 0)})</option>`;
+                }));
+                select.innerHTML = options.join('');
+                select.value = current;
+                if (select.value !== current) {
+                    select.value = 'all';
+                    tagAuditState.tag = 'all';
+                }
+            }
+
+            const reasons = document.getElementById('tag-audit-reason-pills');
+            if (reasons) {
+                const rows = data.excluded_reasons || [];
+                reasons.innerHTML = rows.length ? rows.slice(0, 8).map(row => `
+                    <span class="px-2.5 py-1 rounded-lg border border-rose-800/40 bg-rose-950/30 text-[11px] text-rose-300">
+                        ${escapeHtml(row.reason)} <span class="opacity-70">${Number(row.count || 0)}</span>
+                    </span>
+                `).join('') : '<span class="text-[11px] text-gray-600 italic">제외 사유 없음</span>';
+            }
+        }
+
+        function tagBadge(tag) {
+            const color = TAG_CATEGORY_COLORS[tag] || '#64748b';
+            return `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg border border-gray-800 bg-[#0B0C10] text-[11px] font-bold text-gray-200">
+                <span class="w-2 h-2 rounded-full" style="background:${color}"></span>${escapeHtml(tag || '미분류')}
+            </span>`;
+        }
+
+        function sentimentBadge(item) {
+            const label = item.sentiment_label || '대기';
+            const lower = label.toLowerCase();
+            let cls = 'bg-gray-900 border-gray-700 text-gray-500';
+            if (lower === 'positive') cls = 'bg-emerald-950/40 border-emerald-800/50 text-emerald-300';
+            else if (lower === 'warning' || lower === 'panic' || item.sentiment_score < -0.15) cls = 'bg-rose-950/40 border-rose-800/50 text-rose-300';
+            else if (lower === 'neutral') cls = 'bg-blue-950/30 border-blue-800/40 text-blue-300';
+            return `<span class="inline-flex px-2 py-1 rounded-lg border text-[11px] font-bold ${cls}">${escapeHtml(label)}</span>`;
+        }
+
+        function renderTagAuditTable(data) {
+            const tbody = document.getElementById('tag-audit-table');
+            if (!tbody) return;
+            const rows = data.items || [];
+            if (!rows.length) {
+                tbody.innerHTML = '<tr><td colspan="6" class="p-6 text-center text-gray-600 italic">조건에 맞는 태깅 항목이 없습니다.</td></tr>';
+                return;
+            }
+            tbody.innerHTML = rows.map(item => {
+                const excluded = !!item.excluded;
+                const statusClass = excluded
+                    ? 'bg-rose-950/40 border-rose-800/50 text-rose-300'
+                    : item.primary_tag
+                        ? 'bg-emerald-950/40 border-emerald-800/50 text-emerald-300'
+                        : 'bg-amber-950/40 border-amber-800/50 text-amber-300';
+                const statusText = excluded ? '제외' : item.primary_tag ? '태깅완료' : (item.queue_status || '대기');
+                const tags = (item.tags || []).slice(0, 4).map(tag => {
+                    const label = tag.tag || tag.label || '';
+                    const score = tag.score !== undefined ? ` ${Number(tag.score || 0).toFixed(2)}` : '';
+                    return `<span title="hits ${Number(tag.hits || 0)}">${tagBadge(label)}<span class="text-[10px] text-gray-500 ml-1">${score}</span></span>`;
+                }).join('<br>');
+                const link = item.url ? `<a href="${escapeHtml(item.url)}" target="_blank" class="text-blue-400 hover:text-blue-300 text-[11px] inline-flex items-center gap-0.5 mt-1"><span class="material-symbols-outlined text-[12px]">open_in_new</span>원본</a>` : '';
+                return `
+                    <tr class="border-b border-gray-850 align-top hover:bg-[#181921]/60 transition-colors">
+                        <td class="p-3">
+                            <div class="font-bold text-gray-200 text-xs leading-snug">${escapeHtml(item.title || '(제목 없음)')}</div>
+                            <div class="mt-1 text-[11px] text-gray-500">${escapeHtml(item.source_group || '-')}/${escapeHtml(item.source || '-')} · ${shortDate(item.tagged_at || item.published_at || item.crawled_at)}</div>
+                            <div class="mt-2 text-[11px] text-gray-500 leading-relaxed max-w-[520px]">${escapeHtml(item.snippet || '')}</div>
+                            ${link}
+                        </td>
+                        <td class="p-3">
+                            <span class="inline-flex px-2 py-1 rounded-lg border text-[11px] font-bold ${statusClass}">${escapeHtml(statusText)}</span>
+                            <div class="mt-2 text-[10px] text-gray-500">queue ${escapeHtml(item.queue_status || '-')}</div>
+                            <div class="text-[10px] text-gray-500">crawl ${escapeHtml(item.crawl_status || '-')}</div>
+                        </td>
+                        <td class="p-3">
+                            <div class="mb-2">${item.primary_tag ? tagBadge(item.primary_tag) : '<span class="text-[11px] text-gray-600">없음</span>'}</div>
+                            <div class="space-y-1">${tags || '<span class="text-[11px] text-gray-600">상세 태그 없음</span>'}</div>
+                            <div class="mt-2 text-[10px] text-gray-500">rel ${Number(item.relevance_score || 0).toFixed(2)} · conf ${Number(item.confidence || 0).toFixed(2)}</div>
+                        </td>
+                        <td class="p-3">
+                            ${sentimentBadge(item)}
+                            <div class="mt-2 text-[10px] text-gray-500">score ${Number(item.sentiment_score || 0).toFixed(3)}</div>
+                            <div class="text-[10px] text-gray-500">${escapeHtml(item.impact_type || '-')}</div>
+                        </td>
+                        <td class="p-3 text-[11px] text-gray-500 leading-relaxed">
+                            ${escapeHtml(excluded ? (item.exclude_reason || '사유 미기록') : '해당 없음')}
+                        </td>
+                        <td class="p-3 text-right">
+                            <div class="font-mono text-gray-300">${Number(item.content_len || 0).toLocaleString()}</div>
+                            <div class="text-[10px] text-gray-500">quality ${Number(item.crawl_quality_score || 0).toFixed(2)}</div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function renderTaggingAudit(data) {
+            if (!data || data.status !== 'success') {
+                showRequestError(data?.message || '태깅 결과를 불러오지 못했습니다.', '태깅 감사 오류');
+                return;
+            }
+            renderTagAuditStatusTabs();
+            renderTagAuditSummary(data);
+            renderTagAuditFilters(data);
+            renderTagAuditTable(data);
+        }
+
+        function fetchTaggingAudit() {
+            if (tagAuditInFlight) return;
+            tagAuditInFlight = true;
+            const params = new URLSearchParams({
+                status: tagAuditState.status,
+                tag: tagAuditState.tag,
+                q: tagAuditState.q,
+                limit: String(tagAuditState.limit),
+                offset: String(tagAuditState.offset)
+            });
+            fetch(`/api/tagging/audit?${params.toString()}`)
+                .then(r => r.json())
+                .then(renderTaggingAudit)
+                .catch(err => showRequestError(err.message || err, '태깅 감사 오류'))
+                .finally(() => { tagAuditInFlight = false; });
+        }
+
+        function dedupAuditBadge(item) {
+            const status = String(item.audit_status || '');
+            const duplicate = item.gpt_is_duplicate === true;
+            const grouped = item.within_group === true;
+            let label = status || '대기';
+            let cls = 'bg-amber-950/40 border-amber-800/50 text-amber-300';
+            if (duplicate && grouped) {
+                label = '중복 확정';
+                cls = 'bg-emerald-950/40 border-emerald-800/50 text-emerald-300';
+            } else if (duplicate) {
+                label = '중복 후보';
+                cls = 'bg-cyan-950/40 border-cyan-800/50 text-cyan-300';
+            } else if (item.gpt_is_duplicate === false) {
+                label = '중복 아님';
+                cls = 'bg-gray-900 border-gray-700 text-gray-400';
+            } else if (status.startsWith('blocked') || status === 'audit_failed') {
+                label = status.startsWith('blocked') ? '감사 차단' : '감사 실패';
+                cls = 'bg-rose-950/40 border-rose-800/50 text-rose-300';
+            }
+            return `<span class="inline-flex px-2 py-1 rounded-lg border text-[11px] font-bold ${cls}">${escapeHtml(label)}</span>`;
+        }
+
+        function percentText(value) {
+            return `${Math.round(Number(value || 0) * 100)}%`;
+        }
+
+        function dedupScoreLine(label, value) {
+            return `
+                <div class="flex items-center justify-between gap-3">
+                    <span class="text-gray-500">${label}</span>
+                    <span class="font-mono text-gray-200">${percentText(value)}</span>
+                </div>
+            `;
+        }
+
+        function renderDedupAuditSummary(data) {
+            const el = document.getElementById('dedup-audit-summary');
+            if (!el) return;
+            const summary = data.summary || {};
+            const cards = [
+                { label: '후보쌍', value: summary.candidate_pairs || 0, icon: 'hub', color: 'text-blue-400' },
+                { label: 'GPT 감사', value: summary.audited_pairs || 0, icon: 'verified', color: 'text-violet-400' },
+                { label: '확정 중복', value: summary.duplicate_pairs || 0, icon: 'join_inner', color: 'text-emerald-400' },
+                { label: '그룹 반영', value: summary.grouped_pairs || 0, icon: 'account_tree', color: 'text-cyan-400' },
+                { label: '차단/실패', value: summary.blocked_pairs || 0, icon: 'warning', color: 'text-rose-400' },
+            ];
+            el.innerHTML = cards.map(card => `
+                <div class="bg-[#181921] border border-gray-800 rounded-xl px-3 py-3 flex items-center gap-2">
+                    <span class="material-symbols-outlined ${card.color} text-[19px]">${card.icon}</span>
+                    <div class="leading-tight">
+                        <div class="text-[10px] text-gray-500">${card.label}</div>
+                        <div class="text-base font-black text-gray-100">${Number(card.value).toLocaleString()}</div>
+                    </div>
+                </div>
+            `).join('') + `
+                <div class="col-span-full text-[11px] text-gray-500">
+                    dedup groups ${Number(summary.dedup_groups || 0).toLocaleString()} · members ${Number(summary.dedup_members || 0).toLocaleString()}
+                </div>
+            `;
+        }
+
+        function renderDedupAuditTable(data) {
+            const tbody = document.getElementById('dedup-audit-table');
+            if (!tbody) return;
+            const rows = data.items || [];
+            if (!rows.length) {
+                tbody.innerHTML = '<tr><td colspan="4" class="p-6 text-center text-gray-600 italic">저장된 중복 후보가 없습니다.</td></tr>';
+                return;
+            }
+            tbody.innerHTML = rows.map(item => {
+                const leftLink = item.left_url ? `<a href="${escapeHtml(item.left_url)}" target="_blank" class="text-blue-400 hover:text-blue-300 text-[11px] inline-flex items-center gap-0.5 mt-1"><span class="material-symbols-outlined text-[12px]">open_in_new</span>좌측 원본</a>` : '';
+                const rightLink = item.right_url ? `<a href="${escapeHtml(item.right_url)}" target="_blank" class="text-blue-400 hover:text-blue-300 text-[11px] inline-flex items-center gap-0.5 mt-1"><span class="material-symbols-outlined text-[12px]">open_in_new</span>우측 원본</a>` : '';
+                const confidence = item.gpt_confidence === null || item.gpt_confidence === undefined ? '-' : percentText(item.gpt_confidence);
+                return `
+                    <tr class="border-b border-gray-850 align-top hover:bg-[#181921]/60 transition-colors">
+                        <td class="p-3">
+                            <div class="space-y-3">
+                                <div>
+                                    <div class="font-bold text-gray-200 text-xs leading-snug">${escapeHtml(item.left_title || '(제목 없음)')}</div>
+                                    <div class="text-[11px] text-gray-500 mt-1">${escapeHtml(item.left_source_group || '-')}/${escapeHtml(item.left_source || '-')} · ${shortDate(item.left_published_at)}</div>
+                                    ${leftLink}
+                                </div>
+                                <div class="border-t border-gray-850 pt-3">
+                                    <div class="font-bold text-gray-200 text-xs leading-snug">${escapeHtml(item.right_title || '(제목 없음)')}</div>
+                                    <div class="text-[11px] text-gray-500 mt-1">${escapeHtml(item.right_source_group || '-')}/${escapeHtml(item.right_source || '-')} · ${shortDate(item.right_published_at)}</div>
+                                    ${rightLink}
+                                </div>
+                            </div>
+                        </td>
+                        <td class="p-3">
+                            ${dedupAuditBadge(item)}
+                            <div class="mt-2 text-[10px] text-gray-500">model ${escapeHtml(item.audit_model || item.model_version || '-')}</div>
+                            <div class="text-[10px] text-gray-500">confidence ${escapeHtml(confidence)}</div>
+                        </td>
+                        <td class="p-3 text-[11px] leading-relaxed">
+                            ${dedupScoreLine('Composite', item.composite_score)}
+                            ${dedupScoreLine('LSA/TF-IDF', item.lsa_similarity)}
+                            ${dedupScoreLine('BGE', item.bge_similarity)}
+                            ${dedupScoreLine('Title', item.title_similarity)}
+                            ${dedupScoreLine('URL', item.url_similarity)}
+                            <div class="flex items-center justify-between gap-3">
+                                <span class="text-gray-500">Source/Time</span>
+                                <span class="font-mono text-gray-200">${item.source_match ? 'same' : 'diff'} · ${Number(item.time_delta_hours || 0).toFixed(1)}h</span>
+                            </div>
+                        </td>
+                        <td class="p-3 text-[11px] text-gray-500 leading-relaxed max-w-[280px]">
+                            ${escapeHtml(item.gpt_rationale || '감사 사유 없음')}
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function renderDedupAudit(data) {
+            if (!data || data.status !== 'success') {
+                showRequestError(data?.message || '중복 후보를 불러오지 못했습니다.', '중복 후보 감사 오류');
+                return;
+            }
+            renderDedupAuditSummary(data);
+            renderDedupAuditTable(data);
+        }
+
+        function fetchDedupAudit() {
+            fetch('/api/dedup/audit?limit=80')
+                .then(r => r.json())
+                .then(renderDedupAudit)
+                .catch(err => showRequestError(err.message || err, '중복 후보 감사 오류'));
+        }
+
+        function renderTestDatasetStatus(data) {
+            const statusEl = document.getElementById('test-mode-admin-status');
+            const dirEl = document.getElementById('test-dataset-dir');
+            const listEl = document.getElementById('test-dataset-file-list');
+            if (statusEl) {
+                const active = !!data.active;
+                statusEl.textContent = active ? `ON · ${data.scenario || 'uploaded'} · ${data.item_count || 0}개` : 'OFF · 실데이터';
+                statusEl.className = active
+                    ? 'text-[11px] font-semibold px-2 py-1 rounded-full bg-cyan-950/40 text-cyan-300 border border-cyan-800/50'
+                    : 'text-[11px] font-semibold px-2 py-1 rounded-full bg-gray-900 text-gray-500 border border-gray-800';
+            }
+            if (dirEl && data.dataset_dir) {
+                dirEl.textContent = data.dataset_dir;
+            }
+            if (listEl) {
+                const files = data.available_files || [];
+                if (!files.length) {
+                    listEl.innerHTML = '<span class="text-xs text-gray-600 italic">Test_dataset 폴더에 JSON 예시 파일이 없습니다.</span>';
+                } else {
+                    listEl.innerHTML = files.map(file => `
+                        <span class="px-2.5 py-1 rounded-lg border border-gray-800 bg-[#181921] text-[11px] text-gray-300 font-mono">
+                            ${file.name}
+                        </span>
+                    `).join('');
+                }
+            }
+        }
+
+        function fetchTestDatasetStatus() {
+            fetch('/api/test_mode')
+                .then(r => r.json())
+                .then(renderTestDatasetStatus)
+                .catch(() => {});
+        }
+
+        function uploadTestDataset() {
+            const fileInput = document.getElementById('test-dataset-file');
+            const button = document.getElementById('btn-upload-test-dataset');
+            const file = fileInput?.files?.[0];
+            if (!file) {
+                showRequestError('첨부할 테스트 JSON 파일을 선택해 주세요.', '입력 필요');
+                return;
+            }
+            const form = new FormData();
+            form.append('dataset', file);
+            if (button) {
+                button.disabled = true;
+                button.innerHTML = '<span class="material-symbols-outlined text-sm animate-spin">progress_activity</span> 태깅/요약 중...';
+            }
+            fetch('/api/test_mode/upload', { method: 'POST', body: form })
+                .then(r => r.json())
+                .then(data => {
+                    if (!data.success) throw new Error(data.error || '테스트 데이터셋 적용 실패');
+                    showToast(data.message, 'success');
+                    fetchTestDatasetStatus();
+                    fetchTaggingProgress();
+                    fetchTaggingAudit();
+                    fetchData();
+                    fetchCrawlStats();
+                })
+                .catch(err => showRequestError(err.message || err, '테스트 데이터셋 오류'))
+                .finally(() => {
+                    if (button) {
+                        button.disabled = false;
+                        button.innerHTML = '<span class="material-symbols-outlined text-sm">play_arrow</span> 업로드 후 태깅/요약 시작';
+                    }
+                });
+        }
+
+        function disableTestDatasetMode() {
+            fetch('/api/test_mode/disable', { method: 'POST' })
+                .then(r => r.json())
+                .then(data => {
+                    if (!data.success) throw new Error(data.error || '테스트 모드 해제 실패');
+                    showToast(data.message, 'success');
+                    fetchTestDatasetStatus();
+                    fetchTaggingProgress();
+                    fetchTaggingAudit();
+                    fetchData();
+                    fetchCrawlStats();
+                })
+                .catch(err => showRequestError(err.message || err, '테스트 모드 오류'));
+        }
+
+        function fetchCrawlStats() {
+            fetch('/api/crawl_stats')
+                .then(r => r.json())
+                .then(data => {
+                    // Total
+                    const totalEl = document.getElementById('crawl-stats-total');
+                    if (totalEl) totalEl.textContent = `— 전체 ${(data.total || 0).toLocaleString()}건`;
+
+                    // Category pills
+                    const pillEl = document.getElementById('crawl-cat-pills');
+                    if (pillEl && data.by_category) {
+                        pillEl.innerHTML = data.by_category.map(c => {
+                            const cls = (CAT_COLORS[c.category] || CAT_COLORS['기타']).pill;
+                            return `<span class="px-3 py-1 rounded-full border text-[11px] font-bold ${cls}">${c.category} <span class="opacity-70">${c.count}건</span></span>`;
+                        }).join('');
+                    }
+
+                    // Per-source table
+                    const tbody = document.getElementById('crawl-stats-table');
+                    if (tbody && data.by_source) {
+                        if (data.by_source.length === 0) {
+                            tbody.innerHTML = '<tr><td colspan="4" class="p-6 text-center text-gray-600 italic">수집된 데이터가 없습니다.</td></tr>';
+                        } else {
+                            tbody.innerHTML = data.by_source.map((s, i) => {
+                                const rowCls = (CAT_COLORS[s.category] || CAT_COLORS['기타']).row;
+                                const bg = i % 2 === 0 ? '' : 'bg-[#181921]/40';
+                                const latest = s.latest ? s.latest.replace('T', ' ').slice(0, 16) : '-';
+                                return `<tr class="border-b border-gray-850/60 hover:bg-gray-800/30 transition-colors ${bg}">
+                                    <td class="p-3 font-mono text-gray-200">${s.source}</td>
+                                    <td class="p-3"><span class="text-[10px] font-bold ${rowCls}">${s.category}</span></td>
+                                    <td class="p-3 text-right font-bold text-gray-100">${s.count.toLocaleString()}</td>
+                                    <td class="p-3 text-gray-500 font-mono">${latest}</td>
+                                </tr>`;
+                            }).join('');
+                        }
+                    }
+                })
+                .catch(() => {
+                    const tbody = document.getElementById('crawl-stats-table');
+                    if (tbody) tbody.innerHTML = '<tr><td colspan="4" class="p-6 text-center text-rose-500 italic">통계 로드 실패</td></tr>';
+                });
+        }
+
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            const icon = document.getElementById('toast-icon');
+            const msg = document.getElementById('toast-message');
+
+            msg.innerText = message;
+            
+            if (type === 'success') {
+                toast.className = "fixed bottom-6 right-6 px-4 py-3 bg-emerald-950/80 border border-emerald-800 text-sm rounded-xl text-emerald-300 shadow-xl transition-all duration-300 z-50 flex items-center gap-2";
+                icon.innerText = "check_circle";
+            } else if (type === 'error') {
+                toast.className = "fixed bottom-6 right-6 px-4 py-3 bg-rose-950/80 border border-rose-800 text-sm rounded-xl text-rose-300 shadow-xl transition-all duration-300 z-50 flex items-center gap-2";
+                icon.innerText = "error";
+            } else {
+                toast.className = "fixed bottom-6 right-6 px-4 py-3 bg-gray-900 border border-gray-800 text-sm rounded-xl text-gray-200 shadow-xl transition-all duration-300 z-50 flex items-center gap-2";
+                icon.innerText = "info";
+            }
+
+            toast.classList.remove('translate-y-12', 'opacity-0');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-12', 'opacity-0');
+            }, 4000);
+        }
+
+        function showErrorModal(message, title = '오류 상세') {
+            const modal = document.getElementById('error-modal');
+            const modalContainer = document.getElementById('error-modal-container');
+            const titleEl = document.getElementById('error-modal-title');
+            const messageEl = document.getElementById('error-modal-message');
+            const text = String(message || '알 수 없는 오류가 발생했습니다.');
+
+            const iconEl = document.createElement('span');
+            iconEl.className = 'material-symbols-outlined text-lg';
+            iconEl.setAttribute('aria-hidden', 'true');
+            iconEl.innerText = 'error';
+            titleEl.replaceChildren(iconEl, document.createTextNode(title));
+            messageEl.value = text;
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modalContainer.classList.remove('scale-95');
+            modalContainer.classList.add('scale-100');
+            setTimeout(() => messageEl.focus(), 0);
+        }
+
+        function closeErrorModal() {
+            const modal = document.getElementById('error-modal');
+            const modalContainer = document.getElementById('error-modal-container');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modalContainer.classList.remove('scale-100');
+            modalContainer.classList.add('scale-95');
+        }
+
+        function copyErrorModalText() {
+            const messageEl = document.getElementById('error-modal-message');
+            const text = messageEl.value;
+            const fallbackCopy = () => {
+                messageEl.focus();
+                messageEl.select();
+                try {
+                    return document.execCommand('copy');
+                } catch (e) {
+                    return false;
+                }
+            };
+            const showFallbackResult = () => {
+                if (fallbackCopy()) {
+                    showToast('오류 내용을 복사했습니다.', 'success');
+                } else {
+                    showToast('오류 내용을 선택했습니다. Ctrl+C로 복사해 주세요.', 'info');
+                }
+            };
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text)
+                    .then(() => showToast('오류 내용을 복사했습니다.', 'success'))
+                    .catch(showFallbackResult);
+            } else {
+                showFallbackResult();
+            }
+        }
+
+        function showRequestError(message, title = '오류') {
+            showToast('오류가 발생했습니다. 상세 모달을 확인해 주세요.', 'error');
+            showErrorModal(message, title);
+        }
+
+        const collectorLabels = {
+            x: 'X',
+            truth: 'Truth',
+            gov: '정부',
+            news: '뉴스',
+            thinktank: '싱크탱크',
+            axios: 'Axios',
+            market: 'Market',
+            russia: '러시아',
+            china: '중국'
+        };
+        let collectorEnabledState = {};
+
+        function renderCollectorToggles(config) {
+            const enabled = (config && config.enabled) || {};
+            ['x', 'truth', 'gov', 'news', 'thinktank', 'axios', 'market', 'russia', 'china'].forEach(platform => {
+                const button = document.getElementById(`collector-toggle-${platform}`);
+                if (!button) return;
+                const isEnabled = enabled[platform] !== false;
+                collectorEnabledState[platform] = isEnabled;
+                button.dataset.enabled = isEnabled ? 'true' : 'false';
+                button.innerHTML = `
+                    <span class="inline-flex items-center gap-1">
+                        <span class="w-1.5 h-1.5 rounded-full ${isEnabled ? 'bg-emerald-400' : 'bg-gray-500'}"></span>
+                        ${collectorLabels[platform]} ${isEnabled ? 'ON' : 'OFF'}
+                    </span>
+                `;
+                button.className = isEnabled
+                    ? "collector-toggle px-3 py-1.5 rounded-lg border text-[11px] font-bold transition-all bg-emerald-950/30 border-emerald-800/50 text-emerald-300 hover:bg-emerald-900/40"
+                    : "collector-toggle px-3 py-1.5 rounded-lg border text-[11px] font-bold transition-all bg-gray-900/70 border-gray-700 text-gray-500 hover:bg-gray-850";
+            });
+        }
+
+        function setCollectorEnabled(platform) {
+            const nextEnabled = !(collectorEnabledState[platform] !== false);
+            const button = document.getElementById(`collector-toggle-${platform}`);
+            if (button) button.disabled = true;
+
+            fetch('/api/collectors/config', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ platform, enabled: nextEnabled })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    renderCollectorToggles(data.crawler_config);
+                    showToast(data.message, 'success');
+                    fetchStatus();
+                } else {
+                    showRequestError(data.message, '수집 설정 오류');
+                }
+            })
+            .catch(() => showRequestError("수집 설정 변경 중 문제가 발생했습니다.", '수집 설정 오류'))
+            .finally(() => {
+                if (button) button.disabled = false;
+            });
+        }
+
+        function setValueUnlessFocused(id, value) {
+            const el = document.getElementById(id);
+            if (!el || document.activeElement === el) return;
+            el.value = value ?? '';
+        }
+
+        function renderXApiConfig(config) {
+            const maskEl = document.getElementById('x-api-token-mask');
+            if (maskEl) {
+                maskEl.innerText = config?.configured ? (config.token_masked || '설정됨') : '미설정';
+                maskEl.className = config?.configured ? 'font-mono text-emerald-300' : 'font-mono text-gray-500';
+            }
+            setValueUnlessFocused('x-api-accounts', (config?.accounts || []).join('\n'));
+            setValueUnlessFocused('x-api-queries', (config?.queries || []).join('\n'));
+            setValueUnlessFocused('x-api-recent-days', config?.recent_lookback_days || 1);
+            setValueUnlessFocused('x-api-backfill-days', config?.backfill_days || 7);
+            const fullArchive = document.getElementById('x-api-full-archive');
+            if (fullArchive && document.activeElement !== fullArchive) {
+                fullArchive.checked = !!config?.use_full_archive;
+            }
+        }
+
+        function xApiPayloadFromForm() {
+            const token = document.getElementById('x-api-bearer')?.value.trim() || '';
+            return {
+                bearer_token: token,
+                accounts: document.getElementById('x-api-accounts')?.value || '',
+                queries: document.getElementById('x-api-queries')?.value || '',
+                recent_lookback_days: Number(document.getElementById('x-api-recent-days')?.value || 1),
+                backfill_days: Number(document.getElementById('x-api-backfill-days')?.value || 7),
+                use_full_archive: !!document.getElementById('x-api-full-archive')?.checked,
+                exclude_retweets: true,
+                exclude_replies: true
+            };
+        }
+
+        function saveXApiConfig() {
+            return fetch('/api/x/config', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(xApiPayloadFromForm())
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status !== 'success') throw new Error(data.message || 'X API 설정 저장 실패');
+                const tokenInput = document.getElementById('x-api-bearer');
+                if (tokenInput) tokenInput.value = '';
+                renderXApiConfig(data.x_api);
+                renderCollectorToggles(data.crawler_config);
+                showToast(data.message, 'success');
+                fetchStatus();
+                return data;
+            })
+            .catch(err => {
+                showRequestError(err.message || err, 'X API 설정 오류');
+                throw err;
+            });
+        }
+
+        function testXApiConfig() {
+            saveXApiConfig().then(() => {
+                fetch('/api/x/test', { method: 'POST' })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.status !== 'success') throw new Error(data.message || 'X API 테스트 실패');
+                        showToast(data.message, 'success');
+                        fetchStatus();
+                    })
+                    .catch(err => showRequestError(err.message || err, 'X API 테스트 오류'));
+            }).catch(() => {});
+        }
+
+        function runAllBackfill() {
+            const days = Number(document.getElementById('global-backfill-days')?.value || document.getElementById('x-api-backfill-days')?.value || 7);
+            if (!confirm(`활성화된 전체 수집원에서 최근 ${days}일 데이터를 제한 없이 백필합니다. 외부 API 요금/쿼터가 소모될 수 있습니다. 계속할까요?`)) return;
+            saveXApiConfig().then(() => {
+                showToast('전체 백필을 시작했습니다. 완료까지 시간이 걸릴 수 있습니다.', 'info');
+                fetch('/api/crawl/backfill', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ days })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status !== 'success') throw new Error(data.message || '전체 백필 실패');
+                    showToast(data.message, 'success');
+                    fetchStatus();
+                    fetchData();
+                    fetchCrawlStats();
+                    fetchTaggingProgress();
+                    fetchTaggingAudit();
+                })
+                .catch(err => showRequestError(err.message || err, '전체 백필 오류'));
+            }).catch(() => {});
+        }
+
+        function formatUsageDate(value) {
+            if (!value) return '없음';
+            const date = new Date(value);
+            if (isNaN(date.getTime())) return '없음';
+            return date.toLocaleString();
+        }
+
+        function renderWonStatus(won, usage = null) {
+            const modelEl = document.getElementById('won-model');
+            const modelSelect = document.getElementById('won-model-select');
+            const apiUrlInput = document.getElementById('won-api-url');
+            const statusEl = document.getElementById('won-status');
+            const maskEl = document.getElementById('won-key-mask');
+            const usageEl = document.getElementById('won-usage-summary');
+            if (!modelEl || !statusEl || !maskEl) return;
+
+            const model = won?.model || 'gpt-5.5';
+            const configured = won?.configured === true;
+            const enabled = won?.enabled !== false;
+            modelEl.innerText = model;
+            if (modelSelect) {
+                modelSelect.value = model;
+            }
+            if (apiUrlInput) {
+                apiUrlInput.value = won?.api_url || '';
+            }
+            if (configured) {
+                statusEl.innerText = enabled ? 'OpenAI 연동 준비됨' : '비활성화';
+                statusEl.className = enabled ? 'font-bold text-emerald-400' : 'font-bold text-amber-400';
+                maskEl.innerText = won.api_key_masked || 'OpenAI API 키 미설정';
+                maskEl.className = enabled
+                    ? 'text-[10px] text-emerald-500 mt-2 font-mono truncate'
+                    : 'text-[10px] text-amber-500 mt-2 font-mono truncate';
+            } else {
+                statusEl.innerText = '미연동';
+                statusEl.className = 'font-bold text-gray-500';
+                maskEl.innerText = 'OpenAI API 키 미설정';
+                maskEl.className = 'text-[10px] text-gray-500 mt-2 font-mono truncate';
+            }
+
+            if (usageEl && usage !== null && usage !== undefined) {
+                const totalCalls = Number(usage?.total_calls || 0);
+                if (!totalCalls) {
+                    usageEl.innerHTML = 'LLM 호출 없음';
+                    usageEl.className = 'mt-3 rounded-lg border border-gray-800 bg-[#0B0C10] px-3 py-2 text-[10px] text-gray-500 leading-relaxed';
+                } else {
+                    const totalTokens = Number(usage?.total_tokens || 0).toLocaleString();
+                    const providerCalls = Number(usage?.provider_reported_calls || 0);
+                    const estimatedCalls = Number(usage?.estimated_calls || 0);
+                    const sourceText = providerCalls > 0
+                        ? `제공자 보고 ${providerCalls.toLocaleString()}회 · 추정 ${estimatedCalls.toLocaleString()}회`
+                        : '전부 추정 토큰';
+                    const last = usage?.last_call || {};
+                    usageEl.innerHTML = `
+                        <div class="flex justify-between gap-2"><span>호출</span><span class="font-mono text-gray-700">${totalCalls.toLocaleString()}회</span></div>
+                        <div class="flex justify-between gap-2"><span>토큰</span><span class="font-mono text-gray-700">${totalTokens}</span></div>
+                        <div class="flex justify-between gap-2"><span>기준</span><span class="font-mono text-gray-700">${sourceText}</span></div>
+                        <div class="mt-1 truncate text-gray-500">최근 ${formatUsageDate(last.at)}</div>
+                    `;
+                    usageEl.className = 'mt-3 rounded-lg border border-blue-200 bg-blue-50 px-3 py-2 text-[10px] text-gray-600 leading-relaxed';
+                }
+            }
+        }
+
+        function saveWonConfig() {
+            const input = document.getElementById('won-api-key');
+            const modelSelect = document.getElementById('won-model-select');
+            const apiUrlInput = document.getElementById('won-api-url');
+            const apiKey = input.value.trim();
+            const model = modelSelect ? modelSelect.value : 'gpt-5.5';
+            const api_url = apiUrlInput ? apiUrlInput.value.trim() : '';
+            if (apiKey && !apiKey.startsWith('sk-')) {
+                showRequestError('OpenAI API 키 형식이 아닙니다. platform.openai.com에서 발급한 sk- 또는 sk-proj- 키를 입력하세요.', 'LLM 설정 오류');
+                return;
+            }
+
+            fetch('/api/won/config', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ api_key: apiKey, model, api_url, enabled: true })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    input.value = '';
+                    renderWonStatus(data.won, data.llm_usage);
+                    showToast(data.message, 'success');
+                } else {
+                    showRequestError(data.message, 'LLM 설정 오류');
+                }
+            })
+            .catch(() => showRequestError('LLM 설정 저장 중 문제가 발생했습니다.', 'LLM 설정 오류'));
+        }
+
+        function testWonConfig() {
+            const input = document.getElementById('won-api-key');
+            const modelSelect = document.getElementById('won-model-select');
+            const apiUrlInput = document.getElementById('won-api-url');
+            const apiKey = input.value.trim();
+            const model = modelSelect ? modelSelect.value : 'gpt-5.5';
+            const api_url = apiUrlInput ? apiUrlInput.value.trim() : '';
+            if (apiKey && !apiKey.startsWith('sk-')) {
+                showRequestError('OpenAI API 키 형식이 아닙니다. platform.openai.com에서 발급한 sk- 또는 sk-proj- 키를 입력하세요.', 'LLM 테스트 오류');
+                return;
+            }
+            showToast('LLM API/런타임 확인 중...', 'info');
+
+            fetch('/api/won/test', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ api_key: apiKey, model, api_url })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    showToast(data.message, 'success');
+                } else {
+                    showRequestError(data.message, 'LLM 테스트 오류');
+                }
+            })
+            .catch(() => showRequestError('LLM 연동 테스트 중 문제가 발생했습니다.', 'LLM 테스트 오류'));
+        }
+
+        function deleteWonConfig() {
+            if (!confirm('저장된 LLM 설정을 삭제할까요?')) return;
+
+            fetch('/api/won/config', { method: 'DELETE' })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    renderWonStatus(data.won);
+                    showToast(data.message, 'success');
+                } else {
+                    showRequestError(data.message, 'LLM 삭제 오류');
+                }
+            })
+            .catch(() => showRequestError('LLM 설정 삭제 중 문제가 발생했습니다.', 'LLM 삭제 오류'));
+        }
+
+        // Fetch Scheduler & Account Statuses
+        function fetchStatus() {
+            fetch('/api/status')
+                .then(res => res.json())
+                .then(data => {
+                    // Update scheduler status
+                    const isRunning = data.scheduler.running;
+                    const statusDot = document.getElementById('status-dot');
+                    const statusPulse = document.getElementById('status-pulse');
+                    const statusText = document.getElementById('status-text');
+                    const pidInfo = document.getElementById('scheduler-pid-info');
+                    const crawlTimer = document.getElementById('scheduler-crawl-timer');
+                    const platformTimers = document.getElementById('scheduler-platform-timers');
+                    
+                    const btnStart = document.getElementById('btn-start');
+                    const btnStop = document.getElementById('btn-stop');
+                    
+                    if (isRunning) {
+                        statusText.innerText = "러닝 중 (루프 활성)";
+                        statusText.className = "text-sm font-semibold text-emerald-400";
+                        statusDot.className = "relative inline-flex rounded-full h-3 w-3 bg-emerald-500";
+                        statusPulse.className = "animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 bg-emerald-500";
+                        pidInfo.innerHTML = `프로세스 정보: <span class="text-emerald-500 font-bold font-mono">PID ${data.scheduler.pid}</span>`;
+                        const loop = data.crawler_status?.loop || {};
+                        const remaining = loop.next_crawl_at ? Math.max(0, Math.floor((new Date(loop.next_crawl_at).getTime() - Date.now()) / 1000)) : Number(loop.seconds_until_next_crawl || 0);
+                        const nextTime = loop.next_crawl_at ? new Date(loop.next_crawl_at).toLocaleTimeString() : '계산 중';
+                        if (crawlTimer) crawlTimer.innerHTML = `다음 뉴스 수집: <span class="text-cyan-300 font-bold font-mono">${formatDuration(remaining)}</span> <span class="text-gray-600">(${nextTime})</span>`;
+                        if (platformTimers) {
+                            const platformLabels = { x: 'X', truth: 'Truth', gov: 'GOV', news: 'News', thinktank: 'ThinkTank', axios: 'Axios', market: 'Market', russia: 'Russia', china: 'China' };
+                            const platformNext = loop.platform_next || {};
+                            platformTimers.innerHTML = Object.entries(platformLabels).map(([key, label]) => {
+                                const item = platformNext[key] || {};
+                                const enabled = data.crawler_config?.enabled?.[key] !== false;
+                                const value = !enabled ? '꺼짐' : item.next_at ? formatDuration(Math.max(0, Math.floor((new Date(item.next_at).getTime() - Date.now()) / 1000))) : '계산 중';
+                                return `<div class="flex justify-between gap-2"><span>${label}</span><span class="font-mono ${enabled ? 'text-cyan-300' : 'text-gray-600'}">${value}</span></div>`;
+                            }).join('');
+                        }
+                        btnStart.disabled = true;
+                        btnStop.disabled = false;
+                    } else {
+                        statusText.innerText = "정지됨 (루프 대기)";
+                        statusText.className = "text-sm font-semibold text-gray-400";
+                        statusDot.className = "relative inline-flex rounded-full h-3 w-3 bg-gray-500";
+                        statusPulse.className = "hidden";
+                        pidInfo.innerHTML = `프로세스 정보: <span class="text-gray-500">미작동</span>`;
+                        if (crawlTimer) crawlTimer.innerHTML = `다음 뉴스 수집: <span class="text-gray-500">루프 대기</span>`;
+                        if (platformTimers) platformTimers.innerHTML = '';
+                        btnStart.disabled = false;
+                        btnStop.disabled = true;
+                    }
+
+                    renderCollectorToggles(data.crawler_config);
+                    renderXApiConfig(data.x_api);
+                    renderWonStatus(data.won, data.llm_usage);
+
+                    // Update Truth Social Tokens
+                    const truthCountEl = document.getElementById('truth-tokens-count');
+                    const truthListEl = document.getElementById('truth-tokens-list');
+                    truthCountEl.innerText = `${data.accounts.truth.length}개`;
+                    if (data.accounts.truth.length === 0) {
+                        truthListEl.innerHTML = `
+                            <div class="text-xs text-gray-500 italic p-3 text-center bg-[#181921]/50 border border-gray-800/50 rounded-xl">
+                                등록된 토큰이 없습니다. 수동 입력 또는 자동 로그인을 진행해 주세요.
+                            </div>
+                        `;
+                    } else {
+                        truthListEl.innerHTML = data.accounts.truth.map((token, idx) => {
+                            const displayToken = token.length > 20 ? token.substring(0, 15) + "..." : token;
+                            return `
+                                <div class="bg-[#181921] border border-gray-800/60 rounded-xl p-2.5 flex justify-between items-center">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                        <span class="text-xs font-mono text-gray-300">토큰 #${idx + 1} (${displayToken})</span>
+                                    </div>
+                                    <div class="flex items-center gap-1.5">
+                                        <button onclick="verifyAccount('truth', ${idx})" class="px-2 py-1 bg-blue-950/40 hover:bg-blue-900/30 border border-blue-800/40 text-blue-400 rounded-lg text-[10px] font-semibold transition-all">연동확인</button>
+                                        <button onclick="deleteAccount('truth', ${idx})" class="p-1 hover:bg-gray-850 hover:text-red-400 text-gray-500 rounded transition-colors">
+                                            <span class="material-symbols-outlined text-sm">delete</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('');
+                    }
+
+                    // Update Platform Statuses (X, Truth Social, Gov, News, Market)
+                    const platforms = ['x', 'truth', 'gov', 'news', 'thinktank', 'axios', 'market', 'russia', 'china'];
+                    platforms.forEach(p => {
+                        const statusEl = document.getElementById(`status-platform-${p}`);
+                        if (!statusEl) return;
+                        
+                        let platformData = null;
+                        if (data.crawler_status && data.crawler_status.platforms) {
+                            platformData = data.crawler_status.platforms[p];
+                        }
+                        
+                        let dotClass = "w-2 h-2 rounded-full bg-gray-500";
+                        let textClass = "text-gray-500 font-semibold";
+                        let statusText = "대기 중";
+                        let errorButtonHtml = "";
+                        let isWarning = false;
+                        
+                        if (platformData) {
+                            const statusVal = platformData.status;
+                            if (statusVal === 'online') {
+                                dotClass = "w-2 h-2 rounded-full bg-emerald-500 animate-pulse";
+                                textClass = "text-emerald-400 font-semibold";
+                                statusText = "온라인 (실시간)";
+                            } else if (statusVal === 'partial') {
+                                dotClass = "w-2 h-2 rounded-full bg-amber-500 animate-pulse";
+                                textClass = "text-amber-400 font-semibold";
+                                statusText = "부분 정상";
+                            } else if (statusVal === 'disabled') {
+                                dotClass = "w-2 h-2 rounded-full bg-gray-600";
+                                textClass = "text-gray-500 font-semibold";
+                                statusText = "꺼짐";
+                            } else if (statusVal === 'pending') {
+                                dotClass = "w-2 h-2 rounded-full bg-gray-500";
+                                textClass = "text-gray-500 font-semibold";
+                                statusText = "대기 중";
+                            } else if (statusVal === 'offline') {
+                                isWarning = true;
+                                dotClass = "relative flex h-2 w-2";
+                                textClass = "text-rose-500 font-bold";
+                                statusText = "오프라인 (오류발생)";
+                                
+                                if (platformData.error) {
+                                    const escapedError = JSON.stringify(platformData.error).replace(/"/g, '&quot;');
+                                    errorButtonHtml = `
+                                        <button onclick="showPlatformError('${p}', ${escapedError})" class="ml-2 px-1.5 py-0.5 bg-rose-950/60 border border-rose-800 text-rose-300 hover:bg-rose-900/40 text-[10px] rounded transition-all flex items-center gap-0.5 font-bold">
+                                            <span class="material-symbols-outlined text-[10px]" style="font-size:10px">warning</span> 오류 보기
+                                        </button>
+                                    `;
+                                }
+                            }
+                        }
+                        
+                        if (p === 'market') {
+                            const smDotHtml = isWarning 
+                                ? `<span class="relative flex h-1.5 w-1.5"><span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 bg-rose-500"></span><span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-rose-500"></span></span>`
+                                : `<span class="${dotClass.replace('w-2 h-2', 'w-1.5 h-1.5')}"></span>`;
+                            
+                            statusEl.innerHTML = `
+                                ${smDotHtml}
+                                <span class="${textClass.replace(' font-semibold', '').replace(' font-bold', '')} text-[10px] ml-1">${statusText.replace('온라인 (실시간)', '온라인')}</span>
+                                ${errorButtonHtml}
+                            `;
+                        } else {
+                            const dotHtml = isWarning
+                                ? `<span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 bg-rose-500"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span></span>`
+                                : `<span class="${dotClass}"></span>`;
+                            statusEl.innerHTML = `
+                                ${dotHtml}
+                                <span class="${textClass} ml-1.5">${statusText}</span>
+                                ${errorButtonHtml}
+                            `;
+                        }
+                    });
+                })
+                .catch(err => console.error("Status fetch error:", err));
+        }
+
+        // Control Scheduler Loops (Start/Stop/Force Run)
+        function controlScheduler(action) {
+            fetch(`/api/scheduler/${action}`, { method: 'POST' })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        showToast(data.message, 'success');
+                        fetchStatus();
+                    } else {
+                        showToast(data.message, 'error');
+                    }
+                })
+                .catch(err => showToast("서버 연결 실패", 'error'));
+        }
+
+        function resetCrawlData() {
+            if (!confirm('기존 크롤링 데이터와 태깅/요약 파생 데이터를 모두 삭제합니다. 계정 토큰과 LLM 설정은 유지됩니다. 계속할까요?')) return;
+            const button = document.getElementById('btn-reset-crawl-data');
+            if (button) {
+                button.disabled = true;
+                button.innerHTML = '<span class="material-symbols-outlined text-sm animate-spin">progress_activity</span> 초기화 중...';
+            }
+            fetch('/api/crawl_data/reset', { method: 'POST' })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status !== 'success') throw new Error(data.message || '초기화 실패');
+                    showToast(data.message, 'success');
+                    fetchStatus();
+                    fetchData();
+                    fetchCrawlStats();
+                    fetchTaggingProgress();
+                    fetchTaggingAudit();
+                })
+                .catch(err => showRequestError(err.message || err, '크롤링 데이터 초기화 오류'))
+                .finally(() => {
+                    if (button) {
+                        button.disabled = false;
+                        button.innerHTML = '<span class="material-symbols-outlined text-sm">delete_sweep</span> 수집 데이터 초기화';
+                    }
+                });
+        }
+
+        function resetTaggingWork() {
+            if (!confirm('수집 데이터는 유지하고 기존 태깅/감성/요약 결과를 초기화한 뒤 전체 항목을 다시 태깅합니다. 계속할까요?')) return;
+            const button = document.getElementById('btn-reset-tagging-work');
+            if (button) {
+                button.disabled = true;
+                button.innerHTML = '<span class="material-symbols-outlined text-sm animate-spin">progress_activity</span> 다시 작업 시작 중...';
+            }
+            fetch('/api/tagging/reset_rework', { method: 'POST' })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status !== 'success') throw new Error(data.message || '태깅 초기화 실패');
+                    showToast(data.message, 'success');
+                    fetchTaggingProgress();
+                    fetchTaggingAudit();
+                    fetchData();
+                })
+                .catch(err => showRequestError(err.message || err, '태깅 작업 초기화 오류'))
+                .finally(() => {
+                    if (button) {
+                        button.disabled = false;
+                        button.innerHTML = '<span class="material-symbols-outlined text-sm">restart_alt</span> 태깅 초기화 및 다시 작업';
+                    }
+                });
+        }
+
+        // Delete account token
+        function deleteAccount(type, slot) {
+            if (!confirm(`정말로 이 ${type.toUpperCase()} 계정 인증 토큰을 삭제하시겠습니까?`)) return;
+            
+            fetch(`/api/account/delete?type=${type}&slot=${slot}`, { method: 'POST' })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        showToast(data.message, 'success');
+                        fetchStatus();
+                    } else {
+                        showToast(data.message, 'error');
+                    }
+                });
+        }
+
+        // Verify account token
+        function verifyAccount(type, slot) {
+            showToast('Truth Social 연동 상태 확인 중...', 'info');
+            
+            fetch(`/api/account/verify?type=${type}&slot=${slot}`, { method: 'POST' })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        showToast(data.message, 'success');
+                        fetchStatus();
+                    } else {
+                        showToast(data.message, 'error');
+                    }
+                })
+                .catch(err => {
+                    showToast("서버와 연결을 할 수 없습니다.", "error");
+                });
+        }
+
+        // Show detailed platform crawler errors
+        function showPlatformError(platform, errorMsg) {
+            const cleanMsg = errorMsg.replace(/\\n/g, '\n').replace(/\\t/g, '\t');
+            showRequestError(`[${platform.toUpperCase()} 크롤러 수집 오류 상세 내역]\n\n${cleanMsg}`, `${platform.toUpperCase()} 수집 오류`);
+        }
+
+        // Manage Modals
+
+        function openLoginModal(type, slot = '') {
+            const modal = document.getElementById('login-modal');
+            const modalContainer = document.getElementById('modal-container');
+            const title = document.getElementById('modal-title');
+            const typeInput = document.getElementById('login-type');
+            const slotInput = document.getElementById('login-slot');
+            
+            const fieldsCredentials = document.getElementById('fields-credentials');
+            const fieldsToken = document.getElementById('fields-token');
+            const emailContainer = document.getElementById('field-email-container');
+            const labelUsername = document.getElementById('label-username');
+            
+            typeInput.value = type;
+            slotInput.value = slot;
+
+            // Reset form fields
+            document.getElementById('input-username').value = '';
+            document.getElementById('input-email').value = '';
+            document.getElementById('input-password').value = '';
+            document.getElementById('input-token').value = '';
+
+            if (type === 'truth_auto') {
+                title.innerText = "Truth Social 자동 로그인";
+                fieldsCredentials.classList.remove('hidden');
+                emailContainer.classList.add('hidden');
+                fieldsToken.classList.add('hidden');
+                labelUsername.innerText = "이메일 또는 아이디 (Email/Username)";
+            } else if (type === 'truth_manual') {
+                title.innerText = "Truth Social 수동 토큰 입력";
+                fieldsCredentials.classList.add('hidden');
+                fieldsToken.classList.remove('hidden');
+            }
+
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modalContainer.classList.remove('scale-95');
+            modalContainer.classList.add('scale-100');
+        }
+
+        function closeLoginModal() {
+            const modal = document.getElementById('login-modal');
+            const modalContainer = document.getElementById('modal-container');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modalContainer.classList.remove('scale-100');
+            modalContainer.classList.add('scale-95');
+        }
+
+        // Form Submit
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            const type = document.getElementById('login-type').value;
+            const slot = document.getElementById('login-slot').value;
+            
+            const username = document.getElementById('input-username').value.trim();
+            const email = document.getElementById('input-email').value.trim();
+            const password = document.getElementById('input-password').value.trim();
+            const token = document.getElementById('input-token').value.trim();
+ 
+            const loading = document.getElementById('modal-loading');
+            const loadingText = document.getElementById('loading-text');
+ 
+            let url = '';
+            let payload = {};
+ 
+            if (type === 'truth_auto') {
+                url = '/api/login/truth_auto';
+                payload = { username, password };
+                loadingText.innerText = "Truth Social 인증 중...";
+            } else if (type === 'truth_manual') {
+                url = '/api/login/truth_manual';
+                payload = { token };
+                loadingText.innerText = "액세스 토큰 등록 중...";
+            }
+ 
+            loading.classList.remove('hidden');
+
+            fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(data => {
+                loading.classList.add('hidden');
+                if (data.status === 'success') {
+                    showToast(data.message, 'success');
+                    closeLoginModal();
+                    fetchStatus();
+                } else {
+                    showRequestError(data.message, '로그인 오류');
+                }
+            })
+            .catch(err => {
+                loading.classList.add('hidden');
+                showRequestError("연결 중 문제가 발생했습니다.", '로그인 오류');
+            });
+        }
+
+        // Switch Tabs
+        function switchTab(tabId) {
+            activeTab = tabId;
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(tabId).classList.remove('hidden');
+
+            const tabNewsBtn = document.getElementById('btn-tab-news');
+            const tabMarketBtn = document.getElementById('btn-tab-market');
+
+            if (tabId === 'tab-news') {
+                tabNewsBtn.className = "pb-4 font-bold text-sm text-blue-500 border-b-2 border-blue-500 transition-all";
+                tabMarketBtn.className = "pb-4 font-semibold text-sm text-gray-400 border-b-2 border-transparent hover:text-gray-200 transition-all";
+            } else {
+                tabMarketBtn.className = "pb-4 font-bold text-sm text-blue-500 border-b-2 border-blue-500 transition-all";
+                tabNewsBtn.className = "pb-4 font-semibold text-sm text-gray-400 border-b-2 border-transparent hover:text-gray-200 transition-all";
+            }
+        }
+
+        // Fetch Logs and stream
+        function startLogPolling() {
+            if (logStreamInterval) {
+                clearInterval(logStreamInterval);
+            }
+            fetchAndRenderLogs();
+            logStreamInterval = setInterval(() => {
+                fetchAndRenderLogs();
+            }, 2000);
+        }
+
+        function fetchAndRenderLogs() {
+            const shouldTail = !logInitialized && lastLogLine === 0;
+            const url = shouldTail ? '/api/logs?offset=0&tail=120&session=1' : `/api/logs?offset=${lastLogLine}`;
+            fetch(url)
+                .then(res => res.json())
+                .then(data => {
+                    const terminal = document.getElementById('log-terminal');
+                    if (lastLogLine === 0 && data.start_line > 0) {
+                        terminal.innerHTML = `<div class="text-gray-500">[시스템] 최신 로그 ${data.lines.length}줄 표시 중 (전체 ${data.last_line}줄)</div>`;
+                    } else if (lastLogLine === 0 && data.lines && data.lines.length > 0) {
+                        terminal.innerHTML = '';
+                    }
+
+                    if (data.lines && data.lines.length > 0) {
+                        data.lines.forEach(line => {
+                            const div = document.createElement('div');
+                            div.className = "mb-0.5 text-gray-300";
+                            const lowerLine = line.toLowerCase();
+                            if (lowerLine.includes('error') || lowerLine.includes('fail')) {
+                                div.className = "mb-0.5 text-rose-400 font-semibold";
+                            } else if (lowerLine.includes('success') || line.includes('성공')) {
+                                div.className = "mb-0.5 text-emerald-400";
+                            } else if (line.includes('Executing FULL')) {
+                                div.className = "mb-0.5 text-blue-400 font-bold border-t border-gray-900 pt-1 mt-1";
+                            }
+                            div.innerText = line;
+                            terminal.appendChild(div);
+                        });
+
+                        if (document.getElementById('auto-scroll-log').checked) {
+                            terminal.scrollTop = terminal.scrollHeight;
+                        }
+                    }
+                    lastLogLine = data.last_line || lastLogLine;
+                    logInitialized = true;
+                })
+                .catch(err => console.error("Logs error:", err));
+        }
+
+        function clearLogTerminal() {
+            document.getElementById('log-terminal').innerHTML = '<div class="text-gray-600">[시스템] 터미널 버퍼 비움. 새로운 로그 대기 중...</div>';
+            lastLogLine = 0;
+            logInitialized = false;
+            fetchAndRenderLogs();
+        }
+
+        // Render News Grid Layout
+        function renderNewsGrid() {
+            const feedX = document.getElementById('feed-list-x');
+            const feedTruth = document.getElementById('feed-list-truth');
+            const feedGov = document.getElementById('feed-list-gov');
+            const feedNews = document.getElementById('feed-list-news');
+            const feedThinktank = document.getElementById('feed-list-thinktank');
+            const feedAxios = document.getElementById('feed-list-axios');
+            const feedRussia = document.getElementById('feed-list-russia');
+            const feedChina = document.getElementById('feed-list-china');
+            
+            // Clear content
+            if (feedX) feedX.innerHTML = '';
+            if (feedTruth) feedTruth.innerHTML = '';
+            if (feedGov) feedGov.innerHTML = '';
+            if (feedNews) feedNews.innerHTML = '';
+            if (feedThinktank) feedThinktank.innerHTML = '';
+            if (feedAxios) feedAxios.innerHTML = '';
+            if (feedRussia) feedRussia.innerHTML = '';
+            if (feedChina) feedChina.innerHTML = '';
+            
+            const lists = {
+                x: [],
+                truth: [],
+                gov: [],
+                news: [],
+                thinktank: [],
+                axios: [],
+                russia: [],
+                china: []
+            };
+            
+            fetchedNews.forEach(item => {
+                if (item.source === 'Gov_Kremlin') {
+                    lists.russia.push(item);
+                } else if (item.source === 'News_PeopleCN_KO') {
+                    lists.china.push(item);
+                } else if (item.source.startsWith('X_')) {
+                    lists.x.push(item);
+                } else if (item.source.startsWith('TruthSocial_')) {
+                    lists.truth.push(item);
+                } else if (item.source.startsWith('ThinkTank_')) {
+                    lists.thinktank.push(item);
+                } else if (item.source === 'Axios' || item.source.startsWith('Axios')) {
+                    lists.axios.push(item);
+                } else if (item.source.startsWith('Gov_')) {
+                    lists.gov.push(item);
+                } else if (item.source.startsWith('News_')) {
+                    lists.news.push(item);
+                }
+            });
+            
+            const renderItem = (item) => {
+                // Author clean
+                let author = item.source;
+                if (item.source.startsWith('X_')) {
+                    const xAuthors = {
+                        X_ElonMusk: '@elonmusk',
+                        X_ROK_President_Lee: '@Jaemyung_Lee',
+                        X_ROK_PresidentialOffice: '@KOREA',
+                        X_ROK_OPM: '@PrimeMinisterKR',
+                        X_ROK_MND: '@ROK_MND',
+                        X_ROK_MND_Spokesperson: '@MNDSpokesperson',
+                        X_ROK_MOFA: '@mofa_kr',
+                        X_ROK_ForeignMinister: '@FMChoHyun',
+                        X_LeeJaemyung: '@Jaemyung_Lee'
+                    };
+                    author = xAuthors[item.source] || ('@' + item.source.replace('X_', ''));
+                } else if (item.source.startsWith('TruthSocial_')) {
+                    author = '@' + item.source.replace('TruthSocial_', '');
+                } else if (item.source === 'Gov_Kremlin') {
+                    author = 'Kremlin';
+                } else if (item.source === 'News_PeopleCN_KO') {
+                    author = '인민망';
+                } else if (item.source.startsWith('ThinkTank_')) {
+                    author = item.source.replace('ThinkTank_', '').replace(/_/g, ' ');
+                } else if (item.source.startsWith('Axios')) {
+                    author = 'Axios';
+                } else if (item.source.startsWith('Gov_')) {
+                    author = item.source.replace('Gov_', '');
+                } else if (item.source.startsWith('News_')) {
+                    author = item.source.replace('News_', '');
+                }
+                if (author.startsWith('Newsis')) {
+                    author = '뉴시스';
+                }
+                
+                // Title (if any) or content
+                const titleStr = item.title ? `<div class="font-bold text-gray-250 text-[11px] mb-1 line-clamp-1">${item.title}</div>` : '';
+                const bodyStr = item.content || '';
+                
+                // Format Date
+                let timeStr = item.published_at;
+                try {
+                    const dt = new Date(item.published_at);
+                    timeStr = `${dt.getMonth() + 1}/${dt.getDate()} ${String(dt.getHours()).padStart(2, '0')}:${String(dt.getMinutes()).padStart(2, '0')}`;
+                } catch(e){}
+                
+                return `
+                    <div class="border-b border-gray-800/60 pb-3 mb-3 last:border-b-0 last:pb-0 last:mb-0">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-bold text-gray-300 text-xs">${author}</span>
+                            <span class="text-[10px] text-gray-500 font-mono">${timeStr}</span>
+                        </div>
+                        ${titleStr}
+                        <p class="text-gray-400 text-xs leading-relaxed mb-2 line-clamp-2 font-medium">${bodyStr}</p>
+                        <div class="flex justify-end">
+                            <a href="${item.url}" target="_blank" class="text-[10px] text-blue-400 hover:text-blue-300 flex items-center gap-0.5 bg-blue-950/20 px-2 py-0.5 rounded border border-blue-900/20 hover:border-blue-800/40 transition-colors">
+                                <span class="material-symbols-outlined text-[12px]">link</span> 원본 보기
+                            </a>
+                        </div>
+                    </div>
+                `;
+            };
+            
+            const populate = (el, items) => {
+                if (!el) return;
+                if (items.length === 0) {
+                    el.innerHTML = `<div class="text-xs text-gray-600 italic p-8 text-center bg-gray-900/20 border border-dashed border-gray-800/60 rounded-xl my-auto">수집된 소식이 없습니다.</div>`;
+                } else {
+                    el.innerHTML = items.map(renderItem).join('');
+                }
+            };
+            
+            populate(feedX, lists.x);
+            populate(feedTruth, lists.truth);
+            populate(feedGov, lists.gov);
+            populate(feedNews, lists.news);
+            populate(feedThinktank, lists.thinktank);
+            populate(feedAxios, lists.axios);
+            populate(feedRussia, lists.russia);
+            populate(feedChina, lists.china);
+        }
+
+        const adminMarketQuoteSymbols = {
+            kospi: '^KS11',
+            kosdaq: '^KQ11',
+            krwusd: 'KRW=X',
+            sp500: '^GSPC',
+            nasdaq: '^IXIC',
+            dow: '^DJI'
+        };
+        window.adminMarketQuotesData = window.adminMarketQuotesData || {};
+        let adminMarketQuotesInFlight = false;
+        let adminLastMarketQuotesLoadedAt = 0;
+        const ADMIN_MARKET_QUOTE_REFRESH_MS = 15000;
+        const adminMarketNameMapping = {
+            kospi: 'KOSPI', kosdaq: 'KOSDAQ', krwusd: 'KRW/USD',
+            sp500: 'S&P 500', nasdaq: 'NASDAQ', dow: 'DOW JONES',
+            taco: 'TACO Index', pizza: 'Pentagon Pizza Index'
+        };
+
+        function loadAdminMarketQuotes(market) {
+            const now = Date.now();
+            if (adminMarketQuotesInFlight || now - adminLastMarketQuotesLoadedAt < ADMIN_MARKET_QUOTE_REFRESH_MS) return;
+            const symbols = Object.values(adminMarketQuoteSymbols);
+            const params = new URLSearchParams({ symbols: symbols.join(',') });
+            adminMarketQuotesInFlight = true;
+            fetch(`/api/stock_quotes?${params.toString()}`)
+                .then(res => res.ok ? res.json() : null)
+                .then(data => {
+                    if (!data || !data.quotes) return;
+                    window.adminMarketQuotesData = Object.entries(adminMarketQuoteSymbols).reduce((acc, [key, symbol]) => {
+                        if (data.quotes[symbol]) acc[key] = data.quotes[symbol];
+                        return acc;
+                    }, {});
+                    adminLastMarketQuotesLoadedAt = Date.now();
+                    renderAdminMarketTable(market);
+                })
+                .catch(() => {})
+                .finally(() => {
+                    adminMarketQuotesInFlight = false;
+                });
+        }
+
+        function getAdminMarketKeys(market) {
+            return Array.from(new Set([
+                ...Object.keys(adminMarketQuoteSymbols),
+                ...Object.keys(market || {}),
+                ...Object.keys(window.adminMarketQuotesData || {})
+            ]));
+        }
+
+        function renderAdminMarketChart(market, marketKeys) {
+            const chartEl = document.getElementById('market-chart');
+            if (!chartEl) return;
+            const rows = marketKeys.map(key => {
+                const val = market[key] || {};
+                const quote = window.adminMarketQuotesData[key];
+                const change = Number(quote ? quote.change : (val.change || 0));
+                const price = Number(quote ? quote.price : (val.price || 0));
+                return { key, change, price };
+            }).filter(row => Number.isFinite(row.change));
+            if (!rows.length) {
+                chartEl.innerHTML = `<div class="h-[180px] flex items-center justify-center text-xs text-gray-500">지수 데이터를 로딩 중입니다.</div>`;
+                return;
+            }
+            const maxAbs = Math.max(...rows.map(row => Math.abs(row.change)), 1);
+            chartEl.innerHTML = `
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <div class="text-xs font-bold text-gray-200">Market Indices</div>
+                        <div class="text-[11px] text-gray-500">Yahoo Finance chart API</div>
+                    </div>
+                    <div class="text-[11px] text-gray-500">${new Date().toLocaleTimeString()}</div>
+                </div>
+                <div class="space-y-3">
+                    ${rows.map(row => {
+                        const width = Math.max(4, (Math.abs(row.change) / maxAbs) * 100);
+                        const color = row.change >= 0 ? '#34d399' : '#fb7185';
+                        const sign = row.change >= 0 ? '+' : '';
+                        const price = row.price ? row.price.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 2 }) : '-';
+                        return `
+                            <div class="grid grid-cols-[88px_1fr_92px] gap-3 items-center">
+                                <div class="text-[11px] font-bold text-gray-300 truncate">${adminMarketNameMapping[row.key] || row.key.toUpperCase()}</div>
+                                <div class="h-7 bg-[#181921] border border-gray-800 rounded-md overflow-hidden flex items-center">
+                                    <div class="h-full" style="width:${width}%;background:${color};opacity:.85"></div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-[11px] font-mono font-bold" style="color:${color}">${sign}${row.change.toFixed(2)}%</div>
+                                    <div class="text-[10px] text-gray-500 font-mono">${price}</div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+        }
+
+        function renderAdminMarketTable(market) {
+            const marketBody = document.getElementById('market-table-body');
+            if (!marketBody) return;
+            const marketKeys = getAdminMarketKeys(market);
+            renderAdminMarketChart(market, marketKeys);
+
+            marketBody.innerHTML = marketKeys.map(key => {
+                const val = market[key] || {};
+                const quote = window.adminMarketQuotesData[key];
+                const livePrice = quote ? quote.price : val.price;
+                const liveChange = quote ? quote.change : (val.change || 0);
+                const price = livePrice ? livePrice.toLocaleString(undefined, {minimumFractionDigits: 1, maximumFractionDigits: 2}) : '-';
+                const sign = liveChange >= 0 ? '+' : '';
+                const changeColor = liveChange >= 0 ? 'text-emerald-400' : 'text-rose-500';
+
+                return `
+                    <tr class="border-b border-gray-850 hover:bg-[#181921]/30 transition-colors">
+                        <td class="p-3 font-bold text-gray-200">${adminMarketNameMapping[key] || key.toUpperCase()}</td>
+                        <td class="p-3 font-mono font-bold text-gray-300">${price}</td>
+                        <td class="p-3 font-mono font-semibold ${changeColor}">${sign}${Number(liveChange || 0).toFixed(2)}%</td>
+                        <td class="p-3 font-mono text-gray-500">${val.minutes ? val.minutes.length : 0}개</td>
+                        <td class="p-3 font-mono text-gray-500">${val.daily ? val.daily.length : 0}개</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Parse and display news & market datasets from backend
+        function fetchData() {
+            fetch('/api/data')
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('data-last-refresh').innerText = `마지막 동기화: ${new Date().toLocaleTimeString()}`;
+                    
+                    // Save and Render News Grid
+                    fetchedNews = data.news || [];
+                    renderNewsGrid();
+
+                    // Render Market Table
+                    const market = data.market || {};
+                    renderAdminMarketTable(market);
+                    loadAdminMarketQuotes(market);
+                })
+                .catch(err => console.error("Data fetch error:", err));
+        }
+    </script>
+</body>
+</html>
+

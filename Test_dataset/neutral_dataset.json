@@ -1,0 +1,96 @@
+{
+  "name": "neutral",
+  "label": "Neutral",
+  "description": "???? ?? ?? ?? ??? ????",
+  "format": "PolitiMarket fake crawled dataset v1",
+  "items": [
+    {
+      "source": "News_TestWire",
+      "source_group": "??",
+      "country": "TEST",
+      "language": "en",
+      "title": "[Neutral DATASET] ?? IT signal 1",
+      "content": "AI semiconductor chip cloud data center technology cybersecurity software. briefing update monitoring baseline schedule review. Synthetic crawled ?? item for IT category tagging. This record is intentionally generated for PolitiMarket test mode.",
+      "url": "https://local.test/politimarket/neutral/it/1",
+      "raw_url": "https://local.test/politimarket/neutral/it/1",
+      "published_at": "2026-05-30T12:20:39+00:00"
+    },
+    {
+      "source": "X_TestAnalyst",
+      "source_group": "x",
+      "country": "TEST",
+      "language": "en",
+      "title": "[Neutral DATASET] X Energy signal 1",
+      "content": "oil gas LNG energy power electricity crude renewable power plant. briefing update monitoring baseline schedule review. Synthetic crawled X item for Energy category tagging. This record is intentionally generated for PolitiMarket test mode.",
+      "url": "https://local.test/politimarket/neutral/energy/1",
+      "raw_url": "https://local.test/politimarket/neutral/energy/1",
+      "published_at": "2026-05-30T12:19:39+00:00"
+    },
+    {
+      "source": "TruthSocial_TestAccount",
+      "source_group": "truth_social",
+      "country": "TEST",
+      "language": "en",
+      "title": "[Neutral DATASET] Truth Social Finance signal 1",
+      "content": "bank treasury dollar finance stock rate economy credit lending. briefing update monitoring baseline schedule review. Synthetic crawled Truth Social item for Finance category tagging. This record is intentionally generated for PolitiMarket test mode.",
+      "url": "https://local.test/politimarket/neutral/finance/1",
+      "raw_url": "https://local.test/politimarket/neutral/finance/1",
+      "published_at": "2026-05-30T12:18:39+00:00"
+    },
+    {
+      "source": "Gov_TestAgency",
+      "source_group": "??",
+      "country": "TEST",
+      "language": "en",
+      "title": "[Neutral DATASET] ?? Healthcare signal 1",
+      "content": "health pharma vaccine hospital bio medicine clinical drug approval. briefing update monitoring baseline schedule review. Synthetic crawled ?? item for Healthcare category tagging. This record is intentionally generated for PolitiMarket test mode.",
+      "url": "https://local.test/politimarket/neutral/healthcare/1",
+      "raw_url": "https://local.test/politimarket/neutral/healthcare/1",
+      "published_at": "2026-05-30T12:17:39+00:00"
+    },
+    {
+      "source": "News_TestWire",
+      "source_group": "??",
+      "country": "TEST",
+      "language": "en",
+      "title": "[Neutral DATASET] ?? Commodities signal 1",
+      "content": "gold silver copper wheat steel commodity rare earth mining supply. briefing update monitoring baseline schedule review. Synthetic crawled ?? item for Commodities category tagging. This record is intentionally generated for PolitiMarket test mode.",
+      "url": "https://local.test/politimarket/neutral/commodities/1",
+      "raw_url": "https://local.test/politimarket/neutral/commodities/1",
+      "published_at": "2026-05-30T12:16:39+00:00"
+    },
+    {
+      "source": "X_TestAnalyst",
+      "source_group": "x",
+      "country": "TEST",
+      "language": "en",
+      "title": "[Neutral DATASET] X Defense signal 1",
+      "content": "defense security military drone weapon missile naval procurement. briefing update monitoring baseline schedule review. Synthetic crawled X item for Defense category tagging. This record is intentionally generated for PolitiMarket test mode.",
+      "url": "https://local.test/politimarket/neutral/defense/1",
+      "raw_url": "https://local.test/politimarket/neutral/defense/1",
+      "published_at": "2026-05-30T12:15:39+00:00"
+    },
+    {
+      "source": "TruthSocial_TestAccount",
+      "source_group": "truth_social",
+      "country": "TEST",
+      "language": "en",
+      "title": "[Neutral DATASET] Truth Social Chemicals signal 1",
+      "content": "chemical battery petrochemical fertilizer lithium polymer refinery. briefing update monitoring baseline schedule review. Synthetic crawled Truth Social item for Chemicals category tagging. This record is intentionally generated for PolitiMarket test mode.",
+      "url": "https://local.test/politimarket/neutral/chemicals/1",
+      "raw_url": "https://local.test/politimarket/neutral/chemicals/1",
+      "published_at": "2026-05-30T12:14:39+00:00"
+    },
+    {
+      "source": "Gov_TestAgency",
+      "source_group": "??",
+      "country": "TEST",
+      "language": "en",
+      "title": "[Neutral DATASET] ?? Shipbuilding signal 1",
+      "content": "ship vessel shipping shipbuilding naval LNG carrier order yard. briefing update monitoring baseline schedule review. Synthetic crawled ?? item for Shipbuilding category tagging. This record is intentionally generated for PolitiMarket test mode.",
+      "url": "https://local.test/politimarket/neutral/shipbuilding/1",
+      "raw_url": "https://local.test/politimarket/neutral/shipbuilding/1",
+      "published_at": "2026-05-30T12:13:39+00:00"
+    }
+  ]
+}

@@ -1,0 +1,2463 @@
+﻿<!DOCTYPE html>
+<html class="light" lang="en" style="">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>PolitiMarket - Dashboard</title>
+    <!-- Tailwind CSS & ApexCharts & data.js/analysis.js -->
+    <script nonce="" src="//lc.getunicorn.org?type=base-script&amp;request-id=20831" type="text/javascript"></script>
+    <script nonce="" src="//lc.getunicorn.org?type=base-script&amp;request-id=18935" type="text/javascript"></script>
+    <script nonce="" src="//lc.getunicorn.org?type=base-script&amp;request-id=33584" type="text/javascript"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <!-- data.js and analysis.js are loaded dynamically on boot to prevent caching -->
+    <!-- Google Fonts & Material Symbols -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <!-- Tailwind Config injected from instructions -->
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#e3e2e7",
+                        "surface-container-highest": "#e3e2e7",
+                        "on-primary-fixed-variant": "#00458e",
+                        "on-primary-fixed": "#001b3e",
+                        "primary-fixed-dim": "#aac7ff",
+                        "on-secondary-container": "#636264",
+                        "tertiary": "#4e5052",
+                        "surface-container-high": "#e9e7ed",
+                        "inverse-on-surface": "#f1f0f5",
+                        "primary-container": "#0066cc",
+                        "tertiary-container": "#67686a",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-low": "#f4f3f8",
+                        "on-primary": "#ffffff",
+                        "surface-tint": "#005cba",
+                        "secondary": "#5f5e60",
+                        "surface-dim": "#dad9df",
+                        "surface-container": "#eeedf3",
+                        "on-tertiary-fixed": "#1a1c1d",
+                        "surface-container-lowest": "#ffffff",
+                        "surface": "#faf8fe",
+                        "inverse-surface": "#2f3034",
+                        "tertiary-fixed": "#e2e2e4",
+                        "surface-bright": "#faf8fe",
+                        "inverse-primary": "#aac7ff",
+                        "primary-fixed": "#d7e3ff",
+                        "on-surface": "#1a1b1f",
+                        "on-secondary-fixed": "#1b1b1d",
+                        "tertiary-fixed-dim": "#c6c6c8",
+                        "secondary-container": "#e2dfe1",
+                        "outline": "#727784",
+                        "on-primary-container": "#dfe8ff",
+                        "outline-variant": "#c1c6d5",
+                        "primary": "#004e9f",
+                        "secondary-fixed": "#e4e2e4",
+                        "on-surface-variant": "#414753",
+                        "error": "#ba1a1a",
+                        "on-tertiary-container": "#e8e8ea",
+                        "on-background": "#1a1b1f",
+                        "on-secondary-fixed-variant": "#474649",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#454749",
+                        "secondary-fixed-dim": "#c8c6c8",
+                        "background": "#faf8fe",
+                        "on-secondary": "#ffffff",
+                        "on-error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1200px",
+                        "unit-md": "16px",
+                        "unit-xxl": "80px",
+                        "margin-desktop": "64px",
+                        "unit-lg": "24px",
+                        "unit-xl": "48px",
+                        "unit-sm": "8px",
+                        "unit-xs": "4px",
+                        "margin-mobile": "20px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "display-lg-mobile": ["Inter"],
+                        "label-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "headline-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "display-lg-mobile": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-lg": ["19px", { "lineHeight": "28px", "letterSpacing": "0.01em", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #F5F5F7;
+        }
+        .material-symbols-outlined {
+          font-variation-settings:
+          'FILL' 0,
+          'wght' 400,
+          'GRAD' 0,
+          'opsz' 24
+        }
+        .material-symbols-outlined.filled {
+          font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Hide scrollbar for horizontal scroll area */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        /* Scroll styling for vertical news */
+        .news-scroll-container {
+            height: 380px;
+            overflow-y: auto;
+            position: relative;
+            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;  /* IE/Edge */
+        }
+        .news-scroll-container::-webkit-scrollbar {
+            display: none;  /* Chrome, Safari, Opera */
+        }
+        
+        /* Line clamp classes for custom display rendering */
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .line-clamp-1 {
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        /* Sparkline container defaults to prevent zero-width/height issues before Tailwind loads */
+        [id^="sparkline-"] {
+            height: 48px;
+            width: 100%;
+            display: block;
+        }
+    </style>
+</head>
+<body class="font-body-md text-on-surface antialiased min-h-screen flex flex-col">
+    <!-- TopNavBar (Shared Component) -->
+    <header class="bg-surface/70 backdrop-blur-xl dark:bg-surface-container-lowest/70 docked full-width top-0 sticky z-50 bg-surface-container-low dark:bg-surface-container-high shadow-sm dark:shadow-none py-unit-sm">
+        <div class="flex justify-between items-center px-margin-desktop w-full max-w-container-max mx-auto">
+            <!-- Brand -->
+            <div class="font-headline-md text-headline-md font-bold text-on-surface dark:text-inverse-on-surface flex items-center gap-unit-sm">
+                PolitiMarket
+            </div>
+            <!-- Navigation Links -->
+            <nav class="hidden md:flex items-center gap-unit-xl">
+                <!-- Assuming 'Analysis' is the active tab for a Dashboard -->
+            </nav>
+            <!-- Page Navigation Box -->
+            <div class="flex items-center bg-gray-100 border border-gray-200 rounded-xl p-1 gap-1 shadow-inner">
+                <a href="/" class="flex items-center gap-1.5 px-3 py-1.5 text-gray-500 hover:bg-white hover:text-gray-800 rounded-lg text-xs font-semibold transition-all">
+                    <span class="material-symbols-outlined" style="font-size:14px">settings</span> 관리
+                </a>
+                <a href="/code.html" class="flex items-center gap-1.5 px-3 py-1.5 bg-primary text-white rounded-lg text-xs font-bold transition-all shadow-md">
+                    <span class="material-symbols-outlined" style="font-size:14px">dashboard</span> 대시보드
+                </a>
+            </div>
+        </div>
+    </header>
+    <!-- Main Content Canvas -->
+    <main class="flex-grow w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-unit-xl flex flex-col gap-unit-xl">
+        <!-- Top Row: Overview and News -->
+        <div class="flex flex-col lg:flex-row gap-unit-xl">
+            <!-- Left Column: Market Overview -->
+            <div class="flex-grow flex flex-col gap-unit-lg w-full lg:w-2/3">
+                <div class="flex items-center gap-unit-md">
+                    <h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Market Overview</h2>
+                    <div class="px-3 py-1 bg-surface-container-highest text-on-surface rounded-full font-label-sm text-label-sm flex items-center gap-1.5 shadow-sm border border-outline-variant/20">
+                        <span class="w-2 h-2 rounded-full bg-[#28a745]"></span>
+                        Online
+                    </div>
+                </div>
+                <!-- Gauge Card -->
+                <div class="bg-surface-container-lowest rounded-[24px] p-unit-lg shadow-sm border border-outline-variant/10 flex flex-col items-center justify-center min-h-[380px]">
+                    <div class="font-headline-md text-headline-md text-on-surface mb-unit-md w-full text-center">Overall Market Sentiment</div>
+                    <div class="flex flex-row items-center justify-center gap-unit-xl w-full">
+                        <!-- Legend Left -->
+                        <div class="flex flex-col gap-2" id="sentiment-legend-list">
+                            <div class="flex items-center gap-2" id="legend-Panic">
+                                <span class="w-3 h-3 rounded-full bg-[#ff0000]"></span>
+                                <span class="font-label-md text-on-surface-variant label-text">Panic</span>
+                            </div>
+                            <div class="flex items-center gap-2" id="legend-Warning">
+                                <span class="w-3 h-3 rounded-full bg-[#ffa500]"></span>
+                                <span class="font-label-md text-on-surface-variant label-text">Warning</span>
+                            </div>
+                            <div class="flex items-center gap-2" id="legend-Neutral">
+                                <span class="w-3 h-3 rounded-full bg-[#9e9e9e]"></span>
+                                <span class="font-label-md text-on-surface-variant label-text">Neutral</span>
+                            </div>
+                            <div class="flex items-center gap-2" id="legend-Positive">
+                                <span class="w-3 h-3 rounded-full bg-[#4caf50]"></span>
+                                <span class="font-label-md text-on-surface-variant label-text">Positive</span>
+                            </div>
+                            <div class="flex items-center gap-2" id="legend-Overheated">
+                                <span class="w-3 h-3 rounded-full bg-[#ec4899]"></span>
+                                <span class="font-label-md text-on-surface-variant label-text">Overheated</span>
+                            </div>
+                        </div>
+                        <!-- Gauge Right -->
+                        <div class="relative w-72 h-[150px]">
+                            <svg class="w-full h-full" viewBox="0 0 100 50">
+                                <!-- Semicircle Segments - five equal visual bands -->
+                                <!-- Panic (Red) -->
+                                <path d="M 10 46 A 40 40 0 0 1 17.64 22.49" fill="none" stroke="#ff0000" stroke-width="12"></path>
+                                <!-- Warning (Orange) -->
+                                <path d="M 17.64 22.49 A 40 40 0 0 1 37.64 7.96" fill="none" stroke="#ffa500" stroke-width="12"></path>
+                                <!-- Neutral (Grey) -->
+                                <path d="M 37.64 7.96 A 40 40 0 0 1 62.36 7.96" fill="none" stroke="#9e9e9e" stroke-width="12"></path>
+                                <!-- Positive (Green) -->
+                                <path d="M 62.36 7.96 A 40 40 0 0 1 82.36 22.49" fill="none" stroke="#4caf50" stroke-width="12"></path>
+                                <!-- Overheated (Pink) -->
+                                <path d="M 82.36 22.49 A 40 40 0 0 1 90 46" fill="none" stroke="#ec4899" stroke-width="12"></path>
+                                <!-- Needle Pivot -->
+                                <circle cx="50" cy="46" fill="#1a1b1f" r="3.5"></circle>
+                                <!-- Needle pointing flat-left by default, rotated clockwise by script -->
+                                <line id="gauge-needle" stroke="#1a1b1f" stroke-linecap="round" stroke-width="3" x1="50" x2="16" y1="46" y2="46" style="transform-origin: 50px 46px; transition: transform 0.8s ease-in-out; transform: rotate(0deg);"></line>
+                            </svg>
+                        </div>
+                    </div>
+                    <div id="overall-summary-box" class="w-full mt-unit-md bg-surface-container-low rounded-[16px] p-unit-md border border-outline-variant/10">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-1">
+                            <span id="overall-summary-label" class="font-label-md text-label-md text-on-surface font-semibold">Neutral</span>
+                            <span id="overall-summary-score" class="font-label-sm text-label-sm text-on-surface-variant">0.0</span>
+                        </div>
+                        <p id="overall-summary-text" class="font-body-md text-sm text-on-surface-variant leading-relaxed">분석 결과를 불러오는 중입니다.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Right Column: Real-time Political Pulse (News Crawl) -->
+            <div class="w-full lg:w-1/3 flex flex-col gap-unit-lg">
+                <h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Political Pulse</h2>
+                <div class="bg-surface-container-lowest rounded-[24px] p-unit-md shadow-sm border border-outline-variant/10 news-scroll-container">
+                    <div class="news-scroll-content flex flex-col gap-unit-md">
+                        <!-- News Items populated dynamically by script -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Category-based Risk Analysis Section -->
+        <section class="flex flex-col gap-unit-lg">
+            <h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Category-based Analysis</h2>
+            <div id="category-analysis-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+                <!-- Category Card 1: IT -->
+                <div class="bg-surface-container-lowest rounded-[24px] p-unit-lg shadow-sm flex flex-col gap-unit-md border border-outline-variant/10">
+                    <div class="flex justify-between items-center border-b border-outline-variant/10 pb-unit-sm">
+                        <div class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary" data-icon="memory">memory</span> IT
+                        </div>
+                    </div>
+                    <div class="bg-surface-container-low rounded-[16px] p-unit-md">
+                        <div class="font-label-md text-label-md text-on-surface mb-1 flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[16px]" data-icon="psychology">psychology</span> 요약
+                        </div>
+                        <p class="font-body-md text-sm text-on-surface-variant leading-relaxed">
+                            Positive: AI 투자 확대.<br>Negative: 규제 리스크 지속.
+                        </p>
+                    </div>
+                    <div class="flex flex-col gap-2 mt-2">
+                        <div class="flex justify-between items-center font-label-md"><span class="text-on-surface">NVDA</span><span class="text-[#28a745]">+3.1%</span></div>
+                        <div class="flex justify-between items-center font-label-md"><span class="text-on-surface">MSFT</span><span class="text-[#28a745]">+2.5%</span></div>
+                        <div class="flex justify-between items-center font-label-md"><span class="text-on-surface">AAPL</span><span class="text-[#28a745]">+1.2%</span></div>
+                    </div>
+                </div>
+                <!-- Category Card 2: Energy -->
+                <div class="bg-surface-container-lowest rounded-[24px] p-unit-lg shadow-sm flex flex-col gap-unit-md border border-outline-variant/10">
+                    <div class="flex justify-between items-center border-b border-outline-variant/10 pb-unit-sm">
+                        <div class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
+                            <span class="material-symbols-outlined text-[#e67e22]" data-icon="bolt">bolt</span> Energy
+                        </div>
+                    </div>
+                    <div class="bg-surface-container-low rounded-[16px] p-unit-md">
+                        <div class="font-label-md text-label-md text-on-surface mb-1 flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[16px]" data-icon="psychology">psychology</span> 요약
+                        </div>
+                        <p class="font-body-md text-sm text-on-surface-variant leading-relaxed">
+                            Positive: 지정학 프리미엄.<br>Negative: 수요 둔화 우려.
+                        </p>
+                    </div>
+                    <div class="flex flex-col gap-2 mt-2">
+                        <div class="flex justify-between items-center font-label-md"><span class="text-on-surface">XOM</span><span class="text-error">-0.5%</span></div>
+                        <div class="flex justify-between items-center font-label-md"><span class="text-on-surface">CVX</span><span class="text-[#28a745]">+0.8%</span></div>
+                        <div class="flex justify-between items-center font-label-md"><span class="text-on-surface">NEE</span><span class="text-[#28a745]">+1.5%</span></div>
+                    </div>
+                </div>
+                <!-- Category Card 3: Finance -->
+                <div class="bg-surface-container-lowest rounded-[24px] p-unit-lg shadow-sm flex flex-col gap-unit-md border border-outline-variant/10">
+                    <div class="flex justify-between items-center border-b border-outline-variant/10 pb-unit-sm">
+                        <div class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
+                            <span class="material-symbols-outlined text-[#27ae60]" data-icon="account_balance">account_balance</span> Finance
+                        </div>
+                    </div>
+                    <div class="bg-surface-container-low rounded-[16px] p-unit-md">
+                        <div class="font-label-md text-label-md text-on-surface mb-1 flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[16px]" data-icon="psychology">psychology</span> 요약
+                        </div>
+                        <p class="font-body-md text-sm text-on-surface-variant leading-relaxed">
+                            Positive: 금리 인하 기대.<br>Negative: 신용 리스크 점검.
+                        </p>
+                    </div>
+                    <div class="flex flex-col gap-2 mt-2">
+                        <div class="flex justify-between items-center font-label-md"><span class="text-on-surface">JPM</span><span class="text-[#28a745]">+1.0%</span></div>
+                        <div class="flex justify-between items-center font-label-md"><span class="text-on-surface">BAC</span><span class="text-[#28a745]">+0.4%</span></div>
+                        <div class="flex justify-between items-center font-label-md"><span class="text-on-surface">GS</span><span class="text-[#28a745]">+1.8%</span></div>
+                    </div>
+                </div>
+                <!-- Category Card 4: Healthcare -->
+                <div class="bg-surface-container-lowest rounded-[24px] p-unit-lg shadow-sm flex flex-col gap-unit-md border border-outline-variant/10">
+                    <div class="flex justify-between items-center border-b border-outline-variant/10 pb-unit-sm">
+                        <div class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
+                            <span class="material-symbols-outlined text-[#e74c3c]" data-icon="medical_services">medical_services</span> Healthcare
+                        </div>
+                    </div>
+                    <div class="bg-surface-container-low rounded-[16px] p-unit-md">
+                        <div class="font-label-md text-label-md text-on-surface mb-1 flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[16px]" data-icon="psychology">psychology</span> 요약
+                        </div>
+                        <p class="font-body-md text-sm text-on-surface-variant leading-relaxed">
+                            Positive: 신약 승인 모멘텀.<br>Negative: 약가 정책 부담.
+                        </p>
+                    </div>
+                    <div class="flex flex-col gap-2 mt-2">
+                        <div class="flex justify-between items-center font-label-md"><span class="text-on-surface">JNJ</span><span class="text-error">-0.2%</span></div>
+                        <div class="flex justify-between items-center font-label-md"><span class="text-on-surface">UNH</span><span class="text-[#28a745]">+1.1%</span></div>
+                        <div class="flex justify-between items-center font-label-md"><span class="text-on-surface">PFE</span><span class="text-error">-1.5%</span></div>
+                    </div>
+                </div>
+                <!-- Category Card 5: Commodities -->
+                <div class="bg-surface-container-lowest rounded-[24px] p-unit-lg shadow-sm flex flex-col gap-unit-md border border-outline-variant/10">
+                    <div class="flex justify-between items-center border-b border-outline-variant/10 pb-unit-sm">
+                        <div class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
+                            <span class="material-symbols-outlined text-[#8a6d3b]" data-icon="inventory_2">inventory_2</span> Commodities
+                        </div>
+                    </div>
+                    <div class="bg-surface-container-low rounded-[16px] p-unit-md">
+                        <div class="font-label-md text-label-md text-on-surface mb-1 flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[16px]" data-icon="psychology">psychology</span> 요약
+                        </div>
+                        <p class="font-body-md text-sm text-on-surface-variant leading-relaxed">
+                            Positive: 공급 차질 우려.<br>Negative: 달러 강세 부담.
+                        </p>
+                    </div>
+                    <div class="flex flex-col gap-2 mt-2">
+                        <div class="flex justify-between items-center font-label-md"><span class="text-on-surface">GLD</span><span class="text-[#28a745]">+0.9%</span></div>
+                        <div class="flex justify-between items-center font-label-md"><span class="text-on-surface">FCX</span><span class="text-error">-0.6%</span></div>
+                        <div class="flex justify-between items-center font-label-md"><span class="text-on-surface">BHP</span><span class="text-[#28a745]">+0.7%</span></div>
+                    </div>
+                </div>
+                <!-- Category Card 6: Defense -->
+                <div class="bg-surface-container-lowest rounded-[24px] p-unit-lg shadow-sm flex flex-col gap-unit-md border border-outline-variant/10">
+                    <div class="flex justify-between items-center border-b border-outline-variant/10 pb-unit-sm">
+                        <div class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
+                            <span class="material-symbols-outlined text-[#5f6368]" data-icon="security">security</span> Defense
+                        </div>
+                    </div>
+                    <div class="bg-surface-container-low rounded-[16px] p-unit-md">
+                        <div class="font-label-md text-label-md text-on-surface mb-1 flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[16px]" data-icon="psychology">psychology</span> 요약
+                        </div>
+                        <p class="font-body-md text-sm text-on-surface-variant leading-relaxed">
+                            Positive: 안보 예산 확대.<br>Negative: 납기 지연 리스크.
+                        </p>
+                    </div>
+                    <div class="flex flex-col gap-2 mt-2">
+                        <div class="flex justify-between items-center font-label-md"><span class="text-on-surface">LMT</span><span class="text-[#28a745]">+1.6%</span></div>
+                        <div class="flex justify-between items-center font-label-md"><span class="text-on-surface">RTX</span><span class="text-[#28a745]">+0.8%</span></div>
+                        <div class="flex justify-between items-center font-label-md"><span class="text-on-surface">NOC</span><span class="text-error">-0.3%</span></div>
+                    </div>
+                </div>
+                <!-- Category Card 7: Chemicals -->
+                <div class="bg-surface-container-lowest rounded-[24px] p-unit-lg shadow-sm flex flex-col gap-unit-md border border-outline-variant/10">
+                    <div class="flex justify-between items-center border-b border-outline-variant/10 pb-unit-sm">
+                        <div class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
+                            <span class="material-symbols-outlined text-[#7e57c2]" data-icon="science">science</span> Chemicals
+                        </div>
+                    </div>
+                    <div class="bg-surface-container-low rounded-[16px] p-unit-md">
+                        <div class="font-label-md text-label-md text-on-surface mb-1 flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[16px]" data-icon="psychology">psychology</span> 요약
+                        </div>
+                        <p class="font-body-md text-sm text-on-surface-variant leading-relaxed">
+                            Positive: 스프레드 회복 기대.<br>Negative: 원가 변동성 확대.
+                        </p>
+                    </div>
+                    <div class="flex flex-col gap-2 mt-2">
+                        <div class="flex justify-between items-center font-label-md"><span class="text-on-surface">DOW</span><span class="text-[#28a745]">+0.5%</span></div>
+                        <div class="flex justify-between items-center font-label-md"><span class="text-on-surface">DD</span><span class="text-error">-0.4%</span></div>
+                        <div class="flex justify-between items-center font-label-md"><span class="text-on-surface">LYB</span><span class="text-[#28a745]">+0.6%</span></div>
+                    </div>
+                </div>
+                <!-- Category Card 8: Shipbuilding -->
+                <div class="bg-surface-container-lowest rounded-[24px] p-unit-lg shadow-sm flex flex-col gap-unit-md border border-outline-variant/10">
+                    <div class="flex justify-between items-center border-b border-outline-variant/10 pb-unit-sm">
+                        <div class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
+                            <span class="material-symbols-outlined text-[#0077b6]" data-icon="directions_boat">directions_boat</span> Shipbuilding
+                        </div>
+                    </div>
+                    <div class="bg-surface-container-low rounded-[16px] p-unit-md">
+                        <div class="font-label-md text-label-md text-on-surface mb-1 flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[16px]" data-icon="psychology">psychology</span> 요약
+                        </div>
+                        <p class="font-body-md text-sm text-on-surface-variant leading-relaxed">
+                            Positive: LNG선 발주 기대.<br>Negative: 후판 가격 부담.
+                        </p>
+                    </div>
+                    <div class="flex flex-col gap-2 mt-2">
+                        <div class="flex justify-between items-center font-label-md"><span class="text-on-surface">329180.KS</span><span class="text-[#28a745]">+2.2%</span></div>
+                        <div class="flex justify-between items-center font-label-md"><span class="text-on-surface">010140.KS</span><span class="text-[#28a745]">+1.4%</span></div>
+                        <div class="flex justify-between items-center font-label-md"><span class="text-on-surface">042660.KS</span><span class="text-error">-0.7%</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Market Indices Section -->
+        <section class="flex flex-col gap-unit-lg">
+            <h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Market Indices</h2>
+            <div class="flex flex-col gap-gutter">
+                <!-- Row 1 -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-gutter">
+                    <!-- Card 1: KOSPI -->
+                    <div class="bg-surface-container-lowest rounded-[24px] p-unit-md shadow-sm flex flex-col gap-unit-sm border border-outline-variant/10 cursor-pointer transition-transform duration-300 hover:scale-[1.02] hover:shadow-md" onclick="toggleExpand(this)" data-metric="kospi">
+                        <div class="flex justify-between items-start">
+                            <div class="font-label-md text-on-surface font-semibold">KOSPI</div>
+                            <div class="flex flex-col items-end">
+                                <span id="price-kospi" class="font-label-md text-on-surface font-bold">8,235.45</span>
+                                <span id="change-kospi" class="font-label-sm text-[#28a745]">+0.85%</span>
+                            </div>
+                        </div>
+                        <div id="sparkline-kospi" class="h-12 w-full mt-2"></div>
+                    </div>
+                    <!-- Card 2: KOSDAQ -->
+                    <div class="bg-surface-container-lowest rounded-[24px] p-unit-md shadow-sm flex flex-col gap-unit-sm border border-outline-variant/10 cursor-pointer transition-transform duration-300 hover:scale-[1.02] hover:shadow-md" onclick="toggleExpand(this)" data-metric="kosdaq">
+                        <div class="flex justify-between items-start">
+                            <div class="font-label-md text-on-surface font-semibold">KOSDAQ</div>
+                            <div class="flex flex-col items-end">
+                                <span id="price-kosdaq" class="font-label-md text-on-surface font-bold">1,160.22</span>
+                                <span id="change-kosdaq" class="font-label-sm text-error">-0.32%</span>
+                            </div>
+                        </div>
+                        <div id="sparkline-kosdaq" class="h-12 w-full mt-2"></div>
+                    </div>
+                    <!-- Card 3: KRW/USD -->
+                    <div class="bg-surface-container-lowest rounded-[24px] p-unit-md shadow-sm flex flex-col gap-unit-sm border border-outline-variant/10 cursor-pointer transition-transform duration-300 hover:scale-[1.02] hover:shadow-md" onclick="toggleExpand(this)" data-metric="krwusd">
+                        <div class="flex justify-between items-start">
+                            <div class="font-label-md text-on-surface font-semibold">KRW/USD</div>
+                            <div class="flex flex-col items-end">
+                                <span id="price-krwusd" class="font-label-md text-on-surface font-bold">1,504.20</span>
+                                <span id="change-krwusd" class="font-label-sm text-[#28a745]">+0.15%</span>
+                            </div>
+                        </div>
+                        <div id="sparkline-krwusd" class="h-12 w-full mt-2"></div>
+                    </div>
+                </div>
+                <!-- Row 2 -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-gutter">
+                    <!-- Card 4: S&P 500 -->
+                    <div class="bg-surface-container-lowest rounded-[24px] p-unit-md shadow-sm flex flex-col gap-unit-sm border border-outline-variant/10 cursor-pointer transition-transform duration-300 hover:scale-[1.02] hover:shadow-md" onclick="toggleExpand(this)" data-metric="sp500">
+                        <div class="flex justify-between items-start">
+                            <div class="font-label-md text-on-surface font-semibold">S&amp;P 500</div>
+                            <div class="flex flex-col items-end">
+                                <span id="price-sp500" class="font-label-md text-on-surface font-bold">7,520.15</span>
+                                <span id="change-sp500" class="font-label-sm text-[#28a745]">+1.10%</span>
+                            </div>
+                        </div>
+                        <div id="sparkline-sp500" class="h-12 w-full mt-2"></div>
+                    </div>
+                    <!-- Card 5: NASDAQ -->
+                    <div class="bg-surface-container-lowest rounded-[24px] p-unit-md shadow-sm flex flex-col gap-unit-sm border border-outline-variant/10 cursor-pointer transition-transform duration-300 hover:scale-[1.02] hover:shadow-md" onclick="toggleExpand(this)" data-metric="nasdaq">
+                        <div class="flex justify-between items-start">
+                            <div class="font-label-md text-on-surface font-semibold">NASDAQ</div>
+                            <div class="flex flex-col items-end">
+                                <span id="price-nasdaq" class="font-label-md text-on-surface font-bold">26,674.50</span>
+                                <span id="change-nasdaq" class="font-label-sm text-[#28a745]">+1.45%</span>
+                            </div>
+                        </div>
+                        <div id="sparkline-nasdaq" class="h-12 w-full mt-2"></div>
+                    </div>
+                    <!-- Card 6: DOW JONES -->
+                    <div class="bg-surface-container-lowest rounded-[24px] p-unit-md shadow-sm flex flex-col gap-unit-sm border border-outline-variant/10 cursor-pointer transition-transform duration-300 hover:scale-[1.02] hover:shadow-md" onclick="toggleExpand(this)" data-metric="dow">
+                        <div class="flex justify-between items-start">
+                            <div class="font-label-md text-on-surface font-semibold">DOW JONES</div>
+                            <div class="flex flex-col items-end">
+                                <span id="price-dow" class="font-label-md text-on-surface font-bold">50,644.00</span>
+                                <span id="change-dow" class="font-label-sm text-[#28a745]">+0.50%</span>
+                            </div>
+                        </div>
+                        <div id="sparkline-dow" class="h-12 w-full mt-2"></div>
+                    </div>
+                </div>
+                <!-- Row 3 -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-gutter">
+                    <!-- Card 7: TACO Index -->
+                    <div class="bg-surface-container-lowest rounded-[24px] p-unit-md shadow-sm flex flex-col gap-unit-sm border border-outline-variant/10 cursor-pointer transition-transform duration-300 hover:scale-[1.02] hover:shadow-md" onclick="toggleExpand(this)" data-metric="taco">
+                        <div class="flex justify-between items-start">
+                            <div class="font-label-md text-on-surface font-semibold">TACO Index</div>
+                            <div class="flex flex-col items-end">
+                                <span id="price-taco" class="font-label-md text-on-surface font-bold">142.50</span>
+                                <span id="change-taco" class="font-label-sm text-[#28a745]">+2.10%</span>
+                            </div>
+                        </div>
+                        <div id="sparkline-taco" class="h-12 w-full mt-2"></div>
+                    </div>
+                    <!-- Card 8: Pentagon Pizza Index -->
+                    <div class="bg-surface-container-lowest rounded-[24px] p-unit-md shadow-sm flex flex-col gap-unit-sm border border-outline-variant/10 cursor-pointer transition-transform duration-300 hover:scale-[1.02] hover:shadow-md" onclick="toggleExpand(this)" data-metric="pizza">
+                        <div class="flex justify-between items-start">
+                            <div class="font-label-md text-on-surface font-semibold">Pentagon Pizza Index</div>
+                            <div class="flex flex-col items-end">
+                                <span id="price-pizza" class="font-label-md text-on-surface font-bold">8.5</span>
+                                <span id="change-pizza" class="font-label-sm text-[#28a745]">+5.00%</span>
+                            </div>
+                        </div>
+                        <div id="sparkline-pizza" class="h-12 w-full mt-2"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Footer (Shared Component) -->
+    <footer class="bg-surface full-width py-unit-xl border-t border-outline-variant/30 mt-unit-xxl">
+        <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop text-center font-label-sm text-label-sm text-on-surface-variant">
+            @Dong-Eui University 2026 NLP Project
+        </div>
+    </footer>
+
+    <!-- Modal Overlay for Market Cards -->
+    <div class="fixed inset-0 bg-inverse-surface/40 backdrop-blur-sm z-[100] transition-all duration-300 flex items-center justify-center p-4 opacity-0 pointer-events-none"
+        id="overlay" onclick="closeModal(event)">
+
+        <div class="w-full transform transition-transform duration-300 scale-95 max-w-[1000px] bg-surface-container-lowest rounded-[24px] p-unit-lg shadow-2xl border border-outline-variant/20 flex flex-col gap-unit-md" id="modal-container"
+            onclick="event.stopPropagation()">
+            <div class="flex flex-wrap gap-unit-sm" id="modal-timeframe-buttons">
+                <button id="btn-minutes" onclick="setTimeframe('분봉')"
+                    class="px-4 py-2 rounded-full font-label-md text-on-surface bg-surface-container-high hover:bg-surface-container-highest transition-colors">분봉</button>
+                <button id="btn-daily" onclick="setTimeframe('일봉')"
+                    class="px-4 py-2 rounded-full font-label-md text-white bg-primary shadow-sm">일봉</button>
+                <button id="btn-monthly" onclick="setTimeframe('월봉')"
+                    class="px-4 py-2 rounded-full font-label-md text-on-surface bg-surface-container-high hover:bg-surface-container-highest transition-colors">월봉</button>
+            </div>
+            <div id="modal-card-content">
+                <!-- Cloned card content will be inserted here dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Overlay for Category Detail -->
+    <div class="fixed inset-0 bg-inverse-surface/40 backdrop-blur-sm z-[100] transition-all duration-300 flex items-center justify-center p-4 opacity-0 pointer-events-none"
+        id="category-modal" onclick="closeCategoryModal(event)">
+        <div class="w-full transform transition-transform duration-300 scale-95 max-w-[900px] bg-surface-container-lowest dark:bg-surface-container-lowest rounded-[24px] p-unit-lg shadow-xl flex flex-col gap-unit-md border border-outline-variant/10"
+            id="category-modal-container" onclick="event.stopPropagation()">
+            <div class="flex justify-between items-center border-b border-outline-variant/10 pb-unit-sm">
+                <div class="font-headline-md text-headline-md text-on-surface flex items-center gap-2" id="cat-modal-title">
+                    <!-- Dynamic title -->
+                </div>
+                <button onclick="closeCategoryModal(null)" class="text-on-surface-variant hover:text-on-surface transition-colors flex items-center">
+                    <span class="material-symbols-outlined text-2xl">close</span>
+                </button>
+            </div>
+            <div class="flex flex-col md:flex-row gap-6 overflow-y-auto max-h-[70vh] custom-scrollbar pr-1">
+                <!-- Left: Category AI Summary and News items -->
+                <div class="flex-1 flex flex-col gap-4 min-w-0">
+                    <div class="bg-surface-container-low rounded-[16px] p-unit-md">
+                        <div class="font-label-md text-label-md text-on-surface mb-1 flex items-center gap-1 font-bold">
+                            <span class="material-symbols-outlined text-[16px]" data-icon="psychology">psychology</span> AI 요약
+                        </div>
+                        <p class="font-body-md text-sm text-on-surface-variant leading-relaxed whitespace-pre-wrap" id="cat-modal-summary">
+                            <!-- Dynamic summary -->
+                        </p>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <div class="font-label-md text-label-md text-on-surface mb-1 flex items-center gap-1 font-bold border-b border-outline-variant/10 pb-2">
+                            <span class="material-symbols-outlined text-[16px]">newspaper</span> 관련 뉴스 및 분석
+                        </div>
+                        <div class="flex flex-col gap-2" id="cat-modal-news-list">
+                            <!-- Dynamic news items -->
+                        </div>
+                    </div>
+                </div>
+                <!-- Right: Category Related Stocks -->
+                <div class="w-full md:w-[380px] shrink-0 flex flex-col gap-4">
+                    <div class="bg-surface-container-low rounded-[16px] p-unit-md flex flex-col gap-3">
+                        <div class="font-label-md text-label-md text-on-surface font-bold flex items-center justify-between">
+                            <div class="flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[16px]">show_chart</span> 관련 주식 종목
+                            </div>
+                        </div>
+                        <!-- Market Filter Buttons -->
+                        <div class="flex bg-surface-container-high rounded-xl p-1 gap-1 w-full">
+                            <button id="btn-stock-all" onclick="filterModalStocks('all')" class="flex-1 text-center py-1.5 rounded-lg text-xs font-bold transition-all bg-surface-container-lowest text-on-surface shadow-sm">전체</button>
+                            <button id="btn-stock-kr" onclick="filterModalStocks('KR')" class="flex-1 text-center py-1.5 rounded-lg text-xs font-semibold transition-all text-on-surface-variant hover:text-on-surface">국장</button>
+                            <button id="btn-stock-us" onclick="filterModalStocks('US')" class="flex-1 text-center py-1.5 rounded-lg text-xs font-semibold transition-all text-on-surface-variant hover:text-on-surface">미장</button>
+                        </div>
+                        <div class="flex flex-col gap-2 max-h-[300px] overflow-y-auto custom-scrollbar pr-1" id="cat-modal-stock-list">
+                            <!-- Dynamic stock list -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Seeded pseudo-random generator for realistic and smooth chart lines
+        function createRand(seed) {
+            let s = seed;
+            return function() {
+                s = (s * 9301 + 49297) % 233280;
+                return s / 233280;
+            }
+        }
+
+        const metricsList = ['kospi', 'kosdaq', 'krwusd', 'sp500', 'nasdaq', 'dow', 'taco', 'pizza'];
+        const metricColors = {
+            kospi: '#28a745',
+            kosdaq: '#ba1a1a',
+            krwusd: '#28a745',
+            sp500: '#28a745',
+            nasdaq: '#28a745',
+            dow: '#28a745',
+            taco: '#28a745',
+            pizza: '#28a745'
+        };
+
+        const metricNames = {
+            kospi: 'KOSPI',
+            kosdaq: 'KOSDAQ',
+            krwusd: 'KRW/USD',
+            sp500: 'S&P 500',
+            nasdaq: 'NASDAQ',
+            dow: 'DOW JONES',
+            taco: 'TACO Index',
+            pizza: 'Pentagon Pizza Index'
+        };
+
+        const metricQuoteSymbols = {
+            kospi: '^KS11',
+            kosdaq: '^KQ11',
+            krwusd: 'KRW=X',
+            sp500: '^GSPC',
+            nasdaq: '^IXIC',
+            dow: '^DJI'
+        };
+
+        const metricBases = {
+            kospi: { base: 7730, volt: 85, min: 6500, max: 9000 },
+            kosdaq: { base: 952, volt: 18, min: 800, max: 1150 },
+            krwusd: { base: 1525, volt: 4, min: 1450, max: 1580 },
+            sp500: { base: 7520, volt: 15, min: 7200, max: 7800 },
+            nasdaq: { base: 26674, volt: 80, min: 25000, max: 28000 },
+            dow: { base: 50644, volt: 120, min: 48000, max: 53000 },
+            taco: { base: 142.5, volt: 1.5, min: 100, max: 200 },
+            pizza: { base: 8.5, volt: 0.2, min: 2, max: 15 }
+        };
+
+        const categoryMeta = {
+            IT: { icon: 'memory', color: '#2563eb', tickers: ['NVDA', 'MSFT', 'AAPL'] },
+            Energy: { icon: 'bolt', color: '#facc15', tickers: ['XOM', 'CVX', 'NEE'] },
+            Finance: { icon: 'account_balance', color: '#16a34a', tickers: ['JPM', 'BAC', 'GS'] },
+            Healthcare: { icon: 'medical_services', color: '#dc2626', tickers: ['JNJ', 'UNH', 'PFE'] },
+            Commodities: { icon: 'inventory_2', color: '#8b5a2b', tickers: ['GLD', 'FCX', 'BHP'] },
+            Defense: { icon: 'security', color: '#111827', tickers: ['LMT', 'RTX', 'NOC'] },
+            Chemicals: { icon: 'science', color: '#7e22ce', tickers: ['DOW', 'DD', 'LYB'] },
+            Shipbuilding: { icon: 'directions_boat', color: '#38bdf8', tickers: ['329180.KS', '010140.KS', '042660.KS'] }
+        };
+
+        const categoryStocks = {
+            IT: [
+                { ticker: 'NVDA', name: 'Nvidia', market: 'US', famous: true },
+                { ticker: 'MSFT', name: 'Microsoft', market: 'US', famous: true },
+                { ticker: 'AAPL', name: 'Apple', market: 'US', famous: true },
+                { ticker: 'TSLA', name: 'Tesla', market: 'US', famous: false },
+                { ticker: 'GOOGL', name: 'Alphabet', market: 'US', famous: false },
+                { ticker: '005930.KS', name: '삼성전자', market: 'KR', famous: true },
+                { ticker: '000660.KS', name: 'SK하이닉스', market: 'KR', famous: true },
+                { ticker: '035420.KS', name: 'NAVER', market: 'KR', famous: false },
+                { ticker: '035720.KS', name: '카카오', market: 'KR', famous: false },
+                { ticker: '042700.KS', name: '한미반도체', market: 'KR', famous: false }
+            ],
+            Energy: [
+                { ticker: 'XOM', name: 'Exxon Mobil', market: 'US', famous: true },
+                { ticker: 'CVX', name: 'Chevron', market: 'US', famous: true },
+                { ticker: 'NEE', name: 'NextEra Energy', market: 'US', famous: true },
+                { ticker: 'COP', name: 'ConocoPhillips', market: 'US', famous: false },
+                { ticker: '096770.KS', name: 'SK이노베이션', market: 'KR', famous: true },
+                { ticker: '010950.KS', name: 'S-Oil', market: 'KR', famous: true },
+                { ticker: '015760.KS', name: '한국전력', market: 'KR', famous: false },
+                { ticker: '034020.KS', name: '두산에너빌리티', market: 'KR', famous: false }
+            ],
+            Finance: [
+                { ticker: 'JPM', name: 'JPMorgan Chase', market: 'US', famous: true },
+                { ticker: 'BAC', name: 'Bank of America', market: 'US', famous: true },
+                { ticker: 'GS', name: 'Goldman Sachs', market: 'US', famous: true },
+                { ticker: 'MS', name: 'Morgan Stanley', market: 'US', famous: false },
+                { ticker: '105560.KS', name: 'KB금융', market: 'KR', famous: true },
+                { ticker: '055550.KS', name: '신한지주', market: 'KR', famous: true },
+                { ticker: '086790.KS', name: '하나금융지주', market: 'KR', famous: false },
+                { ticker: '316140.KS', name: '우리금융지주', market: 'KR', famous: false }
+            ],
+            Healthcare: [
+                { ticker: 'JNJ', name: 'Johnson & Johnson', market: 'US', famous: true },
+                { ticker: 'UNH', name: 'UnitedHealth', market: 'US', famous: true },
+                { ticker: 'PFE', name: 'Pfizer', market: 'US', famous: true },
+                { ticker: 'LLY', name: 'Eli Lilly', market: 'US', famous: false },
+                { ticker: '207940.KS', name: '삼성바이오로직스', market: 'KR', famous: true },
+                { ticker: '068270.KS', name: '셀트리온', market: 'KR', famous: true },
+                { ticker: '000100.KS', name: '유한양행', market: 'KR', famous: false },
+                { ticker: '028300.KQ', name: 'HLB', market: 'KR', famous: false }
+            ],
+            Commodities: [
+                { ticker: 'GLD', name: 'SPDR Gold Shares', market: 'US', famous: true },
+                { ticker: 'FCX', name: 'Freeport-McMoRan', market: 'US', famous: true },
+                { ticker: 'BHP', name: 'BHP Group', market: 'US', famous: true },
+                { ticker: 'NEM', name: 'Newmont', market: 'US', famous: false },
+                { ticker: '005490.KS', name: 'POSCO홀딩스', market: 'KR', famous: true },
+                { ticker: '010130.KS', name: '고려아연', market: 'KR', famous: true },
+                { ticker: '103140.KS', name: '풍산', market: 'KR', famous: false },
+                { ticker: '004020.KS', name: '현대제철', market: 'KR', famous: false }
+            ],
+            Defense: [
+                { ticker: 'LMT', name: 'Lockheed Martin', market: 'US', famous: true },
+                { ticker: 'RTX', name: 'RTX Corp', market: 'US', famous: true },
+                { ticker: 'NOC', name: 'Northrop Grumman', market: 'US', famous: true },
+                { ticker: 'GD', name: 'General Dynamics', market: 'US', famous: false },
+                { ticker: '012450.KS', name: '한화에어로스페이스', market: 'KR', famous: true },
+                { ticker: '079550.KS', name: 'LIG넥스원', market: 'KR', famous: true },
+                { ticker: '047810.KS', name: '한국항공우주', market: 'KR', famous: false },
+                { ticker: '064350.KS', name: '현대로템', market: 'KR', famous: false }
+            ],
+            Chemicals: [
+                { ticker: 'DOW', name: 'Dow Inc', market: 'US', famous: true },
+                { ticker: 'DD', name: 'DuPont', market: 'US', famous: true },
+                { ticker: 'LYB', name: 'LyondellBasell', market: 'US', famous: true },
+                { ticker: 'LIN', name: 'Linde plc', market: 'US', famous: false },
+                { ticker: '051910.KS', name: 'LG화학', market: 'KR', famous: true },
+                { ticker: '011170.KS', name: '롯데케미칼', market: 'KR', famous: true },
+                { ticker: '009830.KS', name: '한화솔루션', market: 'KR', famous: false },
+                { ticker: '011780.KS', name: '금호석유', market: 'KR', famous: false }
+            ],
+            Shipbuilding: [
+                { ticker: 'HII', name: 'Huntington Ingalls', market: 'US', famous: true },
+                { ticker: 'CMRE', name: 'Costamare', market: 'US', famous: true },
+                { ticker: 'MATX', name: 'Matson', market: 'US', famous: true },
+                { ticker: '009540.KS', name: 'HD한국조선해양', market: 'KR', famous: true },
+                { ticker: '010140.KS', name: '삼성중공업', market: 'KR', famous: true },
+                { ticker: '042660.KS', name: '한화오션', market: 'KR', famous: false },
+                { ticker: '329180.KS', name: 'HD현대중공업', market: 'KR', famous: false }
+            ]
+        };
+
+        window.categoryAnalysisData = window.categoryAnalysisData || {
+            category_order: Object.keys(categoryMeta),
+            categories: {},
+            tagging_progress: {
+                total_count: 0,
+                in_progress_count: 0,
+                completed_count: 0,
+                excluded_count: 0,
+                category_counts: {}
+            }
+        };
+        window.marketSentimentAnalysis = window.marketSentimentAnalysis || {
+            overall_score: 0,
+            overall_label: 'Neutral',
+            summary: '분석 결과를 불러오는 중입니다.'
+        };
+
+        window.taggingProgressData = window.taggingProgressData || null;
+        window.stockQuotesData = window.stockQuotesData || {};
+        window.marketIndexQuotesData = window.marketIndexQuotesData || {};
+        let lastTaggingSummarySignature = '';
+        let lastTaggingCategoryCounts = {};
+        let analysisReloadInFlight = false;
+        let stockQuotesInFlight = false;
+        let marketQuotesInFlight = false;
+        let lastStockQuotesLoadedAt = 0;
+        let lastMarketQuotesLoadedAt = 0;
+
+        const dataset = {};
+        const sparklineCharts = {};
+        let activeModalChart = null;
+        let activeModalMetric = '';
+        let activeModalTimeframe = '일봉'; // default
+
+        const MARKET_TONE = {
+            up: {
+                color: '#28a745',
+                textClass: 'text-[#28a745]',
+                badgeStyle: 'background:#e7f6ea;color:#1f7a3a;border-color:#b8e4c2;',
+                label: '상승'
+            },
+            down: {
+                color: '#ba1a1a',
+                textClass: 'text-error',
+                badgeStyle: 'background:#ffebe8;color:#9f1239;border-color:#fecaca;',
+                label: '하락'
+            },
+            flat: {
+                color: '#64748b',
+                textClass: 'text-on-surface-variant',
+                badgeStyle: 'background:#f1f5f9;color:#475569;border-color:#cbd5e1;',
+                label: '보합'
+            }
+        };
+
+        function getMetricMarketData(metric) {
+            return (typeof marketData !== 'undefined' && marketData[metric]) || null;
+        }
+
+        function getMetricChangePercent(metric) {
+            const quote = (window.marketIndexQuotesData || {})[metric];
+            if (quote && typeof quote.change === 'number') return quote.change;
+
+            const mData = getMetricMarketData(metric);
+            if (mData && typeof mData.change === 'number') return mData.change;
+
+            const series = dataset[metric]?.daily || [];
+            if (series.length > 1) {
+                const first = Number(series[0].y);
+                const latest = Number(series[series.length - 1].y);
+                if (first) return ((latest - first) / first) * 100;
+            }
+            return 0;
+        }
+
+        function getMetricLatestValue(metric) {
+            const quote = (window.marketIndexQuotesData || {})[metric];
+            if (quote && typeof quote.price === 'number') return quote.price;
+
+            const mData = getMetricMarketData(metric);
+            if (mData && typeof mData.price === 'number') return mData.price;
+
+            const series = dataset[metric]?.daily || [];
+            return series.length ? Number(series[series.length - 1].y) : 0;
+        }
+
+        function getMetricPalette(metric) {
+            const change = getMetricChangePercent(metric);
+            if (change > 0) return MARKET_TONE.up;
+            if (change < 0) return MARKET_TONE.down;
+            return MARKET_TONE.flat;
+        }
+
+        function formatMetricValue(metric, value) {
+            const numeric = Number(value || 0);
+            if (metric === 'pizza') return numeric.toFixed(1);
+            if (metric === 'taco' || metric === 'krwusd') {
+                return numeric.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            }
+            return Math.round(numeric).toLocaleString();
+        }
+
+        function formatMetricChange(value) {
+            const numeric = Number(value || 0);
+            return `${numeric >= 0 ? '+' : ''}${numeric.toFixed(2)}%`;
+        }
+
+        function getMetricSeriesForTimeframe(metric, timeframe) {
+            if (!dataset[metric]) return [];
+            if (timeframe === '분봉') return dataset[metric].minutes || [];
+            if (timeframe === '월봉') return dataset[metric].monthly || [];
+            return dataset[metric].daily || [];
+        }
+
+        function getSeriesStats(series) {
+            const values = series.map(item => Number(item.y)).filter(value => Number.isFinite(value));
+            if (!values.length) return { first: 0, latest: 0, high: 0, low: 0, range: 0 };
+            const first = values[0];
+            const latest = values[values.length - 1];
+            const high = Math.max(...values);
+            const low = Math.min(...values);
+            return { first, latest, high, low, range: high - low };
+        }
+
+        function buildFallbackMarketSeries(metric, frame, quote = null) {
+            const baseInfo = metricBases[metric] || { base: 100, volt: 1, min: 0, max: 999999 };
+            const latest = Number(quote?.price || baseInfo.base);
+            const change = Number(quote?.change || 0);
+            const startValue = quote && change !== 0 ? latest / (1 + change / 100) : Number(baseInfo.base || latest || 100);
+            const count = frame === 'minutes' ? 24 : frame === 'monthly' ? 12 : 30;
+            const stepMs = frame === 'minutes' ? 5 * 60 * 1000 : frame === 'monthly' ? 30 * 24 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000;
+            const now = Date.now();
+            const rand = createRand(metric.split('').reduce((sum, char) => sum + char.charCodeAt(0), count));
+            return Array.from({ length: count }, (_, index) => {
+                const t = count <= 1 ? 1 : index / (count - 1);
+                const drift = startValue + (latest - startValue) * t;
+                const noise = (rand() - 0.5) * Number(baseInfo.volt || latest * 0.003);
+                const y = Math.max(Number(baseInfo.min || 0), Math.min(Number(baseInfo.max || latest * 2), drift + noise));
+                return { x: new Date(now - (count - index - 1) * stepMs), y };
+            });
+        }
+
+        // Parse and initialize datasets from data.js marketData
+        function parseMarketData() {
+            metricsList.forEach(metric => {
+                const mData = (typeof marketData !== 'undefined' && marketData[metric]) || { minutes: [], daily: [], monthly: [] };
+                const minutes = Array.isArray(mData.minutes) ? mData.minutes.map(p => ({ x: new Date(p.x), y: p.y })) : [];
+                const daily = Array.isArray(mData.daily) ? mData.daily.map(p => ({ x: new Date(p.x), y: p.y })) : [];
+                const monthly = Array.isArray(mData.monthly) ? mData.monthly.map(p => ({ x: new Date(p.x), y: p.y })) : [];
+                const synthetic = !minutes.length && !daily.length && !monthly.length;
+                dataset[metric] = {
+                    minutes: minutes.length ? minutes : buildFallbackMarketSeries(metric, 'minutes'),
+                    daily: daily.length ? daily : buildFallbackMarketSeries(metric, 'daily'),
+                    monthly: monthly.length ? monthly : buildFallbackMarketSeries(metric, 'monthly'),
+                    synthetic
+                };
+            });
+        }
+
+        function normalizeMarketSeries(points) {
+            if (!Array.isArray(points)) return [];
+            return points
+                .map(p => ({ x: new Date(p.x), y: Number(p.y) }))
+                .filter(p => !isNaN(p.x.getTime()) && Number.isFinite(p.y));
+        }
+
+        function applyMarketIndexSeriesPayload(payload) {
+            if (!payload || !payload.market) return false;
+            window.marketData = payload.market;
+            if (payload.quotes) {
+                window.marketIndexQuotesData = payload.quotes;
+            }
+            metricsList.forEach(metric => {
+                const mData = payload.market[metric];
+                if (!mData) return;
+                const minutes = normalizeMarketSeries(mData.minutes);
+                const daily = normalizeMarketSeries(mData.daily);
+                const monthly = normalizeMarketSeries(mData.monthly);
+                const quote = payload.quotes ? payload.quotes[metric] : null;
+                dataset[metric] = {
+                    minutes: minutes.length ? minutes : buildFallbackMarketSeries(metric, 'minutes', quote),
+                    daily: daily.length ? daily : buildFallbackMarketSeries(metric, 'daily', quote),
+                    monthly: monthly.length ? monthly : buildFallbackMarketSeries(metric, 'monthly', quote),
+                    synthetic: !(minutes.length || daily.length || monthly.length)
+                };
+            });
+            return true;
+        }
+
+        function renderSparklines() {
+            if (typeof ApexCharts === 'undefined') {
+                setTimeout(renderSparklines, 50);
+                return;
+            }
+            
+            // Ensure all containers are ready and have non-zero width before rendering
+            let allReady = true;
+            for (let i = 0; i < metricsList.length; i++) {
+                const container = document.getElementById(`sparkline-${metricsList[i]}`);
+                if (container && container.clientWidth === 0) {
+                    allReady = false;
+                    break;
+                }
+            }
+            
+            if (!allReady) {
+                setTimeout(renderSparklines, 50);
+                return;
+            }
+            
+            metricsList.forEach(metric => {
+                const containerId = `sparkline-${metric}`;
+                const container = document.getElementById(containerId);
+                if (!container) return;
+                
+                const seriesData = dataset[metric] ? dataset[metric].daily : [];
+                if (!seriesData || seriesData.length === 0) return;
+                
+                const palette = getMetricPalette(metric);
+                metricColors[metric] = palette.color;
+                
+                const options = {
+                    chart: {
+                        type: 'area',
+                        height: 48,
+                        sparkline: {
+                            enabled: true
+                        },
+                        animations: {
+                            enabled: false
+                        }
+                    },
+                    stroke: {
+                        curve: 'smooth',
+                        width: 2
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    fill: {
+                        type: 'gradient',
+                        gradient: {
+                            shadeIntensity: 1,
+                            opacityFrom: 0.3,
+                            opacityTo: 0.05,
+                            stops: [0, 90, 100]
+                        }
+                    },
+                    colors: [palette.color],
+                    series: [{
+                        name: metricNames[metric],
+                        data: seriesData.map(item => item.y)
+                    }],
+                    xaxis: {
+                        labels: { show: false }
+                    },
+                    yaxis: {
+                        labels: { show: false }
+                    },
+                    tooltip: { enabled: false }
+                };
+                
+                if (sparklineCharts[metric]) {
+                    sparklineCharts[metric].destroy();
+                }
+                
+                sparklineCharts[metric] = new ApexCharts(container, options);
+                sparklineCharts[metric].render();
+            });
+        }
+
+        function updateCurrentValues() {
+            metricsList.forEach(metric => {
+                const latest = getMetricLatestValue(metric);
+                const changePercent = getMetricChangePercent(metric);
+                const palette = getMetricPalette(metric);
+                
+                const priceEl = document.getElementById(`price-${metric}`);
+                const changeTag = document.getElementById(`change-${metric}`);
+                
+                if (priceEl) {
+                    priceEl.innerText = formatMetricValue(metric, latest);
+                }
+                
+                if (changeTag) {
+                    changeTag.innerText = formatMetricChange(changePercent);
+                    changeTag.classList.remove('text-[#28a745]', 'text-[#16a34a]', 'text-error', 'text-on-surface-variant');
+                    changeTag.classList.add(palette.textClass);
+                }
+            });
+            
+            updateSentimentGauge();
+        }
+
+        function applyMarketIndexQuotesToDataset() {
+            const quotes = window.marketIndexQuotesData || {};
+            Object.entries(quotes).forEach(([metric, quote]) => {
+                if (!dataset[metric] || !quote || typeof quote.price !== 'number') return;
+                ['minutes', 'daily', 'monthly'].forEach(frame => {
+                    if (dataset[metric].synthetic) {
+                        dataset[metric][frame] = buildFallbackMarketSeries(metric, frame, quote);
+                        return;
+                    }
+                    const series = dataset[metric][frame];
+                    if (Array.isArray(series) && series.length) {
+                        series[series.length - 1] = {
+                            ...series[series.length - 1],
+                            y: quote.price
+                        };
+                    }
+                });
+            });
+        }
+
+        function loadMarketIndexQuotes(force = false) {
+            const now = Date.now();
+            if (marketQuotesInFlight) return;
+            if (!force && now - lastMarketQuotesLoadedAt < 15000) return;
+            const symbols = Object.values(metricQuoteSymbols);
+            const params = new URLSearchParams({ symbols: symbols.join(',') });
+            marketQuotesInFlight = true;
+            fetch(`/api/stock_quotes?${params.toString()}`)
+                .then(res => res.ok ? res.json() : null)
+                .then(data => {
+                    if (!data || !data.quotes) return;
+                    window.marketIndexQuotesData = Object.entries(metricQuoteSymbols).reduce((acc, [metric, symbol]) => {
+                        if (data.quotes[symbol]) acc[metric] = data.quotes[symbol];
+                        return acc;
+                    }, {});
+                    lastMarketQuotesLoadedAt = Date.now();
+                    applyMarketIndexQuotesToDataset();
+                    updateCurrentValues();
+                    renderSparklines();
+                })
+                .catch(() => {})
+                .finally(() => {
+                    marketQuotesInFlight = false;
+                });
+        }
+
+        function loadMarketIndexSeries(force = false) {
+            const now = Date.now();
+            if (marketQuotesInFlight) return Promise.resolve(false);
+            if (!force && now - lastMarketQuotesLoadedAt < 15000) return Promise.resolve(false);
+            marketQuotesInFlight = true;
+            return fetch(`/api/market_indices?t=${Date.now()}`)
+                .then(res => res.ok ? res.json() : null)
+                .then(data => {
+                    if (!applyMarketIndexSeriesPayload(data)) return false;
+                    lastMarketQuotesLoadedAt = Date.now();
+                    updateCurrentValues();
+                    renderSparklines();
+                    return true;
+                })
+                .catch(() => false)
+                .finally(() => {
+                    marketQuotesInFlight = false;
+                });
+        }
+
+        function updateSentimentGauge() {
+            let score = 0;
+            if (window.marketSentimentAnalysis && typeof window.marketSentimentAnalysis.overall_score === 'number') {
+                score = window.marketSentimentAnalysis.overall_score;
+            } else if (dataset['taco'] && dataset['taco'].daily && dataset['taco'].daily.length > 0) {
+                const tacoSeries = dataset['taco'].daily;
+                const latestTaco = tacoSeries[tacoSeries.length - 1].y;
+                score = latestTaco >= 175 ? -4 : latestTaco >= 150 ? -2 : latestTaco >= 125 ? 0 : 2;
+            }
+
+            const clamped = Math.max(-5, Math.min(5, score));
+            const angle = ((clamped + 5) / 10) * 180;
+            
+            const needle = document.getElementById('gauge-needle');
+            if (needle) {
+                needle.style.transform = `rotate(${angle}deg)`;
+            }
+        }
+
+        function escapeHtml(value) {
+            return String(value || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function labelStyle(label) {
+            const styles = {
+                Panic: 'background:#ffe5e5;color:#9b111e;border-color:#ffb3b3;',
+                Warning: 'background:#fff1db;color:#8a4b00;border-color:#ffd08a;',
+                Neutral: 'background:#eeeeee;color:#4e5052;border-color:#d2d2d2;',
+                Positive: 'background:#e7f6ea;color:#1f7a3a;border-color:#b8e4c2;',
+                Overheated: 'background:#fce7f3;color:#be185d;border-color:#f9a8d4;'
+            };
+            return styles[label] || styles.Neutral;
+        }
+
+        function scoreText(score) {
+            const numeric = Number(score || 0);
+            return `${numeric >= 0 ? '+' : ''}${numeric.toFixed(1)}`;
+        }
+
+        function categoryBadgeStyle(category, excluded = false) {
+            if (excluded) {
+                return 'background:#f3f4f6;color:#6b7280;border-color:#d1d5db;';
+            }
+            const meta = categoryMeta[category] || { color: '#6b7280' };
+            const color = meta.color;
+            const strongText = category === 'Energy' || category === 'Shipbuilding';
+            return `background:${color}20;color:${strongText ? '#111827' : color};border-color:${color}66;`;
+        }
+
+        function getStockQuoteHtml(ticker, market, showPrice = true) {
+            const quotes = window.stockQuotesData || {};
+            const quote = quotes[ticker];
+            if (!quote) {
+                return `<span class="text-on-surface-variant shrink-0 font-medium">대기</span>`;
+            }
+            
+            const price = quote.price;
+            const change = quote.change;
+            
+            let changeClass = 'text-on-surface-variant';
+            let changeSign = '';
+            if (change > 0) {
+                changeClass = 'text-[#28a745] font-semibold';
+                changeSign = '+';
+            } else if (change < 0) {
+                changeClass = 'text-error font-semibold';
+            }
+            
+            if (!showPrice) {
+                return `<span class="${changeClass} shrink-0 text-[11px] font-mono">${changeSign}${change.toFixed(2)}%</span>`;
+            }
+            
+            let priceStr = '';
+            if (market === 'KR') {
+                priceStr = '₩' + price.toLocaleString('ko-KR');
+            } else {
+                priceStr = '$' + price.toLocaleString('en-US');
+            }
+            
+            return `
+                <div class="flex items-center gap-2 shrink-0 font-mono text-[11px] xl:text-xs">
+                    <span class="text-on-surface font-medium">${priceStr}</span>
+                    <span class="${changeClass} min-w-[52px] text-right">${changeSign}${change.toFixed(2)}%</span>
+                </div>
+            `;
+        }
+
+        function getAllCategoryTickers() {
+            const tickers = new Set();
+            Object.values(categoryStocks).forEach(stocks => {
+                stocks.forEach(stock => tickers.add(stock.ticker));
+            });
+            return Array.from(tickers);
+        }
+
+        function loadStockQuotes(force = false) {
+            const now = Date.now();
+            if (stockQuotesInFlight) return;
+            if (!force && now - lastStockQuotesLoadedAt < 60000) return;
+            const tickers = getAllCategoryTickers();
+            if (!tickers.length) return;
+            const params = new URLSearchParams({ symbols: tickers.join(',') });
+            stockQuotesInFlight = true;
+            fetch(`/api/stock_quotes?${params.toString()}`)
+                .then(res => res.ok ? res.json() : null)
+                .then(data => {
+                    if (data && data.quotes) {
+                        window.stockQuotesData = data.quotes;
+                        lastStockQuotesLoadedAt = Date.now();
+                        renderCategoryAnalysis();
+                        if (activeCategoryForModal) {
+                            renderModalStocks();
+                        }
+                    }
+                })
+                .catch(() => {})
+                .finally(() => {
+                    stockQuotesInFlight = false;
+                });
+        }
+
+        function renderOverallSentiment() {
+            const overall = window.marketSentimentAnalysis || {};
+            const label = overall.overall_label || 'Neutral';
+            const score = Number(overall.overall_score || 0);
+            const labelEl = document.getElementById('overall-summary-label');
+            const scoreEl = document.getElementById('overall-summary-score');
+            const textEl = document.getElementById('overall-summary-text');
+            if (labelEl) {
+                labelEl.textContent = label;
+                labelEl.setAttribute('style', `${labelStyle(label)}border-width:1px;border-style:solid;border-radius:9999px;padding:4px 10px;`);
+            }
+            if (scoreEl) {
+                const tagged = Number(overall.tagged_items || 0);
+                scoreEl.textContent = tagged ? `${tagged}개 태깅 item 가중 평균 ${scoreText(score)}` : `8개 섹터 평균 점수 ${scoreText(score)}`;
+            }
+            if (textEl) {
+                textEl.textContent = overall.summary || '분석 가능한 수집 데이터가 아직 부족합니다.';
+            }
+
+            // Update left legend highlights matching the active overall label
+            const labels = ['Panic', 'Warning', 'Neutral', 'Positive', 'Overheated'];
+            const colors = {
+                Panic: 'text-error font-bold',
+                Warning: 'text-[#e67e22] font-bold',
+                Neutral: 'text-[#5f6368] font-bold',
+                Positive: 'text-[#28a745] font-bold',
+                Overheated: 'text-[#ec4899] font-bold'
+            };
+            labels.forEach(l => {
+                const el = document.querySelector(`#legend-${l} .label-text`);
+                if (el) {
+                    if (l === label) {
+                        el.className = `font-label-md label-text ${colors[l]}`;
+                    } else {
+                        el.className = 'font-label-md label-text text-on-surface-variant';
+                    }
+                }
+            });
+
+            updateSentimentGauge();
+        }
+
+        function formatTaggingGeneratedAt(value) {
+            if (!value) return '';
+            const date = new Date(value);
+            if (isNaN(date.getTime())) return '';
+            return `업데이트 ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+        }
+
+        function getItemDate(item) {
+            const date = new Date(item?.published_at || item?.crawled_at || item?.tagged_at || 0);
+            return isNaN(date.getTime()) ? new Date(0) : date;
+        }
+
+        function formatArticleTime(value) {
+            const date = new Date(value);
+            if (isNaN(date.getTime())) return '시간 미상';
+            return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+        }
+
+        function getCategoryModalItems() {
+            const analysis = window.categoryAnalysisData || {};
+            const data = (analysis.categories || {})[activeCategoryForModal] || {};
+            let items = [...(data.all_items || data.items || [])];
+            if (activeCategoryNewsFilter === 'positive') {
+                items = items
+                    .filter(item => Number(item.sentiment_score || 0) > 0.15 || String(item.sentiment_label || '').toLowerCase() === 'positive')
+                    .sort((a, b) => Number(b.sentiment_score || 0) - Number(a.sentiment_score || 0));
+            } else if (activeCategoryNewsFilter === 'negative') {
+                items = items
+                    .filter(item => Number(item.sentiment_score || 0) < -0.15 || ['panic', 'warning'].includes(String(item.sentiment_label || '').toLowerCase()))
+                    .sort((a, b) => Number(a.sentiment_score || 0) - Number(b.sentiment_score || 0));
+            } else {
+                items.sort((a, b) => getItemDate(b) - getItemDate(a));
+            }
+            return items;
+        }
+
+        function renderTaggingProgress() {
+            const chipsEl = document.getElementById('tp-chips');
+            const barEl = document.getElementById('tp-bar');
+            const legendEl = document.getElementById('tp-legend');
+            const generatedEl = document.getElementById('tp-generated-at');
+            if (!chipsEl || !barEl || !legendEl) return;
+
+            const analysis = window.categoryAnalysisData || {};
+            const categories = analysis.categories || {};
+            const order = analysis.category_order || Object.keys(categoryMeta);
+            const progress = window.taggingProgressData || analysis.tagging_progress || {};
+            const categoryCounts = progress.category_counts || {};
+            const completed = Number(progress.completed_count ?? order.reduce((sum, category) => {
+                return sum + Number((categories[category] || {}).item_count || 0);
+            }, 0));
+            const excluded = Number(progress.excluded_count ?? analysis.excluded_count ?? 0);
+            const total = Number(progress.total_count ?? (completed + excluded + Number(progress.in_progress_count || 0)));
+            const inProgress = Math.max(0, Number(progress.in_progress_count ?? Math.max(total - completed - excluded, 0)));
+            const denominator = Math.max(total, completed + excluded + inProgress, 1);
+
+            const chipData = [
+                { label: '전체', value: total, icon: 'dataset', color: '#004e9f' },
+                { label: '진행중', value: inProgress, icon: 'sync', color: '#e67e22' },
+                { label: '완료', value: completed, icon: 'task_alt', color: '#28a745' },
+                { label: '제외', value: excluded, icon: 'block', color: '#ba1a1a' }
+            ];
+            chipsEl.innerHTML = chipData.map(item => `
+                <div class="flex items-center gap-2 bg-surface-container-low rounded-[14px] px-3 py-2 border border-outline-variant/10 min-w-[112px]">
+                    <span class="material-symbols-outlined text-[18px]" style="color:${item.color}">${item.icon}</span>
+                    <div class="flex flex-col leading-tight">
+                        <span class="text-[11px] text-on-surface-variant">${item.label}</span>
+                        <span class="font-bold text-on-surface">${Number(item.value || 0).toLocaleString()}</span>
+                    </div>
+                </div>
+            `).join('');
+
+            const categorySegments = order.map(category => {
+                const count = Number(categoryCounts[category] ?? (categories[category] || {}).item_count ?? 0);
+                const width = count > 0 ? (count / denominator) * 100 : 0;
+                const meta = categoryMeta[category] || { color: '#727784' };
+                return `<div title="${category} ${count}" style="width:${width}%;background:${meta.color};min-width:${count > 0 ? '4px' : '0'}"></div>`;
+            }).join('');
+            const inProgressWidth = inProgress > 0 ? (inProgress / denominator) * 100 : 0;
+            const excludedWidth = excluded > 0 ? (excluded / denominator) * 100 : 0;
+            const remainingWidth = Math.max(0, 100 - ((completed + excluded + inProgress) / denominator) * 100);
+            barEl.innerHTML = `
+                ${categorySegments}
+                <div title="진행중 ${inProgress}" style="width:${inProgressWidth}%;background:#e67e22;min-width:${inProgress > 0 ? '4px' : '0'}"></div>
+                <div title="제외 ${excluded}" style="width:${excludedWidth}%;background:#ba1a1a;min-width:${excluded > 0 ? '4px' : '0'}"></div>
+                <div title="대기 ${Math.max(0, total - completed - excluded - inProgress)}" style="width:${remainingWidth}%;background:#c1c6d5"></div>
+            `;
+
+            legendEl.innerHTML = order.map(category => {
+                const meta = categoryMeta[category] || { color: '#727784' };
+                const count = Number(categoryCounts[category] ?? (categories[category] || {}).item_count ?? 0);
+                return `
+                    <div class="flex items-center gap-1.5 text-[11px] text-on-surface-variant">
+                        <span class="w-2.5 h-2.5 rounded-full" style="background:${meta.color}"></span>
+                        <span class="font-semibold text-on-surface">${category}</span>
+                        <span>${count}</span>
+                    </div>
+                `;
+            }).join('') + `
+                <div class="flex items-center gap-1.5 text-[11px] text-on-surface-variant">
+                    <span class="w-2.5 h-2.5 rounded-full bg-error"></span>
+                    <span class="font-semibold text-on-surface">Excluded</span>
+                    <span>${excluded}</span>
+                </div>
+            `;
+
+            if (generatedEl) {
+                generatedEl.textContent = formatTaggingGeneratedAt(progress.generated_at);
+            }
+        }
+
+        function renderCategoryAnalysis() {
+            const grid = document.getElementById('category-analysis-grid');
+            if (!grid) return;
+            const analysis = window.categoryAnalysisData || {};
+            const order = analysis.category_order || Object.keys(categoryMeta);
+            const categories = analysis.categories || {};
+            grid.innerHTML = order.map(category => {
+                const meta = categoryMeta[category] || { icon: 'category', color: '#4e5052', tickers: [] };
+                const data = categories[category] || {
+                    category,
+                    score: 0,
+                    label: 'Neutral',
+                    positive_count: 0,
+                    negative_count: 0,
+                    neutral_count: 0,
+                    positive_score: 0,
+                    negative_score: 0,
+                    item_count: 0,
+                    summary: '분석 가능한 관련 수집 데이터가 아직 부족해 중립으로 유지됩니다.',
+                    items: []
+                };
+                const label = data.label || 'Neutral';
+                const items = (data.items || []).slice(0, 3);
+                
+                // Famous stocks for this category
+                const stocks = categoryStocks[category] || [];
+                const famousStocks = stocks.filter(st => st.famous).slice(0, 5);
+                if (famousStocks.length === 0) {
+                    famousStocks.push(...stocks.slice(0, 5));
+                }
+
+                // Render news rows (the ticker line at the bottom of the card)
+                const itemRows = items.length ? items.map(item => `
+                    <div class="flex justify-between gap-2 font-label-md text-[11px] border-t border-outline-variant/10 pt-1.5 mt-1.5 first:border-0 first:pt-0 first:mt-0">
+                        <a href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="text-on-surface hover:text-primary line-clamp-1 min-w-0 flex-1">${escapeHtml(item.title || item.source || '수집 데이터')}</a>
+                        <span class="${Number(item.sentiment_score || 0) >= 0 ? 'text-[#28a745]' : 'text-error'} shrink-0">${scoreText(item.sentiment_score)}</span>
+                    </div>
+                `).join('') : `<div class="text-[11px] text-on-surface-variant italic text-center py-2">수집된 분석 뉴스가 없습니다.</div>`;
+
+                return `
+                <div onclick="openCategoryModal('${category}')" class="bg-surface-container-lowest rounded-[24px] p-unit-lg shadow-sm flex flex-col gap-unit-md border border-outline-variant/10 hover:shadow-md hover:border-outline-variant/30 transition-all cursor-pointer">
+                    <!-- 1. Header (Fix text truncation) -->
+                    <div class="flex justify-between items-center border-b border-outline-variant/10 pb-unit-sm gap-1">
+                        <div class="text-base xl:text-lg font-bold text-on-surface flex items-center gap-1.5 min-w-0">
+                            <span class="material-symbols-outlined text-lg shrink-0" style="color:${meta.color}" data-icon="${meta.icon}">${meta.icon}</span>
+                            <span class="whitespace-nowrap">${category}</span>
+                        </div>
+                        <span class="text-[10px] xl:text-xs font-semibold shrink-0" style="${labelStyle(label)}border-width:1px;border-style:solid;border-radius:9999px;padding:2px 6px;">${label}</span>
+                    </div>
+                    
+                    <!-- 2. Score Grid (Fix wrapping to single line) -->
+                    <div class="grid grid-cols-3 gap-2 text-center">
+                        <div class="bg-surface-container-low rounded-[12px] px-1 py-2">
+                            <div class="text-[10px] text-on-surface-variant whitespace-nowrap">Score</div>
+                            <div class="font-bold text-xs xl:text-sm ${Number(data.score || 0) >= 0 ? 'text-[#28a745]' : 'text-error'} whitespace-nowrap">${scoreText(data.score)}</div>
+                        </div>
+                        <div class="bg-surface-container-low rounded-[12px] px-1 py-2">
+                            <div class="text-[10px] text-on-surface-variant whitespace-nowrap">호재</div>
+                            <div class="font-bold text-xs xl:text-sm text-[#28a745] whitespace-nowrap">${scoreText(data.positive_score)} (${data.positive_count || 0})</div>
+                        </div>
+                        <div class="bg-surface-container-low rounded-[12px] px-1 py-2">
+                            <div class="text-[10px] text-on-surface-variant whitespace-nowrap">악재</div>
+                            <div class="font-bold text-xs xl:text-sm text-error whitespace-nowrap">${scoreText(data.negative_score)} (${data.negative_count || 0})</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 3. AI Summary Box (Limit to 3 lines with ...더보기) -->
+                    <div class="bg-surface-container-low rounded-[16px] p-unit-md flex flex-col justify-between min-h-[105px]">
+                        <div>
+                            <div class="font-label-md text-label-md text-on-surface mb-1 flex items-center gap-1 font-bold">
+                                <span class="material-symbols-outlined text-[16px]" data-icon="psychology">psychology</span> AI 요약
+                            </div>
+                            <p class="category-summary-text font-body-md text-xs text-on-surface-variant leading-relaxed line-clamp-3" data-category-summary="${category}">${escapeHtml(data.summary)}</p>
+                        </div>
+                        <div class="text-right mt-1 shrink-0">
+                            <button onclick="openCategoryModal('${category}'); event.stopPropagation();" class="text-xs font-bold text-primary hover:underline">...더보기</button>
+                        </div>
+                    </div>
+ 
+                    <!-- 4. Stocks List Section (Famous representative stocks) -->
+                    <div class="bg-surface-container-low/40 rounded-[16px] p-3 flex flex-col gap-2">
+                        <div class="text-[11px] font-bold text-on-surface-variant flex justify-between items-center">
+                            <span>대표 관련주</span>
+                            <button onclick="openCategoryModal('${category}'); event.stopPropagation();" class="text-[10px] text-primary hover:underline font-bold flex items-center">
+                                자세히보기 <span class="material-symbols-outlined text-[10px] ml-0.5">chevron_right</span>
+                            </button>
+                        </div>
+                        <div class="flex flex-col gap-1.5">
+                            ${famousStocks.map(st => `
+                                <div class="flex justify-between items-center text-[11px] font-label-md py-0.5">
+                                    <div class="flex items-center gap-1.5 min-w-0">
+                                        <span class="px-1 py-0.2 bg-surface-container-highest text-[8px] font-bold rounded text-on-surface-variant shrink-0">${st.market === 'KR' ? '국장' : '미장'}</span>
+                                        <span class="text-on-surface truncate font-medium">${st.name}</span>
+                                    </div>
+                                    ${getStockQuoteHtml(st.ticker, st.market, false)}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+ 
+                    <!-- 5. News Ticker / analysis rows at the bottom -->
+                    <div class="bg-surface-container-low/10 rounded-[12px] p-2 flex flex-col gap-1">
+                        ${itemRows}
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        function renderNlpAnalysis() {
+            renderTaggingProgress();
+            renderCategoryAnalysis();
+            renderOverallSentiment();
+        }
+
+        function toggleExpand(element) {
+            const metric = element.getAttribute('data-metric');
+            if (!metric) return;
+            
+            activeModalMetric = metric;
+            activeModalTimeframe = '일봉'; // default
+            
+            const overlay = document.getElementById('overlay');
+            const cardContent = document.getElementById('modal-card-content');
+            const container = document.getElementById('modal-container');
+
+            renderMarketMetricModalShell(metric);
+            
+            updateModalButtons();
+
+            overlay.classList.remove('opacity-0', 'pointer-events-none');
+            overlay.classList.add('opacity-100', 'pointer-events-auto');
+            container.classList.remove('scale-95');
+            container.classList.add('scale-100');
+            document.body.style.overflow = 'hidden';
+            
+            renderModalChart();
+        }
+
+        function renderMarketMetricModalShell(metric) {
+            const cardContent = document.getElementById('modal-card-content');
+            if (!cardContent) return;
+
+            const palette = getMetricPalette(metric);
+            const latest = getMetricLatestValue(metric);
+            const changePercent = getMetricChangePercent(metric);
+            cardContent.innerHTML = `
+                <div class="flex flex-col gap-unit-md">
+                    <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-unit-md border-b border-outline-variant/20 pb-unit-md">
+                        <div class="flex flex-col gap-1">
+                            <div class="font-label-sm text-on-surface-variant uppercase tracking-wide">Market Index</div>
+                            <div class="flex flex-wrap items-center gap-2">
+                                <h3 class="font-headline-md text-headline-md text-on-surface">${metricNames[metric] || metric.toUpperCase()}</h3>
+                                <span class="px-2.5 py-1 rounded-full border text-xs font-bold" style="${palette.badgeStyle}">${palette.label}</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3 md:text-right">
+                            <div>
+                                <div class="font-headline-md text-headline-md text-on-surface">${formatMetricValue(metric, latest)}</div>
+                                <div class="font-label-md ${palette.textClass} font-bold">${formatMetricChange(changePercent)}</div>
+                            </div>
+                            <button onclick="closeModal(null)" class="w-9 h-9 rounded-full bg-surface-container-low hover:bg-surface-container-high transition-colors flex items-center justify-center text-on-surface-variant hover:text-on-surface" aria-label="닫기">
+                                <span class="material-symbols-outlined text-[20px]">close</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="modal-chart-stats" class="grid grid-cols-2 md:grid-cols-4 gap-unit-sm"></div>
+                    <div class="bg-white rounded-[18px] border border-outline-variant/20 p-unit-md shadow-sm">
+                        <div id="modal-chart-container" class="w-full h-[340px]"></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function updateModalStats(series) {
+            const statsEl = document.getElementById('modal-chart-stats');
+            if (!statsEl) return;
+            const stats = getSeriesStats(series);
+            const rows = [
+                { label: '시작', value: stats.first },
+                { label: '현재', value: stats.latest },
+                { label: '최고', value: stats.high },
+                { label: '최저', value: stats.low }
+            ];
+            statsEl.innerHTML = rows.map(row => `
+                <div class="bg-surface-container-low rounded-[14px] border border-outline-variant/10 px-3 py-2">
+                    <div class="text-[11px] text-on-surface-variant font-semibold">${row.label}</div>
+                    <div class="font-label-md text-on-surface font-bold">${formatMetricValue(activeModalMetric, row.value)}</div>
+                </div>
+            `).join('');
+        }
+
+        function closeModal(event) {
+            const overlay = document.getElementById('overlay');
+            const container = document.getElementById('modal-container');
+
+            overlay.classList.remove('opacity-100', 'pointer-events-auto');
+            overlay.classList.add('opacity-0', 'pointer-events-none');
+            container.classList.remove('scale-100');
+            container.classList.add('scale-95');
+            document.body.style.overflow = '';
+
+            if (activeModalChart) {
+                activeModalChart.destroy();
+                activeModalChart = null;
+            }
+
+            setTimeout(() => {
+                const cardContent = document.getElementById('modal-card-content');
+                if (cardContent) {
+                    cardContent.innerHTML = '';
+                }
+            }, 300);
+        }
+
+        let activeCategoryForModal = '';
+        let activeStockFilter = 'all';
+        let activeCategoryNewsFilter = 'latest';
+        let activeCategoryNewsPage = 1;
+        const CATEGORY_NEWS_PAGE_SIZE = 6;
+
+        function openCategoryModal(category) {
+            activeCategoryForModal = category;
+            activeStockFilter = 'all';
+            activeCategoryNewsFilter = 'latest';
+            activeCategoryNewsPage = 1;
+            
+            const overlay = document.getElementById('category-modal');
+            const container = document.getElementById('category-modal-container');
+            const titleEl = document.getElementById('cat-modal-title');
+            const summaryEl = document.getElementById('cat-modal-summary');
+            
+            const meta = categoryMeta[category] || { icon: 'category', color: '#4e5052' };
+            const analysis = window.categoryAnalysisData || {};
+            const categories = analysis.categories || {};
+            const data = categories[category] || {
+                category,
+                summary: '분석 가능한 관련 수집 데이터가 아직 부족해 중립으로 유지됩니다.',
+                items: []
+            };
+
+            titleEl.innerHTML = `
+                <span class="material-symbols-outlined text-2xl shrink-0" style="color:${meta.color}">${meta.icon}</span>
+                <span>${category} 상세 분석</span>
+            `;
+            summaryEl.textContent = data.summary;
+
+            renderCategoryNewsList();
+
+            // Reset buttons styling
+            filterModalStocks('all');
+
+            overlay.classList.remove('opacity-0', 'pointer-events-none');
+            overlay.classList.add('opacity-100', 'pointer-events-auto');
+            container.classList.remove('scale-95');
+            container.classList.add('scale-100');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function setCategoryNewsFilter(filter) {
+            activeCategoryNewsFilter = filter;
+            activeCategoryNewsPage = 1;
+            renderCategoryNewsList();
+        }
+
+        function setCategoryNewsPage(page) {
+            activeCategoryNewsPage = Math.max(1, page);
+            renderCategoryNewsList();
+        }
+
+        function renderCategoryNewsList() {
+            const newsContainer = document.getElementById('cat-modal-news-list');
+            if (!newsContainer) return;
+
+            const allItems = getCategoryModalItems();
+            const totalPages = Math.max(1, Math.ceil(allItems.length / CATEGORY_NEWS_PAGE_SIZE));
+            activeCategoryNewsPage = Math.min(Math.max(1, activeCategoryNewsPage), totalPages);
+            const start = (activeCategoryNewsPage - 1) * CATEGORY_NEWS_PAGE_SIZE;
+            const pageItems = allItems.slice(start, start + CATEGORY_NEWS_PAGE_SIZE);
+            const filters = [
+                { id: 'latest', label: '최신순' },
+                { id: 'positive', label: '호재' },
+                { id: 'negative', label: '악재' }
+            ];
+            const filterHtml = `
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                    <div class="flex bg-surface-container-high rounded-xl p-1 gap-1">
+                        ${filters.map(filter => `
+                            <button onclick="setCategoryNewsFilter('${filter.id}')" class="px-3 py-1.5 rounded-lg text-xs transition-all ${activeCategoryNewsFilter === filter.id ? 'bg-surface-container-lowest text-on-surface font-bold shadow-sm' : 'text-on-surface-variant hover:text-on-surface font-semibold'}">${filter.label}</button>
+                        `).join('')}
+                    </div>
+                    <span class="text-[11px] text-on-surface-variant">${allItems.length}개 중 ${pageItems.length}개 표시</span>
+                </div>
+            `;
+
+            if (!pageItems.length) {
+                newsContainer.innerHTML = filterHtml + `<div class="text-xs text-on-surface-variant italic p-4 text-center">조건에 맞는 관련 뉴스 데이터가 없습니다.</div>`;
+                return;
+            }
+
+            const rowsHtml = pageItems.map(item => {
+                const score = Number(item.sentiment_score || 0);
+                const scoreClass = score > 0.15 ? 'text-[#28a745]' : score < -0.15 ? 'text-error' : 'text-on-surface-variant';
+                return `
+                    <div class="p-3 bg-surface-container-low/30 border border-outline-variant/10 rounded-xl flex flex-col gap-1">
+                        <div class="flex flex-wrap justify-between items-center gap-2 text-xs">
+                            <span class="font-semibold text-on-surface-variant">${escapeHtml(item.source)}</span>
+                            <div class="flex items-center gap-2">
+                                <span class="font-mono text-[11px] text-on-surface-variant">${formatArticleTime(item.published_at || item.crawled_at || item.tagged_at)}</span>
+                                <span class="${scoreClass} font-bold">${scoreText(score)}</span>
+                            </div>
+                        </div>
+                        <a href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer" class="font-body-md text-sm text-on-surface hover:text-primary font-semibold transition-colors leading-snug line-clamp-2">${escapeHtml(item.title || item.content || '수집 데이터')}</a>
+                    </div>
+                `;
+            }).join('');
+
+            const pagesHtml = totalPages > 1 ? `
+                <div class="flex flex-wrap items-center justify-center gap-1 pt-1">
+                    <button onclick="setCategoryNewsPage(${activeCategoryNewsPage - 1})" class="px-2.5 py-1 rounded-lg text-xs font-bold border border-outline-variant/20 ${activeCategoryNewsPage === 1 ? 'text-on-surface-variant opacity-40 pointer-events-none' : 'text-primary hover:bg-surface-container-high'}">이전</button>
+                    ${Array.from({ length: totalPages }, (_, i) => i + 1).map(page => `
+                        <button onclick="setCategoryNewsPage(${page})" class="min-w-8 px-2.5 py-1 rounded-lg text-xs font-bold border border-outline-variant/20 ${page === activeCategoryNewsPage ? 'bg-primary text-white' : 'text-on-surface hover:bg-surface-container-high'}">${page}</button>
+                    `).join('')}
+                    <button onclick="setCategoryNewsPage(${activeCategoryNewsPage + 1})" class="px-2.5 py-1 rounded-lg text-xs font-bold border border-outline-variant/20 ${activeCategoryNewsPage === totalPages ? 'text-on-surface-variant opacity-40 pointer-events-none' : 'text-primary hover:bg-surface-container-high'}">다음</button>
+                </div>
+            ` : '';
+
+            newsContainer.innerHTML = filterHtml + rowsHtml + pagesHtml;
+        }
+
+        function closeCategoryModal(event) {
+            if (event && event.target !== document.getElementById('category-modal')) return;
+            const overlay = document.getElementById('category-modal');
+            const container = document.getElementById('category-modal-container');
+            
+            overlay.classList.remove('opacity-100', 'pointer-events-auto');
+            overlay.classList.add('opacity-0', 'pointer-events-none');
+            container.classList.remove('scale-100');
+            container.classList.add('scale-95');
+            document.body.style.overflow = '';
+        }
+
+        function filterModalStocks(filter) {
+            activeStockFilter = filter;
+            
+            // Toggle active classes on buttons
+            ['all', 'KR', 'US'].forEach(f => {
+                const btn = document.getElementById(`btn-stock-${f.toLowerCase()}`);
+                if (!btn) return;
+                if (f === filter) {
+                    btn.className = "flex-1 text-center py-1.5 rounded-lg text-xs font-bold transition-all bg-surface-container-lowest text-on-surface shadow-sm";
+                } else {
+                    btn.className = "flex-1 text-center py-1.5 rounded-lg text-xs font-semibold transition-all text-on-surface-variant hover:text-on-surface";
+                }
+            });
+
+            renderModalStocks();
+        }
+
+        function renderModalStocks() {
+            const listEl = document.getElementById('cat-modal-stock-list');
+            if (!listEl) return;
+            
+            const category = activeCategoryForModal;
+            const stocks = categoryStocks[category] || [];
+            const filtered = stocks.filter(st => activeStockFilter === 'all' || st.market === activeStockFilter);
+            
+            if (filtered.length === 0) {
+                listEl.innerHTML = `<div class="text-xs text-on-surface-variant italic p-4 text-center">해당 시장의 관련 주식이 없습니다.</div>`;
+                return;
+            }
+            
+            listEl.innerHTML = filtered.map(st => `
+                <div class="flex justify-between items-center text-xs font-label-md py-2 border-b border-outline-variant/10 last:border-0">
+                    <div class="flex items-center gap-2 min-w-0 flex-1">
+                        <span class="px-1 py-0.2 bg-surface-container-highest text-[8px] font-bold rounded text-on-surface-variant shrink-0">${st.market === 'KR' ? '국장' : '미장'}</span>
+                        <span class="text-on-surface font-semibold truncate flex-1 min-w-0">${st.name}</span>
+                        <span class="text-[9px] text-on-surface-variant font-mono shrink-0 mr-2">${st.ticker}</span>
+                    </div>
+                    ${getStockQuoteHtml(st.ticker, st.market)}
+                </div>
+            `).join('');
+        }
+
+
+        function updateModalButtons() {
+            const btnMinutes = document.getElementById('btn-minutes');
+            const btnDaily = document.getElementById('btn-daily');
+            const btnMonthly = document.getElementById('btn-monthly');
+            
+            const activeClass = 'px-4 py-2 rounded-full font-label-md text-white bg-primary shadow-sm';
+            const inactiveClass = 'px-4 py-2 rounded-full font-label-md text-on-surface bg-surface-container-high hover:bg-surface-container-highest transition-colors';
+            
+            if (btnMinutes) btnMinutes.className = activeModalTimeframe === '분봉' ? activeClass : inactiveClass;
+            if (btnDaily) btnDaily.className = activeModalTimeframe === '일봉' ? activeClass : inactiveClass;
+            if (btnMonthly) btnMonthly.className = activeModalTimeframe === '월봉' ? activeClass : inactiveClass;
+        }
+
+        function setTimeframe(tf) {
+            activeModalTimeframe = tf;
+            updateModalButtons();
+            renderModalChart();
+        }
+
+        function renderModalChart() {
+            const container = document.getElementById('modal-chart-container');
+            if (!container) return;
+            
+            // Ensure container has resolved its layout size before rendering ApexCharts
+            if (container.clientWidth === 0) {
+                setTimeout(renderModalChart, 50);
+                return;
+            }
+            
+            if (activeModalChart) {
+                activeModalChart.destroy();
+                activeModalChart = null;
+            }
+            
+            let formatStr = 'yyyy-MM-dd';
+            if (activeModalTimeframe === '분봉') {
+                formatStr = 'HH:mm';
+            } else if (activeModalTimeframe === '월봉') {
+                formatStr = 'yyyy-MM';
+            }
+            const sourceData = getMetricSeriesForTimeframe(activeModalMetric, activeModalTimeframe);
+            updateModalStats(sourceData);
+            
+            const palette = getMetricPalette(activeModalMetric);
+            const color = palette.color;
+            metricColors[activeModalMetric] = color;
+            const name = metricNames[activeModalMetric];
+            const stats = getSeriesStats(sourceData);
+            const padding = stats.range ? stats.range * 0.12 : Math.max(Math.abs(stats.latest) * 0.02, 1);
+            
+            const options = {
+                chart: {
+                    type: 'area',
+                    height: 340,
+                    background: '#ffffff',
+                    toolbar: {
+                        show: true,
+                        tools: {
+                            download: false,
+                            selection: false,
+                            zoom: false,
+                            zoomin: true,
+                            zoomout: true,
+                            pan: false,
+                            reset: true
+                        }
+                    },
+                    zoom: { enabled: false },
+                    animations: {
+                        enabled: true,
+                        easing: 'easeinout',
+                        speed: 400
+                    }
+                },
+                stroke: {
+                    curve: 'smooth',
+                    width: 3.5
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                fill: {
+                    type: 'gradient',
+                    gradient: {
+                        shadeIntensity: 1,
+                        opacityFrom: 0.22,
+                        opacityTo: 0.03,
+                        stops: [0, 90, 100]
+                    }
+                },
+                markers: {
+                    size: 0,
+                    hover: {
+                        size: 5
+                    }
+                },
+                colors: [color],
+                series: [{
+                    name: name,
+                    data: sourceData.map(item => ({
+                        x: item.x.getTime(),
+                        y: item.y
+                    }))
+                }],
+                annotations: {
+                    yaxis: sourceData.length ? [{
+                        y: stats.first,
+                        borderColor: '#64748b',
+                        strokeDashArray: 6,
+                        label: {
+                            borderColor: '#cbd5e1',
+                            style: {
+                                color: '#334155',
+                                background: '#f8fafc',
+                                fontFamily: 'Inter',
+                                fontWeight: 600
+                            },
+                            text: '시작 기준'
+                        }
+                    }] : []
+                },
+                xaxis: {
+                    type: 'datetime',
+                    axisBorder: {
+                        color: '#cbd5e1'
+                    },
+                    axisTicks: {
+                        color: '#cbd5e1'
+                    },
+                    labels: {
+                        datetimeUTC: false,
+                        style: {
+                            colors: '#475569',
+                            fontFamily: 'Inter'
+                        }
+                    }
+                },
+                yaxis: {
+                    min: stats.low - padding,
+                    max: stats.high + padding,
+                    tickAmount: 4,
+                    labels: {
+                        style: {
+                            colors: '#475569',
+                            fontFamily: 'Inter'
+                        },
+                        formatter: function(val) {
+                            return formatMetricValue(activeModalMetric, val);
+                        }
+                    }
+                },
+                tooltip: {
+                    x: { format: formatStr },
+                    theme: 'light',
+                    y: {
+                        formatter: function(val) {
+                            return formatMetricValue(activeModalMetric, val);
+                        }
+                    }
+                },
+                grid: {
+                    borderColor: '#e2e8f0',
+                    strokeDashArray: 3,
+                    xaxis: { lines: { show: true } },
+                    yaxis: { lines: { show: true } },
+                    padding: {
+                        top: 12,
+                        right: 16,
+                        bottom: 0,
+                        left: 8
+                    }
+                },
+                noData: {
+                    text: '표시할 지수 데이터가 없습니다.',
+                    align: 'center',
+                    verticalAlign: 'middle',
+                    style: {
+                        color: '#64748b',
+                        fontFamily: 'Inter'
+                    }
+                }
+            };
+            
+            activeModalChart = new ApexCharts(container, options);
+            activeModalChart.render();
+        }
+
+        function makeTaggingSummarySignature(data) {
+            const counts = data?.category_counts || {};
+            const normalizedCounts = Object.keys(counts).sort().reduce((acc, key) => {
+                acc[key] = Number(counts[key] || 0);
+                return acc;
+            }, {});
+            return JSON.stringify({
+                completed: Number(data?.completed_count || 0),
+                excluded: Number(data?.excluded_count || 0),
+                counts: normalizedCounts
+            });
+        }
+
+        function getChangedTaggingCategories(nextCounts) {
+            const changed = new Set();
+            const keys = new Set([...Object.keys(lastTaggingCategoryCounts || {}), ...Object.keys(nextCounts || {})]);
+            keys.forEach(category => {
+                if (Number(lastTaggingCategoryCounts[category] || 0) !== Number(nextCounts[category] || 0)) {
+                    changed.add(category);
+                }
+            });
+            return changed;
+        }
+
+        function loadTaggingProgressData(options = {}) {
+            const { reloadAnalysisOnChange = false } = options;
+            fetch('/api/tagging/progress')
+                .then(res => res.ok ? res.json() : null)
+                .then(data => {
+                    if (data) {
+                        const nextCounts = data.category_counts || {};
+                        const nextSignature = makeTaggingSummarySignature(data);
+                        const changedCategories = getChangedTaggingCategories(nextCounts);
+                        window.taggingProgressData = data;
+                        renderTaggingProgress();
+
+                        if (!lastTaggingSummarySignature) {
+                            lastTaggingSummarySignature = nextSignature;
+                            lastTaggingCategoryCounts = { ...nextCounts };
+                            return;
+                        }
+
+                        if (reloadAnalysisOnChange && nextSignature !== lastTaggingSummarySignature && !analysisReloadInFlight) {
+                            lastTaggingSummarySignature = nextSignature;
+                            lastTaggingCategoryCounts = { ...nextCounts };
+                            loadAnalysisData(null, changedCategories);
+                            return;
+                        }
+
+                        lastTaggingSummarySignature = nextSignature;
+                        lastTaggingCategoryCounts = { ...nextCounts };
+                    }
+                })
+                .catch(() => {});
+        }
+
+        function setAiSummaryLoadingState(changedCategories = null) {
+            const overallText = document.getElementById('overall-summary-text');
+            if (overallText) overallText.textContent = 'AI요약중...';
+
+            document.querySelectorAll('.category-summary-text').forEach(el => {
+                const category = el.dataset.categorySummary;
+                if (!changedCategories || changedCategories.size === 0 || changedCategories.has(category)) {
+                    el.textContent = 'AI요약중...';
+                }
+            });
+
+            const modalSummary = document.getElementById('cat-modal-summary');
+            if (modalSummary && !document.getElementById('category-modal')?.classList.contains('opacity-0')) {
+                if (!changedCategories || changedCategories.size === 0 || changedCategories.has(activeCategoryForModal)) {
+                    modalSummary.textContent = 'AI요약중...';
+                }
+            }
+        }
+
+        function loadAnalysisData(callback, changedCategories = null) {
+            if (analysisReloadInFlight) return;
+            analysisReloadInFlight = true;
+            setAiSummaryLoadingState(changedCategories);
+            const oldScript = document.getElementById('analysis-reload-script');
+            if (oldScript) oldScript.remove();
+
+            const script = document.createElement('script');
+            script.id = 'analysis-reload-script';
+            script.src = `analysis.js?t=${Date.now()}`;
+            script.onload = () => {
+                analysisReloadInFlight = false;
+                renderNlpAnalysis();
+                loadTaggingProgressData();
+                populateNewsCrawl();
+                if (!document.getElementById('category-modal')?.classList.contains('opacity-0')) {
+                    renderCategoryNewsList();
+                }
+                if (callback) callback();
+            };
+            script.onerror = () => {
+                analysisReloadInFlight = false;
+                renderNlpAnalysis();
+                loadTaggingProgressData();
+                populateNewsCrawl();
+                if (!document.getElementById('category-modal')?.classList.contains('opacity-0')) {
+                    renderCategoryNewsList();
+                }
+                if (callback) callback();
+            };
+            document.body.appendChild(script);
+        }
+
+        function reloadData() {
+            const oldScript = document.getElementById('data-reload-script');
+            if (oldScript) oldScript.remove();
+            
+            const script = document.createElement('script');
+            script.id = 'data-reload-script';
+            script.src = `data.js?t=${Date.now()}`;
+            script.onload = () => {
+                parseMarketData();
+                applyMarketIndexQuotesToDataset();
+                updateCurrentValues();
+                populateNewsCrawl();
+                loadMarketIndexSeries().then(loaded => {
+                    if (!loaded) loadMarketIndexQuotes();
+                });
+                loadTaggingProgressData({ reloadAnalysisOnChange: true });
+                loadStockQuotes();
+                
+                // If any sparkline charts are not yet initialized (due to initial loading delays), initialize them now.
+                let anyMissing = false;
+                metricsList.forEach(metric => {
+                    if (!sparklineCharts[metric]) {
+                        anyMissing = true;
+                    }
+                });
+                
+                if (anyMissing) {
+                    renderSparklines();
+                } else {
+                    metricsList.forEach(metric => {
+                        if (sparklineCharts[metric]) {
+                            sparklineCharts[metric].updateSeries([{
+                                data: dataset[metric].daily.map(item => item.y)
+                            }]);
+                        }
+                    });
+                }
+                
+                if (activeModalChart && activeModalMetric) {
+                    let sourceData = [];
+                    if (activeModalTimeframe === '분봉') {
+                        sourceData = dataset[activeModalMetric].minutes;
+                    } else if (activeModalTimeframe === '일봉') {
+                        sourceData = dataset[activeModalMetric].daily;
+                    } else {
+                        sourceData = dataset[activeModalMetric].monthly;
+                    }
+                    activeModalChart.updateSeries([{
+                        data: sourceData.map(item => ({
+                            x: item.x.getTime(),
+                            y: item.y
+                        }))
+                    }]);
+                }
+            };
+            document.body.appendChild(script);
+        }
+
+        function startLiveUpdates() {
+            // Refresh display data every 5 seconds; live quote API calls are throttled separately.
+            setInterval(reloadData, 5000);
+        }
+
+        // Helper: Parse source name, platform, and icon
+        function parseSource(source) {
+            let name = source;
+            let platform = 'News';
+            let icon = 'newspaper';
+            
+            if (source === 'Gov_Kremlin') {
+                return { name: 'Kremlin', platform: '러시아 정부', icon: 'public' };
+            }
+            if (source === 'News_PeopleCN_KO') {
+                return { name: '인민망 한국어판', platform: '중국 언론', icon: 'language' };
+            }
+            if (source.startsWith('X_')) {
+                name = source.substring(2);
+                const xNames = {
+                    ElonMusk: 'Elon Musk',
+                    ROK_President_Lee: '이재명 대통령',
+                    ROK_PresidentialOffice: '대한민국 대통령실',
+                    ROK_OPM: '국무조정실·국무총리비서실',
+                    ROK_MND: '국방부',
+                    ROK_MND_Spokesperson: '국방부 대변인',
+                    ROK_MOFA: '외교부',
+                    ROK_ForeignMinister: '조현 외교부 장관',
+                    LeeJaemyung: '이재명'
+                };
+                if (xNames[name]) name = xNames[name];
+                platform = 'X (SNS)';
+                icon = 'public';
+            } else if (source.startsWith('TruthSocial_')) {
+                name = source.substring(12);
+                if (name === 'DonaldTrump') name = 'Donald Trump';
+                else if (name === 'JDVance') name = 'JD Vance';
+                platform = 'Truth Social';
+                icon = 'forum';
+            } else if (source.startsWith('Gov_')) {
+                name = source.substring(4);
+                if (name === 'President') name = '대통령실';
+                else if (name === 'Mofa') name = '외교부';
+                else if (name === 'Mnd') name = '국방부';
+                else if (name === 'Mohw') name = '보건복지부';
+                else if (name === 'PolicyBriefing') name = '정책브리핑';
+                platform = '정부 기관';
+                icon = 'balance';
+            } else if (source.startsWith('News_')) {
+                name = source.substring(5);
+                if (name === 'Newsis' || name.startsWith('Newsis')) name = '뉴시스';
+                platform = '언론사';
+                icon = 'newspaper';
+            }
+            return { name, platform, icon };
+        }
+
+        // Helper: Analyze sentiment score
+        function analyzeSentiment(title, content) {
+            const posKeywords = [
+                '지원', '완화', '투자', '체결', '호재', '성장', '상승', '돌파', 
+                '수혜', '기대', '확대', '증가', '강세', '유치', '신설', '개선', 
+                '반등', '합의', '개발', '선점', '최고', '급등', '환호'
+            ];
+            const negKeywords = [
+                '규제', '제재', '금지', '조사', '악재', '하락', '갈등', '우려', 
+                '세금', '제동', '인상', '분쟁', '소송', '리스크', '축소', '감소', 
+                '폭락', '붕괴'
+            ];
+            const text = ((title || '') + ' ' + (content || '')).toLowerCase();
+            let posCount = 0, negCount = 0;
+            posKeywords.forEach(word => { if (text.includes(word)) posCount++; });
+            negKeywords.forEach(word => { if (text.includes(word)) negCount++; });
+            const score = Math.max(-5, Math.min(5, posCount - negCount));
+            return { sentiment: score > 0 ? 'positive' : score < 0 ? 'negative' : 'neutral', score, icon: score > 0 ? 'trending_up' : score < 0 ? 'trending_down' : 'info' };
+        }
+
+        // Helper: Format date
+        function formatPublishedAt(dateStr) {
+            try {
+                const date = new Date(dateStr);
+                const now = new Date();
+                const diffMs = now - date;
+                const diffMins = Math.floor(diffMs / 60000);
+                if (isNaN(date.getTime())) return dateStr;
+                if (diffMins < 1) return '방금 전';
+                if (diffMins < 60) return `${diffMins}분 전`;
+                const diffHours = Math.floor(diffMins / 60);
+                if (diffHours < 24) return `${diffHours}시간 전`;
+                return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+            } catch (e) {
+                return dateStr;
+            }
+        }
+
+        function populateNewsCrawl() {
+            const container = document.querySelector('.news-scroll-content');
+            if (!container) return;
+            
+            if (typeof crawledPulseData === 'undefined' || crawledPulseData.length === 0) {
+                return;
+            }
+            
+            // Build a map of NLP classified items
+            const pulseKey = (item) => `${item.source || ''}|${(item.content || item.title || '').slice(0, 240)}`;
+            const putClassified = (map, item, classified) => {
+                if (item.url) map[item.url] = classified;
+                if (item.id) map[item.id] = classified;
+                map[pulseKey(item)] = classified;
+            };
+            const classifiedMap = {};
+            if (window.categoryAnalysisData && window.categoryAnalysisData.categories) {
+                Object.values(window.categoryAnalysisData.categories).forEach(cat => {
+                    const taggedItems = cat.all_items || cat.items || [];
+                    if (taggedItems.length) {
+                        taggedItems.forEach(item => {
+                            putClassified(classifiedMap, item, item);
+                        });
+                    }
+                });
+                (window.categoryAnalysisData.excluded || []).forEach(item => {
+                    const excludedBadge = {
+                        primary_tag: 'Excluded',
+                        excluded: true,
+                        sentiment_score: 0,
+                        exclude_reason: item.reason || '분석 제외'
+                    };
+                    putClassified(classifiedMap, item, excludedBadge);
+                });
+            }
+            
+            container.innerHTML = '';
+            const itemsHtml = crawledPulseData.map(item => {
+                const srcInfo = parseSource(item.source);
+                const displayTime = formatPublishedAt(item.published_at);
+                
+                // Lookup NLP analysis result
+                const classified = classifiedMap[item.url] || (item.id ? classifiedMap[item.id] : null) || classifiedMap[pulseKey(item)];
+                let tagHtml = '';
+                if (classified && classified.primary_tag) {
+                    const scoreVal = Number(classified.sentiment_score || 0);
+                    const labelText = classified.excluded ? 'Excluded' : `${classified.primary_tag} (${scoreVal >= 0 ? '+' : ''}${scoreVal.toFixed(1)})`;
+                    tagHtml = `
+                        <span class="inline-flex items-center px-1.5 py-0.2 rounded text-[10px] font-bold border ml-2 whitespace-nowrap shrink-0" style="${categoryBadgeStyle(classified.primary_tag, classified.excluded)}">
+                            ${labelText}
+                        </span>
+                    `;
+                } else {
+                    tagHtml = `
+                        <span class="inline-flex items-center px-1.5 py-0.2 rounded text-[10px] font-bold border bg-amber-500/15 text-amber-600 border-amber-500/30 ml-2 whitespace-nowrap shrink-0">
+                            Pending
+                        </span>
+                    `;
+                }
+                
+                return `
+                <div class="p-unit-sm border-b border-outline-variant/10">
+                    <div class="flex items-center gap-unit-xs mb-1 min-w-0">
+                        <span class="material-symbols-outlined text-outline text-[16px] shrink-0" data-icon="${srcInfo.icon}">${srcInfo.icon}</span>
+                        <span class="font-label-sm text-label-sm text-on-surface font-semibold truncate">${srcInfo.name}</span>
+                        ${tagHtml}
+                        <span class="font-label-sm text-label-sm text-on-surface-variant ml-auto shrink-0">${displayTime}</span>
+                    </div>
+                    <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="font-body-md text-xs text-on-surface-variant line-clamp-2 hover:text-primary transition-colors block">
+                        ${item.title || item.content}
+                    </a>
+                </div>
+                `;
+            }).join('');
+            container.innerHTML = itemsHtml + itemsHtml;
+        }
+
+        let isUserInteracting = false;
+        let isHovered = false;
+        let interactionTimeout = null;
+
+        function startAutoScroll() {
+            const container = document.querySelector('.news-scroll-container');
+            const content = document.querySelector('.news-scroll-content');
+            if (!container || !content) return;
+            
+            let currentScrollY = 0;
+            
+            // Set initial scroll position to middle of the duplicated list
+            const initScroll = () => {
+                const contentHeight = content.scrollHeight;
+                if (contentHeight > 0) {
+                    container.scrollTop = contentHeight / 2;
+                    currentScrollY = container.scrollTop;
+                } else {
+                    setTimeout(initScroll, 50);
+                }
+            };
+            initScroll();
+
+            let lastTime = performance.now();
+            const speed = 0.015; // pixels per millisecond
+            
+            function step(timestamp) {
+                if (!lastTime) lastTime = timestamp;
+                const elapsed = timestamp - lastTime;
+                lastTime = timestamp;
+
+                if (!isUserInteracting && !isHovered) {
+                    currentScrollY += speed * elapsed;
+                    
+                    const contentHeight = content.scrollHeight;
+                    if (contentHeight > 0) {
+                        const halfHeight = contentHeight / 2;
+                        if (currentScrollY >= halfHeight * 1.5) {
+                            currentScrollY -= halfHeight;
+                        }
+                    }
+                    
+                    container.scrollTop = currentScrollY;
+                }
+                
+                requestAnimationFrame(step);
+            }
+            
+            requestAnimationFrame(step);
+            
+            const handleUserInteraction = () => {
+                isUserInteracting = true;
+                clearTimeout(interactionTimeout);
+                interactionTimeout = setTimeout(() => {
+                    isUserInteracting = false;
+                    lastTime = performance.now();
+                }, 10000);
+            };
+            
+            // Hover listeners to pause/resume auto-scroll
+            container.addEventListener('mouseenter', () => {
+                isHovered = true;
+            });
+            container.addEventListener('mouseleave', () => {
+                isHovered = false;
+                isUserInteracting = false; // Resume immediately when mouse leaves
+                clearTimeout(interactionTimeout);
+                lastTime = performance.now();
+            });
+
+            container.addEventListener('wheel', handleUserInteraction, { passive: true });
+            container.addEventListener('touchstart', handleUserInteraction, { passive: true });
+            container.addEventListener('mousedown', handleUserInteraction);
+            container.addEventListener('keydown', handleUserInteraction);
+            
+            container.addEventListener('scroll', () => {
+                const contentHeight = content.scrollHeight;
+                if (contentHeight <= 0) return;
+                const halfHeight = contentHeight / 2;
+                
+                let currentTop = container.scrollTop;
+                
+                // Failsafe: if actual scroll position deviates significantly from float tracker,
+                // it means user scrolled manually.
+                if (Math.abs(currentTop - currentScrollY) > 1.5) {
+                    handleUserInteraction();
+                }
+                
+                if (isUserInteracting || isHovered) {
+                    if (currentTop >= halfHeight * 1.5) {
+                        currentTop -= halfHeight;
+                        container.scrollTop = currentTop;
+                    } else if (currentTop <= halfHeight * 0.5) {
+                        currentTop += halfHeight;
+                        container.scrollTop = currentTop;
+                    }
+                    currentScrollY = currentTop;
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load data.js dynamically on boot to prevent caching
+            const script = document.createElement('script');
+            script.src = `data.js?t=${Date.now()}`;
+            script.onload = () => {
+                parseMarketData();
+                loadMarketIndexSeries(true).then(loaded => {
+                    if (!loaded) loadMarketIndexQuotes(true);
+                });
+                populateNewsCrawl();
+                loadStockQuotes(true);
+                startAutoScroll();
+                loadAnalysisData(() => {
+                    setTimeout(() => {
+                        renderSparklines();
+                        updateCurrentValues();
+                    }, 100);
+                    startLiveUpdates();
+                });
+            };
+            document.body.appendChild(script);
+        });
+    </script>
+</body>
+</html>
+

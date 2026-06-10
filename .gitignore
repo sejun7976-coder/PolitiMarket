@@ -1,0 +1,44 @@
+# Python/runtime
+__pycache__/
+*.py[cod]
+.venv/
+
+# IDE/local state
+.idea/
+
+# SQLite runtime data
+Crawling/*.db
+Crawling/*.db-*
+
+# Runtime logs/status/process files
+*.log
+*.pid
+Crawling/crawler_status.json
+Web/gui_server*.log
+
+# Local config, credentials, and account/session state
+.env
+.env.*
+!.env.example
+Crawling/crawler_config.json
+Crawling/llm_config.json
+Crawling/test_mode.json
+Crawling/won_config.json
+Crawling/truth_tokens.json
+Crawling/*token*.json
+Crawling/*tokens*.json
+Crawling/*cookie*.json
+Crawling/*cookies*.json
+Crawling/*session*.json
+Crawling/*credential*.json
+Crawling/*credentials*.json
+Crawling/*secret*.json
+Crawling/account_metadata.json
+
+# Generated exports and analysis artifacts
+Exports/
+Filter/output/
+Filter/training_data/
+Web/data.js
+Web/analysis.js
+Web/*_verify.png
